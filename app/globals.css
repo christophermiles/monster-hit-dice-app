@@ -31,3 +31,11 @@ body {
 .link {
   @apply underline;
 }
+
+.input {
+  @apply border-2 border-black;
+}
+
+.button {
+  @apply bg-black text-white dark:invert;
+}

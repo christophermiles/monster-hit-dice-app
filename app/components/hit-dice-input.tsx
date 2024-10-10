@@ -115,6 +115,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange }) => {
 
             <input
                 id="hit-dice-input"
+                type="text"
                 placeholder={placeholderExample}  // The dynamic placeholder for visual effect
                 value={value}
                 onChange={handleInputChange}
@@ -122,7 +123,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange }) => {
                 onBlur={handleBlur}
                 aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
                 pattern={HIT_DICE_REGEX.source}
-                className="flex-auto p-2 text-5xl border-2 border-black"
+                className="input flex-auto p-2 text-5xl"
             />
         </div>
     )

@@ -1,7 +1,7 @@
 'use client'
-import HitDiceInput from "@/app/hit-dice-input";
+import HitDiceInput from "@/app/components/hit-dice-input";
 import {useEffect, useState} from 'react'
-import DiceIcon from "@/app/dice-icon";
+import DiceIcon from "@/app/components/dice-icon";
 
 export default function HitDiceForm() {
 
@@ -68,7 +68,7 @@ export default function HitDiceForm() {
 
                 <button
                     disabled={!hitDiceExpression}
-                    className="pl-4 pr-8 py-2 flex gap-2 items-center bg-black text-white dark:invert text-2xl"
+                    className="button pl-4 pr-8 py-2 flex gap-2 items-center text-2xl"
                 >
                     <DiceIcon icon="dx" className="w-16 h-16"/>
                     <span>Generate</span>
