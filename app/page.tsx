@@ -1,6 +1,6 @@
-import Form from './form'
+import Form from './components/form'
 import Link from 'next/link'
-export default function CalculateHitDice() {
+export default function Main() {
 return (
     <div className="min-h-screen grid grid-cols-[20px_1fr_20px] grid-rows-[20px_1fr_20px] gap-4">
       <main className="flex flex-col gap-8 col-start-2 row-start-2">
