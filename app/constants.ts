@@ -1,0 +1,1 @@
+export const HIT_DICE_REGEX = /^(\d+)d(\d+)([+-]\d+)?$/
