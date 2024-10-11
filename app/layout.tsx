@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { ThemeProvider } from 'next-themes'
-import "./globals.css";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Hit Dice App",
