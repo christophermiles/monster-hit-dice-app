@@ -1,12 +1,19 @@
+'use client'
+
 import React, {useState, useEffect, ChangeEvent} from 'react'
 import {HIT_DICE_REGEX} from "@/app/constants";
+import { Field, Input } from '@headlessui/react'
+import frowser from 'frowser'
 
 interface HitDiceInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     value: string
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void // Accept the entire event
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    onFindHitDiceByMonster: () => void
 }
 
-const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange }) => {
+const browser = frowser.getParser(navigator.userAgent)
+
+const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange, onFindHitDiceByMonster }) => {
     const placeholderExamples = ['2d6', '2d8-2', '2d8+6', '8d10+40', '33d10+330']
     const [placeholderExample, setPlaceholderExample] = useState('')
     const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
@@ -104,28 +111,44 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange }) => {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <Field className="flex flex-col gap-4">
             <div className="flex items-baseline justify-between text-sm">
                 <label for="hit-dice-input">
-                    Enter some Hit Dice
+                    <span className="inline md:hidden">Enter HD</span>
+                    <span className="hidden md:inline">Enter some Hit Dice</span>
                 </label>
 
-                <button className="link">Search monsters (Cmd-K)</button>
+                <button
+                    id="search-monsters-button"
+                    className="flex items-baseline gap-2"
+                    aria-label="Get Hit Dice by monster name"
+                    onClick={onFindHitDiceByMonster}
+                >
+                    <span>Search monsters</span>
+
+                    {browser.getPlatform().type === 'desktop' &&
+                        <span className="flex items-baseline gap-0.5 font-semibold font-sans">
+                            {browser.getOSName() === 'macOS' ? <span className="cmd-key">⌘</span> :
+                                <span className="ctrl-key">Ctrl</span>}
+                            <span>K</span>
+                        </span>
+                    }
+                </button>
             </div>
 
-            <input
+            <Input
                 id="hit-dice-input"
                 type="text"
                 placeholder={placeholderExample}  // The dynamic placeholder for visual effect
+                pattern={HIT_DICE_REGEX.source}
                 value={value}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
-                pattern={HIT_DICE_REGEX.source}
-                className="input flex-auto p-2 text-5xl"
+                className="w-full"
             />
-        </div>
+        </Field>
     )
 }
 
