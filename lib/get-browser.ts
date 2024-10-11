@@ -1,5 +1,5 @@
 import frowser from 'frowser'
 
-export default function getBrowser() {
-    return frowser.getParser(navigator.userAgent)
+export default function getBrowser(skipFeatureDetection = true) {
+    return frowser.getParser(navigator.userAgent, skipFeatureDetection)
 }
