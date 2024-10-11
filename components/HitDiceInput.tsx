@@ -1,16 +1,16 @@
 import React, {useState, useEffect } from 'react'
 import {HIT_DICE_BY_MONSTER_EXAMPLES, HIT_DICE_REGEX} from "@/lib/constants";
-import { Field, Input } from '@headlessui/react'
+import {Field, FieldProps, Input} from '@headlessui/react'
 import {useRotatingAnimatedTexts} from "@/lib/useRotatingAnimatedTexts";
 import clsx from 'clsx'
 
-type HitDiceInputProps = {
+interface HitDiceInputProps extends FieldProps {
     value?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     inputHeaderEnd?: React.ReactNode
 }
 
-const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange, inputHeaderEnd }) => {
+const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange, inputHeaderEnd, className }) => {
     const [placeholderExample, setPlaceholderExample] = useState('')
     const [hasBeenFocused, setHasBeenFocused] = useState(false)
 
@@ -57,7 +57,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({ value, onChange, inputHeade
     )
 
     return (
-        <Field className="flex flex-col gap-4">
+        <Field className={clsx('flex flex-col gap-4', className)}>
             <div className={inputHeaderStyle}>
                 <label for="hit-dice-input">
                     <span className="inline md:hidden">Enter HD</span>

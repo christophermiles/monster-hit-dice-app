@@ -15,7 +15,7 @@ export default function SearchMonstersButton(
         >
             <span>{ text }</span>
 
-            { getBrowser().getPlatform().type === 'desktop' && <CmdK className="font-semibold font-sans"/> }
+            { getBrowser().getPlatform().type === 'desktop' && <CmdK/> }
         </button>
     )
 }

@@ -1,15 +1,11 @@
 'use client'
-import dynamic from 'next/dynamic'
 import React, {useEffect, useState} from 'react'
 import DiceIcon from "@/components/DiceIcon";
+import HitDiceInput from "@/components/HitDiceInput";
 import {Transition} from "@headlessui/react";
-
-const SearchMonstersButton = dynamic(() => import('@/components/SearchMonstersButton'), {
-    ssr: false, // Disable server-side rendering for this component to use platform detection via frowser
-})
+import SearchMonstersButton from "@/components/SearchMonstersButton";
 
 export default function HitDiceForm() {
-
     const [showMonsterSearch, setShowMonsterSearch] = useState(false)
     const [hitDiceExpression, setHitDiceExpression] = useState('')
     const [monsterName, setMonsterName] = useState('')
@@ -70,9 +66,8 @@ export default function HitDiceForm() {
                     <HitDiceInput
                         value={hitDiceExpression}
                         onChange={(e) => setHitDiceExpression(e.target.value)}
-                        onFindHitDiceByMonster={() => setShowMonsterSearch(true)}
                         className="w-full"
-                        inputHeaderEnd={}
+                        inputHeaderEnd=<SearchMonstersButton/>
                     />
 
                     <button
