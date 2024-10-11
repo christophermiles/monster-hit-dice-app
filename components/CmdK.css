@@ -1,0 +1,7 @@
+.cmd-k {
+    @apply flex items-baseline gap-0.5;
+}
+
+.cmd-k[data-bordered] {
+    @apply px-1 py-0.5 border border-gray-100 rounded-md;
+}
