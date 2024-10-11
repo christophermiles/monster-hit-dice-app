@@ -1,4 +1,4 @@
-import Form from './components/form'
+import Form from '@/components/form'
 import Link from 'next/link'
 export default function Main() {
 return (

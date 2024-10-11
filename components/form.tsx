@@ -1,10 +1,10 @@
 'use client'
 import dynamic from 'next/dynamic'
 import {useEffect, useState} from 'react'
-import DiceIcon from "@/app/components/dice-icon";
+import DiceIcon from "@/components/dice-icon";
 import {Transition} from "@headlessui/react";
 
-const HitDiceInput = dynamic(() => import('@/app/components/hit-dice-input'), {
+const HitDiceInput = dynamic(() => import('@/components/hit-dice-input'), {
     ssr: false, // Disable server-side rendering for this component to use platform detection via frowser
 })
 
