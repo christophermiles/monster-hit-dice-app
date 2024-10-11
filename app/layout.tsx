@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import React from "react";
+import type { Metadata } from "next";
+import { ThemeProvider } from 'next-themes'
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Hit Dice App",
@@ -13,10 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
+    <html lang="en" suppressHydrationWarning>
+        <body>
+            <ThemeProvider>{children}</ThemeProvider>
+        </body>
     </html>
   );
 }
