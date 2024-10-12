@@ -1,0 +1,50 @@
+.hit-point-results-table {
+    @apply w-full;
+}
+
+/* region Table text sizes */
+.hit-point-results-table thead {
+    @apply text-lg md:text-xl;
+}
+
+.hit-point-results-table tbody {
+    @apply text-xl md:text-4xl;
+}
+
+.hit-point-results-table tfoot {
+    @apply text-sm md:text-base;
+}
+/* endregion */
+
+.hit-point-results-table th,
+.hit-point-results-table td {
+    @apply text-center;
+}
+
+.hit-point-results-table thead th {
+    @apply pb-[1ch];
+}
+
+/* region Table borders */
+.hit-point-results-table td {
+    @apply border border-black border-t-0;
+}
+/* endregion */
+
+.hit-point-results-table td {
+    @apply min-w-[4ch] min-h-[1rem] py-[0.5ch];
+}
+
+/* region Empty table state */
+.hit-point-results-table:has(td:empty) {
+    @apply text-gray-300;
+}
+
+.hit-point-results-table:has(td:empty) th,
+.hit-point-results-table:has(td:empty) td {
+    @apply border-gray-200;
+}
+
+.hit-point-results-table td:empty:after {
+    content: '-';
+}
