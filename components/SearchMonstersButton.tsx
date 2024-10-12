@@ -1,10 +1,10 @@
+import React from 'react'
 import { useBrowserInfo } from '@/lib/hooks/useBrowserInfo'
 import CmdK from '@/components/CmdK'
 
-export default function SearchMonstersButton({
-  onClick = () => null,
-  text = 'Search monsters',
-}) {
+const SearchMonstersButton: React.FC<{
+  onClick: () => void
+}> = ({ onClick }) => {
   const { platformType } = useBrowserInfo()
 
   return (
@@ -14,9 +14,11 @@ export default function SearchMonstersButton({
       aria-label="Get Hit Dice by monster name"
       onClick={onClick}
     >
-      <span>{text}</span>
+      <span>Search monsters</span>
 
       {platformType === 'desktop' && <CmdK />}
     </button>
   )
 }
+
+export default SearchMonstersButton

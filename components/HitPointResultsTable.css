@@ -2,43 +2,31 @@
     @apply w-full;
 }
 
-/* region Text sizes */
 .hit-point-results-table thead {
     @apply text-lg md:text-xl;
+}
+
+.hit-point-results-table thead th {
+    @apply pb-[1ch] text-center font-normal;
 }
 
 .hit-point-results-table tbody {
     @apply text-xl md:text-4xl;
 }
 
+.hit-point-results-table td {
+    @apply min-w-[4ch] min-h-[1rem] py-[0.5ch];
+    @apply text-center font-medium;
+    @apply border-b border-gray-300;
+}
+
 .hit-point-results-table tfoot {
     @apply text-sm md:text-base;
 }
-/* endregion */
 
-/* region Font weight */
-.hit-point-results-table th {
-    @apply font-medium;
-}
-/* region */
-
-.hit-point-results-table th,
-.hit-point-results-table td {
-    @apply text-center;
-}
-
-.hit-point-results-table thead th {
-    @apply pb-[1ch];
-}
-
-/* region Borders */
-.hit-point-results-table td {
-    @apply border-b border-black;
-}
-/* endregion */
-
-.hit-point-results-table td {
-    @apply min-w-[4ch] min-h-[1rem] py-[0.5ch];
+.hit-point-results-table tfoot th {
+    @apply font-light text-gray-600;
+    @apply uppercase;
 }
 
 /* region Empty state */

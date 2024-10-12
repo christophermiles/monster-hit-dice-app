@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { DM_Mono as Font } from 'next/font/google'
+import { Fira_Code as Font } from 'next/font/google'
 import '../styles/globals.css'
 import clsx from 'clsx'
 

@@ -5,11 +5,22 @@ import { Transition } from '@headlessui/react'
 import SearchMonstersButton from '@/components/SearchMonstersButton'
 import HitPointResultsTable from '@/components/HitPointResultsTable'
 import GetHitPointsButton from '@/components/GetHitPointsButton'
+import { HitPointResults } from 'roll-hit-dice/dist/types'
+import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
+import { DieType } from '@/components/DiceIcon'
 
 export default function HitDiceForm() {
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)
   const [hitDiceExpression, setHitDiceExpression] = useState('')
+  const [dieType, setDieType] = useState<DieType>()
   const [monsterName, setMonsterName] = useState('')
+  const [hitPointResultsList, setHitPointResultsList] = useState<
+    {
+      hitDice: string
+      hitPointResults: HitPointResults
+      dieType: DieType
+    }[]
+  >([])
 
   const Modal = ({
     isOpen,
@@ -37,7 +48,7 @@ export default function HitDiceForm() {
     if (!isOpen) return null
 
     return (
-      <div className="fixed inset-0 bg-gray-800 opacity-90 p-4 flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-neutral-800 opacity-90 p-4 flex flex-col items-center justify-center">
         <input
           type="search"
           value={monsterName}
@@ -63,6 +74,38 @@ export default function HitDiceForm() {
     }
   }, [])
 
+  const handleHitDiceInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHitDiceExpression(e.target.value)
+  }
+
+  useEffect(() => {
+    try {
+      const dieTypeNumber = parseHitDice(hitDiceExpression, true).dieType
+      setDieType(`d${dieTypeNumber}` as DieType)
+    } catch {
+      setDieType(undefined)
+    }
+  }, [hitDiceExpression])
+
+  const handleGetHitPoints = () => {
+    if (!hitDiceExpression) return
+    try {
+      const result = rollHitDice(hitDiceExpression, true)
+      const dieType = parseHitDice(hitDiceExpression, true).dieType
+      setHitPointResultsList(
+        hitPointResultsList
+          .concat({
+            hitDice: hitDiceExpression,
+            hitPointResults: result,
+            dieType: `d${dieType}` as DieType,
+          })
+          .reverse(),
+      )
+    } catch (e) {
+      console.warn(e)
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col gap-16">
@@ -72,15 +115,34 @@ export default function HitDiceForm() {
         >
           <HitDiceInput
             value={hitDiceExpression}
-            onChange={(e) => setHitDiceExpression(e.target.value)}
+            onInput={handleHitDiceInput}
             className="w-full"
-            inputHeaderEnd={<SearchMonstersButton />}
+            inputHeaderEnd={
+              <SearchMonstersButton
+                onClick={() => setShowMonsterSearch(true)}
+              />
+            }
           />
 
-          <GetHitPointsButton disabled={!hitDiceExpression} />
+          <GetHitPointsButton
+            dieType={dieType}
+            disabled={!hitDiceExpression}
+            onClick={handleGetHitPoints}
+          />
         </form>
 
-        <HitPointResultsTable />
+        {hitPointResultsList.length === 0 ? (
+          <HitPointResultsTable /> // Show empty table
+        ) : (
+          hitPointResultsList.map((item, index) => (
+            <HitPointResultsTable
+              key={`${index}-${item.hitDice}`}
+              dieType={item.dieType}
+              hitDice={item.hitDice}
+              hitPointResults={item.hitPointResults}
+            />
+          ))
+        )}
       </div>
 
       <Transition show={showMonsterSearch} as="div">

@@ -2,6 +2,10 @@
     @apply button pl-4 pr-8 py-2 flex gap-2 items-center text-xl md:text-2xl uppercase;
 }
 
+#get-hp-button[disabled] {
+    @apply cursor-not-allowed;
+}
+
 #get-hp-button svg {
     @apply w-8 h-8 md:w-12 md:h-12;
 }

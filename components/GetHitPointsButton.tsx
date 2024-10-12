@@ -1,11 +1,24 @@
-import DiceIcon from '@/components/DiceIcon'
+import DiceIcon, { DieType } from '@/components/DiceIcon'
 import './GetHitPointsButton.css'
+import React from 'react'
 
-export default function GetHitPointsButton({ disabled = false }) {
+type ButtonProps = {
+  dieType?: DieType
+  disabled?: boolean
+  onClick: () => void
+}
+
+const GetHitPointsButton: React.FC<ButtonProps> = ({
+  dieType,
+  disabled = false,
+  onClick = () => null,
+}) => {
   return (
-    <button id="get-hp-button" disabled={disabled}>
-      <DiceIcon icon="dx" />
+    <button id="get-hp-button" disabled={disabled} onClick={onClick}>
+      <DiceIcon dieType={dieType} />
       <span>Get Hit Points</span>
     </button>
   )
 }
+
+export default GetHitPointsButton

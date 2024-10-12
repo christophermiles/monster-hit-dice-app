@@ -12,7 +12,7 @@ interface HitDiceInputProps extends FieldProps {
 
 const HitDiceInput: React.FC<HitDiceInputProps> = ({
   value,
-  onChange,
+  onInput,
   inputHeaderEnd,
   className,
 }) => {
@@ -91,9 +91,9 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
     }
   }, [currentPlaceholderIndex, isTypingPaused, hasBeenFocused]) // Add dependencies
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
-    if (onChange) onChange(event)
+    if (onInput) onInput(event)
     if (newValue !== '') {
       setIsTypingPaused(true)
     } else if (!hasBeenFocused) {
@@ -127,7 +127,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
         placeholder={placeholderExample} // The dynamic placeholder for visual effect
         pattern={HIT_DICE_REGEX.source}
         value={value}
-        onChange={handleInputChange}
+        onInput={handleInput}
         onFocus={handleFocus}
         aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
         className={clsx('input placeholder-gray-200')}
