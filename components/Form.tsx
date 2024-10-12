@@ -4,6 +4,7 @@ import DiceIcon from '@/components/DiceIcon'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
 import SearchMonstersButton from '@/components/SearchMonstersButton'
+import HitPointResultsTable from '@/components/HitPointResultsTable'
 
 export default function HitDiceForm() {
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)
@@ -73,7 +74,7 @@ export default function HitDiceForm() {
             value={hitDiceExpression}
             onChange={(e) => setHitDiceExpression(e.target.value)}
             className="w-full"
-            inputHeaderEnd=<SearchMonstersButton />
+            inputHeaderEnd={<SearchMonstersButton />}
           />
 
           <button disabled={!hitDiceExpression} id="get-hp-button">
@@ -82,31 +83,7 @@ export default function HitDiceForm() {
           </button>
         </form>
 
-        <table className="hit-point-results-table">
-          <thead>
-            <tr>
-              <th colspan="5">Hit Dice _____</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Min.</th>
-              <th></th>
-              <th>Avg.</th>
-              <th></th>
-              <th>Max.</th>
-            </tr>
-          </tfoot>
-        </table>
+        <HitPointResultsTable />
       </div>
 
       <Transition show={showMonsterSearch} as="div">
