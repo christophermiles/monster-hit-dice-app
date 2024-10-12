@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import DiceIcon from '@/components/DiceIcon'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
 import SearchMonstersButton from '@/components/SearchMonstersButton'
