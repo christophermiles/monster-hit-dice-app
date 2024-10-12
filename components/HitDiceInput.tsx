@@ -19,8 +19,8 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
   const placeholderExamples = Object.values(HIT_DICE_BY_MONSTER_EXAMPLES)
   const [placeholderExample, setPlaceholderExample] = useState('')
   const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
-  const [isTypingPaused, setIsTypingPaused] = useState(false) // To track typing pause state
-  const [hasBeenFocused, setHasBeenFocused] = useState(false) // To track if input was ever focused
+  const [isTypingPaused, setIsTypingPaused] = useState(false)
+  const [hasBeenFocused, setHasBeenFocused] = useState(false)
 
   useEffect(() => {
     if (hasBeenFocused) return // Stop all animated typing after the first focus
@@ -89,7 +89,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
       clearTimeout(timeoutId)
       clearInterval(blinkTimeoutId)
     }
-  }, [currentPlaceholderIndex, isTypingPaused, hasBeenFocused]) // Add dependencies
+  }, [currentPlaceholderIndex, isTypingPaused, hasBeenFocused])
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
@@ -124,7 +124,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
       <Input
         id="hit-dice-input"
         type="text"
-        placeholder={placeholderExample} // The dynamic placeholder for visual effect
+        placeholder={placeholderExample}
         pattern={HIT_DICE_REGEX.source}
         value={value}
         onInput={handleInput}
