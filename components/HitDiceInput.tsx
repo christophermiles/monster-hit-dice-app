@@ -42,7 +42,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
           currentPlaceholder += nextExample[charIndex]
           setPlaceholderExample(`${currentPlaceholder}|`)
           charIndex++
-          timeoutId = setTimeout(typeNextLetter, 100)
+          timeoutId = setTimeout(typeNextLetter, 75)
         } else {
           startBlinkingCursor()
         }
@@ -82,7 +82,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
     const rotatePlaceholdersInterval = setInterval(() => {
       if (isTypingPaused) return
       rotatePlaceholders()
-    }, 3000)
+    }, 4500)
 
     return () => {
       clearInterval(rotatePlaceholdersInterval)
