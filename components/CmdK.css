@@ -1,5 +1,5 @@
 .cmd-k {
-  @apply flex items-baseline gap-0.5;
+  @apply flex items-baseline gap-0.5 font-semibold font-sans;
 }
 
 .cmd-k[data-bordered] {
