@@ -66,7 +66,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
   return (
     <Field className={clsx('flex flex-col gap-4', className)}>
       <div className={inputHeaderStyle}>
-        <label>
+        <label htmlFor="hit-dice-input">
           <span className="inline md:hidden">Enter HD</span>
           <span className="hidden md:inline">Enter some Hit Dice</span>
         </label>
