@@ -6,7 +6,7 @@ import './HitDiceInput.css'
 
 interface HitDiceInputProps extends FieldProps {
   value?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
   inputHeaderEnd?: React.ReactNode
 }
 

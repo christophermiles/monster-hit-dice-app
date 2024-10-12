@@ -20,6 +20,14 @@ body {
 }
 
 @layer utilities {
+  .main-layout {
+    @apply w-full grid grid-cols-[1rem_1fr_1rem];
+  }
+
+  .main-layout-content {
+    @apply col-start-2 max-w-5xl mx-auto;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
