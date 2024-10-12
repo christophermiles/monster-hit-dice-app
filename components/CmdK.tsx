@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import getBrowser from '@/lib/get-browser'
+import { useBrowserInfo } from '@/lib/hooks/useBrowserInfo'
 import './CmdK.css'
 
 interface CmdKProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -8,9 +8,11 @@ interface CmdKProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const CmdK: React.FC<CmdKProps> = ({ border, className }) => {
+  const { osName } = useBrowserInfo()
+
   return (
     <span className={clsx('cmd-k', className)} data-bordered={border}>
-      {getBrowser().getOSName() === 'macOS' ? (
+      {osName === 'macOS' ? (
         <span className="cmd-key">⌘</span>
       ) : (
         <span className="ctrl-key">Ctrl</span>

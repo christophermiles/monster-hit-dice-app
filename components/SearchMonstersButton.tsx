@@ -1,10 +1,12 @@
+import { useBrowserInfo } from '@/lib/hooks/useBrowserInfo'
 import CmdK from '@/components/CmdK'
-import getBrowser from '@/lib/get-browser'
 
 export default function SearchMonstersButton({
   onClick = () => null,
   text = 'Search monsters',
 }) {
+  const { platformType } = useBrowserInfo()
+
   return (
     <button
       id="search-monsters-button"
@@ -14,7 +16,7 @@ export default function SearchMonstersButton({
     >
       <span>{text}</span>
 
-      {getBrowser().getPlatform().type === 'desktop' && <CmdK />}
+      {platformType === 'desktop' && <CmdK />}
     </button>
   )
 }
