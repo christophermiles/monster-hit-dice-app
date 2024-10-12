@@ -2,7 +2,7 @@
     @apply w-full;
 }
 
-/* region Table text sizes */
+/* region Text sizes */
 .hit-point-results-table thead {
     @apply text-lg md:text-xl;
 }
@@ -16,6 +16,12 @@
 }
 /* endregion */
 
+/* region Font weight */
+.hit-point-results-table th {
+    @apply font-medium;
+}
+/* region */
+
 .hit-point-results-table th,
 .hit-point-results-table td {
     @apply text-center;
@@ -25,9 +31,9 @@
     @apply pb-[1ch];
 }
 
-/* region Table borders */
+/* region Borders */
 .hit-point-results-table td {
-    @apply border border-black border-t-0;
+    @apply border-b border-black;
 }
 /* endregion */
 
@@ -35,7 +41,7 @@
     @apply min-w-[4ch] min-h-[1rem] py-[0.5ch];
 }
 
-/* region Empty table state */
+/* region Empty state */
 .hit-point-results-table:has(td:empty) {
     @apply text-gray-300;
 }

@@ -5,6 +5,7 @@ import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
 import SearchMonstersButton from '@/components/SearchMonstersButton'
 import HitPointResultsTable from '@/components/HitPointResultsTable'
+import GetHitPointsButton from '@/components/GetHitPointsButton'
 
 export default function HitDiceForm() {
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)
@@ -77,10 +78,7 @@ export default function HitDiceForm() {
             inputHeaderEnd={<SearchMonstersButton />}
           />
 
-          <button disabled={!hitDiceExpression} id="get-hp-button">
-            <DiceIcon icon="dx" />
-            <span>Get Hit Points</span>
-          </button>
+          <GetHitPointsButton disabled={!hitDiceExpression} />
         </form>
 
         <HitPointResultsTable />

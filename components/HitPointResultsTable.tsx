@@ -13,11 +13,13 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
 }) => {
   return (
     <table className="hit-point-results-table">
-      <thead>
-        <tr>
-          <th colSpan={5}>Hit Dice {hitDice ?? '_____'}</th>
-        </tr>
-      </thead>
+      {hitPointResults && hitDice && (
+        <thead>
+          <tr>
+            <th colSpan={5}>Hit Dice {hitDice}</th>
+          </tr>
+        </thead>
+      )}
       <tbody>
         <tr>
           <td>{hitPointResults?.minimum}</td>

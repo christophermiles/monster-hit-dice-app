@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { HIT_DICE_BY_MONSTER_EXAMPLES, HIT_DICE_REGEX } from '@/lib/constants'
 import { Field, FieldProps, Input } from '@headlessui/react'
-import { useRotatingAnimatedTexts } from '@/lib/hooks/useRotatingAnimatedTexts'
 import clsx from 'clsx'
+import './HitDiceInput.css'
 
 interface HitDiceInputProps extends FieldProps {
   value?: string
@@ -16,45 +16,95 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
   inputHeaderEnd,
   className,
 }) => {
+  const placeholderExamples = Object.values(HIT_DICE_BY_MONSTER_EXAMPLES)
   const [placeholderExample, setPlaceholderExample] = useState('')
-  const [hasBeenFocused, setHasBeenFocused] = useState(false)
-
-  const appendToRotatingAnimatedPlaceholderText = '|' // Fake cursor
-
-  const {
-    text: rotatingAnimatedPlaceholderText,
-    stop: stopRotatingAnimatedPlaceholder,
-    start: startRotatingAnimatedPlaceholder,
-  } = useRotatingAnimatedTexts(Object.values(HIT_DICE_BY_MONSTER_EXAMPLES), {
-    appendToText: appendToRotatingAnimatedPlaceholderText,
-  })
+  const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
+  const [isTypingPaused, setIsTypingPaused] = useState(false) // To track typing pause state
+  const [hasBeenFocused, setHasBeenFocused] = useState(false) // To track if input was ever focused
 
   useEffect(() => {
-    setPlaceholderExample(rotatingAnimatedPlaceholderText)
-  }, [rotatingAnimatedPlaceholderText])
+    if (hasBeenFocused) return // Stop all animated typing after the first focus
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value !== '') {
-      stopRotatingAnimatedPlaceholder()
-    } else if (!hasBeenFocused) {
-      startRotatingAnimatedPlaceholder()
+    let charIndex = 0
+    let currentPlaceholder = ''
+    let timeoutId: NodeJS.Timeout
+    let blinkTimeoutId: NodeJS.Timeout
+
+    const displayNextPlaceholder = (nextExample: string) => {
+      charIndex = 0
+      currentPlaceholder = ''
+      let isBlinking = false
+
+      const typeNextLetter = () => {
+        if (isTypingPaused) return
+
+        if (charIndex < nextExample.length) {
+          currentPlaceholder += nextExample[charIndex]
+          setPlaceholderExample(`${currentPlaceholder}|`)
+          charIndex++
+          timeoutId = setTimeout(typeNextLetter, 100)
+        } else {
+          startBlinkingCursor()
+        }
+      }
+
+      const startBlinkingCursor = () => {
+        blinkTimeoutId = setInterval(() => {
+          if (isTypingPaused) return
+
+          if (isBlinking) {
+            setPlaceholderExample(`${currentPlaceholder}|`)
+          } else {
+            setPlaceholderExample(currentPlaceholder)
+          }
+          isBlinking = !isBlinking
+        }, 500)
+      }
+
+      const clearIntervals = () => {
+        clearTimeout(timeoutId)
+        clearInterval(blinkTimeoutId)
+      }
+
+      typeNextLetter()
+
+      return clearIntervals
     }
 
-    if (onChange) {
-      onChange(event)
+    const rotatePlaceholders = () => {
+      const nextIndex =
+        (currentPlaceholderIndex + 1) % placeholderExamples.length
+      setCurrentPlaceholderIndex(nextIndex)
+    }
+
+    displayNextPlaceholder(placeholderExamples[currentPlaceholderIndex])
+
+    const rotatePlaceholdersInterval = setInterval(() => {
+      if (isTypingPaused) return
+      rotatePlaceholders()
+    }, 3000)
+
+    return () => {
+      clearInterval(rotatePlaceholdersInterval)
+      clearTimeout(timeoutId)
+      clearInterval(blinkTimeoutId)
+    }
+  }, [currentPlaceholderIndex, isTypingPaused, hasBeenFocused]) // Add dependencies
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value
+    if (onChange) onChange(event)
+    if (newValue !== '') {
+      setIsTypingPaused(true)
+    } else if (!hasBeenFocused) {
+      setIsTypingPaused(false)
     }
   }
 
   const handleFocus = () => {
-    stopRotatingAnimatedPlaceholder()
-    setPlaceholderExample((current) =>
-      current.replace(appendToRotatingAnimatedPlaceholderText, ''),
-    ) // Remove the fake cursor
-    setHasBeenFocused(true)
-  }
-
-  const handleBlur = () => {
-    startRotatingAnimatedPlaceholder()
+    setIsTypingPaused(true)
+    setPlaceholderExample((current) => current.replace('|', '')) // Remove the fake cursor
+    if (!hasBeenFocused) setHasBeenFocused(true)
   }
 
   const inputHeaderStyle = clsx(
@@ -66,10 +116,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
   return (
     <Field className={clsx('flex flex-col gap-4', className)}>
       <div className={inputHeaderStyle}>
-        <label htmlFor="hit-dice-input">
-          <span className="inline md:hidden">Enter HD</span>
-          <span className="hidden md:inline">Enter some Hit Dice</span>
-        </label>
+        <label htmlFor="hit-dice-input">Enter Hit Dice</label>
 
         {inputHeaderEnd}
       </div>
@@ -82,8 +129,8 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
         value={value}
         onChange={handleInputChange}
         onFocus={handleFocus}
-        onBlur={handleBlur}
         aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
+        className={clsx('input placeholder-gray-200')}
       />
     </Field>
   )

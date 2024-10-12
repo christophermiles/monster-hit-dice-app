@@ -1,0 +1,7 @@
+#hit-dice-input {
+    @apply input;
+    @apply text-4xl md:text-5xl;
+    @apply p-2;
+    border-width: 3px;
+    @apply rounded-sm;
+}

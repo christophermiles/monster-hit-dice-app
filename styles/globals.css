@@ -17,50 +17,26 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
-    'DejaVu Sans Mono', monospace;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
 
-.link {
-  @apply underline;
-}
+  .link {
+    @apply underline;
+  }
 
-.input {
-  @apply appearance-none p-1 border border-black rounded text-black placeholder-gray-500;
-}
+  .input {
+    @apply appearance-none p-1 border border-black text-black placeholder-gray-300;
+  }
 
-.input-xs {
-  @apply input p-0.5 text-xs;
-}
-
-.input-sm {
-  @apply input p-0.5 text-sm;
-}
-
-#hit-dice-input {
-  @apply input p-2 border-2 text-4xl md:text-5xl;
-}
-
-.button {
-  @apply bg-black text-white dark:invert rounded;
+  .button {
+    @apply bg-black text-white dark:invert rounded;
+  }
 }
 
 #search-monsters-button {
   @apply text-gray-500;
-}
-
-#get-hp-button {
-  @apply button pl-4 pr-8 py-2 flex gap-2 items-center text-xl md:text-2xl;
-}
-
-#get-hp-button svg {
-  @apply w-8 h-8 md:w-12 md:h-12;
 }
