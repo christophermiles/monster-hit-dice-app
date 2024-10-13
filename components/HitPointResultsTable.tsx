@@ -6,6 +6,7 @@ import DeleteIcon from '@/components/DeleteIcon'
 
 interface HitPointResultsTableProps {
   hitDice?: string
+  dieType?: string
   monsterName?: string
   hitPointResults?: HitPointResults
 }
@@ -19,7 +20,7 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
     <div className="hit-point-results-table-container">
       {hitPointResults && hitDice && (
         <div className="hit-point-results-table-header">
-          <h2 className="hit-point-results-table-heading">{hitDice}</h2>
+          <h2 className="hit-point-results-table-heading">{`${hitDice}${monsterName && ` (${monsterName})`}`}</h2>
 
           <button className="text-button hit-point-results-table-button hit-point-results-table-button-copy">
             <ClipboardIcon />
