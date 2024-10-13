@@ -14,7 +14,12 @@ const GetHitPointsButton: React.FC<ButtonProps> = ({
   onClick = () => null,
 }) => {
   return (
-    <button id="get-hp-button" disabled={disabled} onClick={onClick}>
+    <button
+      id="get-hp-button"
+      className="button"
+      disabled={disabled}
+      onClick={onClick}
+    >
       <span>Get Hit Points</span>
       <DiceIcon dieType={dieType} size="sm" />
     </button>

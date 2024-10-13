@@ -1,5 +1,5 @@
 #get-hp-button {
-    @apply button px-4 py-2 flex gap-2 items-center;
+    @apply px-4 py-2 flex gap-2 items-center;
     @apply text-xl md:text-2xl uppercase font-medium;
 }
 
