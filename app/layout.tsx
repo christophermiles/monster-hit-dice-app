@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { Fira_Code as Font } from 'next/font/google'
+import { Martian_Mono as Font } from 'next/font/google'
 import '../styles/globals.css'
 import clsx from 'clsx'
 
@@ -13,6 +13,15 @@ export const metadata: Metadata = {
 const font = Font({
   weight: ['300', '400', '500'],
   subsets: ['latin'],
+  fallback: [
+    'ui-monospace',
+    'Cascadia Code',
+    'Source Code Pro',
+    'Menlo',
+    'Consolas',
+    'DejaVu Sans Mono',
+    'monospace',
+  ],
 })
 
 export default function RootLayout({
