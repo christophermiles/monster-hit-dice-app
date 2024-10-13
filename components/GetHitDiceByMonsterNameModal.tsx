@@ -46,20 +46,10 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
         }}
       >
         <div className="main-layout-content p-8 bg-white">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="search"
-              value={monsterName}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setMonsterName(e.target.value)
-              }
-              className="input"
-            />
-
-            <button type="submit" className="button">
-              Done
-            </button>
-          </form>
+          <SearchMonstersCombobox
+            onHitDiceObtained={(hitDice) => onClose(hitDice)}
+            className="w-full"
+          />
         </div>
       </div>
     </div>
