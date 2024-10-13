@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Combobox } from '@headlessui/react'
 import throttle from 'lodash.throttle'
 import sleep from '@/lib/sleep'
+import clsx from 'clsx'
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -74,15 +75,17 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setQuery(event.target.value)
         }
+        className="w-full input input-lg"
       />
-      <Combobox.Options>
+      <Combobox.Options className="my-8">
         {filteredMonsters.map((monster) => (
-          <Combobox.Option key={monster} value={monster} as={Fragment}>
+          <Combobox.Option key={monster} value={monster} as={'ul'}>
             {({ focus }) => (
               <li
-                className={`${
-                  focus ? 'bg-blue-500 text-white' : 'bg-white text-black'
-                }`}
+                className={clsx(
+                  'p-2',
+                  focus ? 'bg-black text-white' : 'bg-white text-black',
+                )}
               >
                 {monster}
               </li>
