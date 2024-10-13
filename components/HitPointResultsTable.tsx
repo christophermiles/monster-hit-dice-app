@@ -19,14 +19,7 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
   return (
     <div className="group">
       {hitPointResults && hitDice && (
-        <div
-          className={clsx(
-            'hit-point-results-table-header',
-            'grid grid-cols-3 grid-rows-1 items-center gap-8',
-          )}
-        >
-          <span />
-
+        <div className={'hit-point-results-table-header'}>
           <h2 className="hit-point-results-table-heading">
             <strong className="font-medium">
               {monsterName ? monsterName : 'Hit Dice'} &mdash;{' '}
@@ -34,16 +27,10 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
             {hitDice}
           </h2>
 
-          <span
-            className={clsx(
-              'flex justify-end gap-2',
-              'text-sm',
-              'opacity-0 group-hover:opacity-100 transition-opacity',
-            )}
-          >
-            <button>Delete</button>
-
+          <span className="hit-point-results-table-controls">
             <button>Copy</button>
+
+            <button>Delete</button>
           </span>
         </div>
       )}
