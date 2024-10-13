@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
 import SearchMonstersCombobox from '@/components/SearchMonstersCombobox'
 
-const Modal: React.FC<{
+interface GetHitDiceByMonsterNameModalProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   isOpen?: boolean
   onClose: (hitDiceFromMonsterName?: string) => void
-}> = ({ isOpen, onClose }) => {
-  const [monsterName, setMonsterName] = useState('')
+}
 
+const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
