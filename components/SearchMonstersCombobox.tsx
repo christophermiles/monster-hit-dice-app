@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { Combobox } from '@headlessui/react'
-import throttle from 'lodash.throttle'
-import sleep from '@/lib/sleep'
+import debounce from 'lodash.debounce'
+import type {Open5EMonster} from "@/app/api/monsters/route";
 import clsx from 'clsx'
 
 interface SearchMonstersComboboxProps
@@ -12,45 +12,34 @@ interface SearchMonstersComboboxProps
 const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
 }) => {
-  const [selectedMonster, setSelectedMonster] = useState<string>('')
+  const [selectedMonster, setSelectedMonster] = useState<Open5EMonster>()
   const [selectedMonsterHitDice, setSelectedMonsterHitDice] =
     useState<string>('')
-  const [query, setQuery] = useState<string>('')
-
-  const [monsters, setMonsters] = useState<string[]>([])
+  const [monsters, setMonsters] = useState<Open5EMonster[]>([])
 
   const filteredMonsters = monsters.slice(0, 5)
 
   const fetchMonsters = async (value: string) => {
     if (!value) setMonsters([])
-    const throttledFilter = throttle(async () => {
-      console.log('Search Open 5E for', value, new Date())
-      await sleep(1000)
-      setMonsters(
-        monsters.concat([
-          value,
-          'A monster from the API',
-          'Another monster',
-          'Another monster!!!',
-          'Monster #5',
-          'Monster #6',
-          'Monster #7',
-          'Monster #8',
-          'Monster #9',
-          'Monster #10',
-        ]),
-      )
-    }, 500)
+    console.log('Search Open 5E for', value, new Date())
 
-    await throttledFilter()
+    // TODO: Set loading indicator
+    try {
+        const res = await fetch(`/api/monsters?name=${value}`)
+        const data: Open5EMonster[] = await res.json()
+        setMonsters(data)
+    } catch (error) {
+        console.error('Error fetching data:', error)
+    } finally {
+        // TODO: Set loading indicator
+    }
   }
 
-  const handleMonsterSelected = (monster: {
-    name: string
-    hitDice: string
-  }) => {
-    setSelectedMonster(monster.name)
-    onHitDiceObtained('2d6+8') // TODO: We will want a monster object with name and Hit Dice
+  const debouncedFetchMonsters = debounce(fetchMonsters, 500)
+
+  const handleMonsterSelected = (monster: Open5EMonster) => {
+    setSelectedMonster(monster)
+    onHitDiceObtained(monster.hit_dice)
   }
 
   return (
@@ -70,16 +59,13 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
       <Combobox.Input
         onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
-          fetchMonsters(event.target.value)
-        }
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setQuery(event.target.value)
+            debouncedFetchMonsters(event.target.value)
         }
         className="w-full input input-lg"
       />
       <Combobox.Options className="my-8">
         {filteredMonsters.map((monster) => (
-          <Combobox.Option key={monster} value={monster} as={'ul'}>
+          <Combobox.Option key={monster.name} value={monster} as={'ul'}>
             {({ focus }) => (
               <li
                 className={clsx(
@@ -87,7 +73,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                   focus ? 'bg-black text-white' : 'bg-white text-black',
                 )}
               >
-                {monster}
+                {monster.name} <span className="text-gray-500">({ monster.hit_dice})</span>
               </li>
             )}
           </Combobox.Option>
