@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { HIT_DICE_BY_MONSTER_EXAMPLES, HIT_DICE_REGEX } from '@/lib/constants'
 import { Field, FieldProps, Input } from '@headlessui/react'
 import clsx from 'clsx'
-import './HitDiceInput.css'
 
 interface HitDiceInputProps extends FieldProps {
   value?: string
@@ -130,7 +129,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
         onInput={handleInput}
         onFocus={handleFocus}
         aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
-        className={clsx('input placeholder-gray-200')}
+        className={clsx('input-lg')}
       />
     </Field>
   )
