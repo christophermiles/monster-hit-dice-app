@@ -54,6 +54,19 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
   return (
     <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
+      <div className="mb-2 flex items-baseline justify-between text-sm">
+        <Combobox.Label>Search SRD monsters</Combobox.Label>
+
+        <label className="flex items-center text-xs">
+          <input type="checkbox" />
+          <span className="hidden md:inline">
+            Include additional content from Open 5E
+          </span>
+
+          <span className="inline md:hidden">Open 5E</span>
+        </label>
+      </div>
+
       <Combobox.Input
         onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
           fetchMonsters(event.target.value)
