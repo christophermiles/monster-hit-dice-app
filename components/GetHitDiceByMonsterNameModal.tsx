@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import SearchMonstersCombobox from '@/components/SearchMonstersCombobox'
 
 const Modal: React.FC<{
   isOpen?: boolean
@@ -24,11 +25,6 @@ const Modal: React.FC<{
 
   if (!isOpen) return null
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onClose('2d6+2')
-  }
-
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     onClose()
@@ -39,7 +35,12 @@ const Modal: React.FC<{
       className="fixed inset-0 p-4 backdrop-blur-sm bg-black bg-opacity-85 flex flex-col justify-start"
       onClick={handleBackdropClick}
     >
-      <div className="main-layout">
+      <div
+        className="main-layout"
+        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+          e.stopPropagation() // Prevent input clicks from closing the backdrop
+        }}
+      >
         <div className="main-layout-content p-8 bg-white">
           <form onSubmit={handleSubmit}>
             <input
