@@ -1,6 +1,8 @@
 import React from 'react'
 import type { HitPointResults } from 'roll-hit-dice/dist/types'
 import './HitPointResultsTable.css'
+import ClipboardIcon from '@/components/ClipboardIcon'
+import DeleteIcon from '@/components/DeleteIcon'
 
 interface HitPointResultsTableProps {
   hitDice?: string
@@ -20,11 +22,13 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
           <h2 className="hit-point-results-table-heading">{hitDice}</h2>
 
           <button className="text-button hit-point-results-table-button hit-point-results-table-button-copy">
-            Copy
+            <ClipboardIcon />
+            <span>Copy</span>
           </button>
 
           <button className="text-button hit-point-results-table-button hit-point-results-table-button-delete">
-            Delete
+            <DeleteIcon />
+            <span>Delete</span>
           </button>
         </div>
       )}

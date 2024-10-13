@@ -1,13 +1,23 @@
 .hit-point-results-table-header {
-    @apply grid grid-cols-3 grid-rows-1 items-start gap-[3ch] pb-[1ch];
+    @apply grid grid-cols-3 grid-rows-1 items-center gap-[3ch] pb-[1ch];
+}
+
+.hit-point-results-table-button {
+    @apply opacity-100 md:opacity-0 transition-opacity;
+    @apply text-xs;
+    @apply flex items-center gap-1;
+}
+
+.hit-point-results-table-button svg {
+    @apply w-4 h-4;
 }
 
 .hit-point-results-table-button-copy {
-    @apply order-1 col-start-1 text-left;
+    @apply order-1 col-start-1 justify-start text-left;
 }
 
 .hit-point-results-table-button-delete {
-    @apply order-3 col-start-3 text-right;
+    @apply order-3 col-start-3 justify-end text-right;
 }
 
 .hit-point-results-table-heading {
@@ -18,11 +28,6 @@
 
 .hit-point-results-table-heading strong {
     @apply font-semibold;
-}
-
-.hit-point-results-table-button {
-    @apply opacity-100 md:opacity-0 transition-opacity;
-    @apply text-xs;
 }
 
 .hit-point-results-table-container:hover .hit-point-results-table-button {
