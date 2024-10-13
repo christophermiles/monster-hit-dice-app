@@ -25,7 +25,7 @@ body {
   }
 
   .main-layout-content {
-    @apply col-start-2 max-w-sm sm:max-w-2xl md:max-w-5xl mx-auto;
+    @apply col-start-2 container max-w-sm sm:max-w-2xl mx-auto;
   }
 
   .text-balance {
