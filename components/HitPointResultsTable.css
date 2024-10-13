@@ -2,19 +2,31 @@
     @apply grid grid-cols-3 grid-rows-1 items-start gap-[3ch] pb-[1ch];
 }
 
+.hit-point-results-table-button-copy {
+    @apply order-1 col-start-1 text-left;
+}
+
+.hit-point-results-table-button-delete {
+    @apply order-3 col-start-3 text-right;
+}
+
 .hit-point-results-table-heading {
-    @apply col-start-1 col-end-3 text-left md:col-start-2 md:text-center;
-    @apply text-xl md:text-2xl font-normal;
+    @apply order-2 col-start-2 text-center;
+    @apply text-2xl md:text-3xl;
+    @apply text-gray-500;
 }
 
 .hit-point-results-table-heading strong {
     @apply font-semibold;
 }
 
-.hit-point-results-table-controls {
-    @apply col-start-3 col-end-3;
-    @apply flex items-baseline justify-end gap-[2ch];
+.hit-point-results-table-button {
+    @apply opacity-100 md:opacity-0 transition-opacity;
     @apply text-xs;
+}
+
+.hit-point-results-table-container:hover .hit-point-results-table-button {
+    @apply md:opacity-100;
 }
 
 .hit-point-results-table {
@@ -26,9 +38,25 @@
 }
 
 .hit-point-results-table tbody td {
-    @apply min-w-[4ch] min-h-[1rem] py-[0.5ch];
+    @apply min-w-[4ch] min-h-[1rem] py-[0.5ch] align-baseline;
     @apply text-center font-medium;
-    @apply border-b border-gray-300;
+    @apply border-b border-gray-400;
+}
+
+.hit-point-results-table tbody td:nth-child(1) {
+    font-size: 60%;
+}
+
+.hit-point-results-table tbody td:nth-child(2) {
+    font-size: 70%;
+}
+
+.hit-point-results-table tbody td:nth-child(3) {
+    font-size: 80%;
+}
+
+.hit-point-results-table tbody td:nth-child(4) {
+    font-size: 90%;
 }
 
 .hit-point-results-table tfoot {
@@ -36,7 +64,7 @@
 }
 
 .hit-point-results-table tfoot th {
-    @apply font-normal text-gray-600;
+    @apply font-normal text-gray-500;
 }
 
 /* region Empty state */

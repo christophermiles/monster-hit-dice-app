@@ -1,14 +1,11 @@
 import React from 'react'
 import type { HitPointResults } from 'roll-hit-dice/dist/types'
 import './HitPointResultsTable.css'
-import DiceIcon, { DieType } from '@/components/DiceIcon'
-import clsx from 'clsx'
 
 interface HitPointResultsTableProps {
   hitDice?: string
   monsterName?: string
   hitPointResults?: HitPointResults
-  dieType?: DieType
 }
 
 const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
@@ -17,21 +14,18 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
   hitPointResults,
 }) => {
   return (
-    <div className="group">
+    <div className="hit-point-results-table-container">
       {hitPointResults && hitDice && (
-        <div className={'hit-point-results-table-header'}>
-          <h2 className="hit-point-results-table-heading">
-            <strong className="font-medium">
-              {monsterName ? monsterName : 'Hit Dice'} &mdash;{' '}
-            </strong>
-            {hitDice}
-          </h2>
+        <div className="hit-point-results-table-header">
+          <h2 className="hit-point-results-table-heading">{hitDice}</h2>
 
-          <span className="hit-point-results-table-controls">
-            <button>Copy</button>
+          <button className="text-button hit-point-results-table-button hit-point-results-table-button-copy">
+            Copy
+          </button>
 
-            <button>Delete</button>
-          </span>
+          <button className="text-button hit-point-results-table-button hit-point-results-table-button-delete">
+            Delete
+          </button>
         </div>
       )}
 

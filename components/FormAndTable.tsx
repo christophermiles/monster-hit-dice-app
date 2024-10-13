@@ -81,6 +81,7 @@ export default function HitDiceForm() {
       const dieType = parseHitDice(hitDice, true).dieType
       setHitPointResultsList(
         hitPointResultsList
+          .filter((r) => r.hitDice !== hitDice)
           .concat({
             hitDice: hitDice,
             hitPointResults: result,

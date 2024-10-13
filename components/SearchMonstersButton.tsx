@@ -10,7 +10,7 @@ const SearchMonstersButton: React.FC<{
   return (
     <button
       id="search-monsters-button"
-      className="flex items-center"
+      className="text-button flex items-center"
       aria-label="Get Hit Dice by monster name"
       onClick={onClick}
     >
