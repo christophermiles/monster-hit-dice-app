@@ -29,8 +29,16 @@ const Modal: React.FC<{
     onClose('2d6+2')
   }
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    onClose()
+  }
+
   return (
-    <div className="fixed inset-0 p-4 backdrop-blur-sm bg-black bg-opacity-85 flex flex-col items-center justify-center">
+    <div
+      className="fixed inset-0 p-4 backdrop-blur-sm bg-black bg-opacity-85 flex flex-col justify-start"
+      onClick={handleBackdropClick}
+    >
       <div className="main-layout">
         <div className="main-layout-content p-8 bg-white">
           <form onSubmit={handleSubmit}>
