@@ -53,11 +53,11 @@ body {
   }
 
   .text-button {
-    @apply text-gray-500;
+    @apply text-neutral-500;
   }
 
   .input {
-    @apply p-1 border-2 border-gray-400 text-black placeholder-gray-200 rounded-sm focus-visible:outline-none focus-visible:border-black;
+    @apply p-1 border-2 border-neutral-400 text-black placeholder-neutral-200 rounded-sm focus-visible:outline-none focus-visible:border-black;
   }
 
   .input-lg {

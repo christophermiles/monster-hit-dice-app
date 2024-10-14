@@ -150,7 +150,7 @@ const monsters: Monster[] = [
   { name: 'Goblin', hitDice: '2d6' },
   { name: 'Gold Dragon Wyrmling', hitDice: '8d8+24' },
   { name: 'Gorgon', hitDice: '12d10+48' },
-  { name: 'Gray Ooze', hitDice: '3d8+9' },
+  { name: 'neutral Ooze', hitDice: '3d8+9' },
   { name: 'Green Dragon Wyrmling', hitDice: '7d8+7' },
   { name: 'Green Hag', hitDice: '11d8+33' },
   { name: 'Grick', hitDice: '6d8' },

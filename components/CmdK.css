@@ -3,5 +3,5 @@
 }
 
 .cmd-k[data-bordered] {
-  @apply px-1 py-0.5 border border-gray-100 rounded-md;
+  @apply px-1 py-0.5 border border-neutral-100 rounded-md;
 }

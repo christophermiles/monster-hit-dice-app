@@ -4,8 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import { Martian_Mono as Font } from 'next/font/google'
 import '../styles/globals.css'
 import clsx from 'clsx'
-import FormAndTable from "@/components/FormAndTable";
-import Link from "next/link";
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Hit Dice App',
@@ -38,22 +37,30 @@ export default function RootLayout({
       className={clsx(font.className, 'antialiased')}
     >
       <body>
-      <ThemeProvider>
-        <div className="main-layout min-h-screen grid-rows-[1fr_auto] pt-8">
-          <main className="main-layout-content px-4">
-            {children}
-          </main>
-          <footer className="main-layout-content py-8 flex items-baseline justify-center flex-wrap gap-8">
-            <div className="flex items-baseline gap-8 text-xs">
-              <Link href="/about" className="link">What is this?</Link>
-              <Link href="/legal" className="link">Legal</Link>
-              <a href="https://api.hitdice.app" className="link">API</a>
-            </div>
-            <p className="text-xs text-gray-500">Made in <span className="text-lg">🇦🇺</span> by <a
-                href="https://christophermiles.com.au" className="link">Christopher Miles</a></p>
-          </footer>
-        </div>
-      </ThemeProvider>
+        <ThemeProvider>
+          <div className="main-layout min-h-screen grid-rows-[1fr_auto] pt-8">
+            <main className="main-layout-content px-4">{children}</main>
+            <footer className="main-layout-content py-8 flex items-baseline justify-center flex-wrap gap-8">
+              <div className="flex items-baseline gap-8 text-xs">
+                <Link href="/about" className="link">
+                  What is this?
+                </Link>
+                <Link href="/legal" className="link">
+                  Legal
+                </Link>
+                <a href="https://api.hitdice.app" className="link">
+                  API
+                </a>
+              </div>
+              <p className="text-xs text-neutral-500">
+                Made in <span className="text-lg">🇦🇺</span> by{' '}
+                <a href="https://christophermiles.com.au" className="link">
+                  Christopher Miles
+                </a>
+              </p>
+            </footer>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )

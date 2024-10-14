@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Monster, Open5EMonster } from '@/app/api/monsters/types'
+import type { Monster, Open5EMonster } from '@/app/api/monsters/types'
+import Fuse from 'fuse.js'
 import srdMonsters from './data-5e-srd-2014'
 
 export interface Open5EResponse {
@@ -22,18 +23,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const results = srdMonsters
-      .filter((monster) =>
-        monster.name.toLowerCase().includes(name.toLowerCase()),
-      )
-      .map((monster) => {
-        return extendedSearch
-          ? {
-              ...monster,
-              documentTitle: '5E SRD (2014)',
-            }
-          : monster
-      })
+    // Filter SRD results
+    let results = srdMonsters
 
     if (extendedSearch) {
       const open5eParams = new URLSearchParams({
@@ -48,18 +39,34 @@ export async function GET(request: NextRequest) {
 
       const data: Open5EResponse = await response.json()
 
-      results.concat(
-        data.results.map((open5eMonster: Open5EMonster): Monster => {
+      results = results
+        .map((srdMonster) => {
           return {
-            name: open5eMonster.name,
-            hitDice: open5eMonster.hit_dice,
-            documentTitle: open5eMonster.document__title,
+            ...srdMonster,
+            documentTitle: '5E SRD (2014)',
           }
-        }),
-      )
+        })
+        .concat(
+          data.results
+            .filter((open5eMonster: Open5EMonster) => !!open5eMonster.hit_dice)
+            .map((open5eMonster: Open5EMonster) => {
+              return {
+                name: open5eMonster.name,
+                hitDice: open5eMonster.hit_dice,
+                documentTitle: open5eMonster.document__title,
+              }
+            }),
+        )
     }
 
-    return NextResponse.json(results, { status: 200 })
+    const fuse = new Fuse<Monster>(results, {
+      keys: ['name'],
+    })
+
+    return NextResponse.json(
+      fuse.search(name).map(({ item }) => item),
+      { status: 200 },
+    )
   } catch {
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 })
   }

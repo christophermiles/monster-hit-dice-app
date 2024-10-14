@@ -3,6 +3,7 @@ import { Combobox } from '@headlessui/react'
 import debounce from 'lodash.debounce'
 import clsx from 'clsx'
 import { Monster } from '@/app/api/monsters/types'
+import purify from 'dompurify'
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -24,7 +25,18 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   const [selectedMonster, setSelectedMonster] = useState<Monster>()
   const [monsters, setMonsters] = useState<Monster[]>([])
 
-  const filteredMonsters = monsters.slice(0, 20)
+  const filteredMonstersForDisplay = monsters.slice(0, 20).map((m) => {
+    return {
+      ...m,
+      nameForDisplay: purify
+        .sanitize(m.name)
+        .split('')
+        .map((l) =>
+          query.toLowerCase().includes(l.toLowerCase()) ? `<u>${l}</u>` : l,
+        )
+        .join(''),
+    }
+  })
 
   const fetchMonsters = async (value: string) => {
     setQuery(value)
@@ -37,7 +49,9 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
     // TODO: Set loading indicator
     try {
-      const res = await fetch(`/api/monsters?name=${value}`)
+      const res = await fetch(
+        `/api/monsters?name=${value}&extendedSearch=${useExtendedSearch}`,
+      )
       const data: Monster[] = await res.json()
       setMonsters(data)
     } catch (error) {
@@ -77,9 +91,9 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
         className="w-full input input-lg"
       />
       <div className="my-8">
-        {filteredMonsters.length > 0 ? (
+        {filteredMonstersForDisplay.length > 0 ? (
           <Combobox.Options className="my-8">
-            {filteredMonsters.map((monster, index) => (
+            {filteredMonstersForDisplay.map((monster, index) => (
               <Combobox.Option
                 key={`${index}-${monster.name}`}
                 value={monster}
@@ -88,14 +102,20 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                 {({ focus }) => (
                   <li
                     className={clsx(
-                      'p-2 flex items-baseline gap-4',
+                      'p-2 flex items-baseline justify-between gap-4',
                       focus ? 'bg-black text-white' : 'bg-white text-black',
                     )}
                   >
-                    <span className="flex-none">
-                      {monster.name}{' '}
+                    <span className="flex-none flex items-baseline gap-1">
                       <span
-                        className={focus ? 'text-gray-300' : 'text-gray-500'}
+                        dangerouslySetInnerHTML={{
+                          __html: monster.nameForDisplay,
+                        }}
+                      />
+                      <span
+                        className={
+                          focus ? 'text-neutral-300' : 'text-neutral-500'
+                        }
                       >
                         ({monster.hitDice})
                       </span>
@@ -104,8 +124,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                     {monster.documentTitle && (
                       <span
                         className={clsx(
-                          'flex-auto text-sm',
-                          focus ? 'text-gray-300' : 'text-gray-500',
+                          'flex-shrink truncate text-xs',
+                          focus ? 'text-neutral-300' : 'text-neutral-500',
                         )}
                       >
                         {monster.documentTitle}
