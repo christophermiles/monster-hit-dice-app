@@ -42,26 +42,10 @@
     @apply text-xl md:text-4xl;
 }
 
-.hit-point-results-table tbody td {
+.hit-point-results-table-result {
     @apply min-w-[4ch] min-h-[1rem] py-[0.5ch] align-baseline;
     @apply text-center font-medium;
     @apply border-b border-gray-400;
-}
-
-.hit-point-results-table tbody td:nth-child(1) {
-    font-size: 60%;
-}
-
-.hit-point-results-table tbody td:nth-child(2) {
-    font-size: 70%;
-}
-
-.hit-point-results-table tbody td:nth-child(3) {
-    font-size: 80%;
-}
-
-.hit-point-results-table tbody td:nth-child(4) {
-    font-size: 90%;
 }
 
 .hit-point-results-table tfoot {
@@ -73,7 +57,7 @@
 }
 
 /* region Empty state */
-.hit-point-results-table:has(td:empty) td,
+.hit-point-results-table:has(td:empty) .hit-point-results-table-result,
 .hit-point-results-table:has(td:empty) th {
     @apply border-gray-200;
     @apply text-gray-300;
@@ -83,3 +67,25 @@
 .hit-point-results-table td:empty:after {
     content: '-';
 }
+
+/* region Results */
+.hit-point-results-table-result-minimum:not(:empty) {
+    font-size: 60%;
+}
+
+.hit-point-results-table-result-weak:not(:empty) {
+    font-size: 70%;
+}
+
+.hit-point-results-table-result-average:not(:empty) {
+    font-size: 80%;
+}
+
+.hit-point-results-table-result-average:not(:empty) {
+    @apply bg-gray-100;
+}
+
+.hit-point-results-table-result-strong:not(:empty) {
+    font-size: 90%;
+}
+/* endregion */

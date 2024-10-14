@@ -37,11 +37,25 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
       <table className="hit-point-results-table">
         <tbody>
           <tr>
-            <td>{hitPointResults?.minimum}</td>
-            <td>{hitPointResults?.weak}</td>
-            <td>{hitPointResults?.average}</td>
-            <td>{hitPointResults?.strong}</td>
-            <td>{hitPointResults?.maximum}</td>
+            <td className="hit-point-results-table-result hit-point-results-table-result-minimum">
+              {hitPointResults?.minimum}
+            </td>
+
+            <td className="hit-point-results-table-result hit-point-results-table-result-weak">
+              {hitPointResults?.weak}
+            </td>
+
+            <td className="hit-point-results-table-result hit-point-results-table-result-average">
+              {hitPointResults?.average}
+            </td>
+
+            <td className="hit-point-results-table-result hit-point-results-table-result-strong">
+              {hitPointResults?.strong}
+            </td>
+
+            <td className="hit-point-results-table-result hit-point-results-table-result-maximum">
+              {hitPointResults?.maximum}
+            </td>
           </tr>
         </tbody>
         <tfoot>
