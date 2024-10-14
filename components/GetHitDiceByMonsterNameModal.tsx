@@ -4,7 +4,7 @@ import SearchMonstersCombobox from '@/components/SearchMonstersCombobox'
 interface GetHitDiceByMonsterNameModalProps
   extends React.HTMLAttributes<HTMLDivElement> {
   isOpen?: boolean
-  onClose: (hitDiceFromMonsterName?: string) => void
+  onClose: (hitDiceFromMonsterName?: string, monsterName?: string) => void
 }
 
 const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
@@ -48,7 +48,7 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
         <div className="main-layout-content mt-12">
           <div className="bg-white p-4">
             <SearchMonstersCombobox
-              onHitDiceObtained={(hitDice) => onClose(hitDice)}
+              onHitDiceObtained={({ hitDice, monsterName}: { hitDice: string; monsterName?: string }) => onClose(hitDice, monsterName)}
               className="w-full"
             />
           </div>
