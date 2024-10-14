@@ -1,6 +1,6 @@
 import DiceIcon, { DieType } from '@/components/DiceIcon'
-import './GetHitPointsButton.css'
 import React from 'react'
+import clsx from "clsx";
 
 type ButtonProps = {
   dieType?: DieType
@@ -16,7 +16,7 @@ const GetHitPointsButton: React.FC<ButtonProps> = ({
   return (
     <button
       id="get-hp-button"
-      className="button"
+      className={clsx('button', 'px-4 py-2 flex gap-2 items-center', 'text-xl md:text-2xl uppercase font-medium', disabled && 'cursor-not-allowed')}
       disabled={disabled}
       onClick={onClick}
     >

@@ -1,6 +1,5 @@
 import React from 'react'
 import clsx from 'clsx'
-import './DiceIcon.css'
 
 export type DieType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20'
 
@@ -24,7 +23,13 @@ const DiceIcon: React.FC<{
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
       data-size={size}
-      className={clsx('dice-icon', className)}
+      className={clsx(
+          'dice-icon',
+          'fill-current',
+          size === 'xs' && 'w-4 h-4 md:w-5 md:h-5',
+          size === 'sm' && 'w-8 h-8 md:w-10 md:h-10',
+          size === 'md' && 'w-12 h-12 md:w-16 md:h-16'
+      )}
     >
       <path d={dieType ? paths[dieType] : paths['dx']} fill="currentColor" />
     </svg>
