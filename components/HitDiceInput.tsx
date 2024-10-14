@@ -106,15 +106,14 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
     if (!hasBeenFocused) setHasBeenFocused(true)
   }
 
-  const inputHeaderStyle = clsx(
-    'flex items-baseline',
-    inputHeaderEnd && 'justify-between',
-    'text-sm',
-  )
-
   return (
     <Field className={clsx('flex flex-col gap-4', className)}>
-      <div className={inputHeaderStyle}>
+      <div className={clsx(
+          'flex items-baseline',
+          inputHeaderEnd && 'justify-between',
+          'px-2',
+          'text-sm',
+      )}>
         <label htmlFor="hit-dice-input">Enter Hit Dice</label>
 
         {inputHeaderEnd}
