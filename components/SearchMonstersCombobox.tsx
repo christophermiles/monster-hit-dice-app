@@ -13,14 +13,19 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
 }) => {
   const [selectedMonster, setSelectedMonster] = useState<Open5EMonster>()
-  const [selectedMonsterHitDice, setSelectedMonsterHitDice] =
-    useState<string>('')
   const [monsters, setMonsters] = useState<Open5EMonster[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [query, setQuery] = useState<string>('')
 
   const filteredMonsters = monsters.slice(0, 5)
 
   const fetchMonsters = async (value: string) => {
-    if (!value) setMonsters([])
+    setQuery(value)
+    if (!value) {
+        setMonsters([])
+        return
+    }
+    setIsSearching(true)
     console.log('Search Open 5E for', value, new Date())
 
     // TODO: Set loading indicator
@@ -31,7 +36,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     } catch (error) {
         console.error('Error fetching data:', error)
     } finally {
-        // TODO: Set loading indicator
+        setIsSearching(false)
     }
   }
 
@@ -63,22 +68,28 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
         }
         className="w-full input input-lg"
       />
-      <Combobox.Options className="my-8">
-        {filteredMonsters.map((monster) => (
-          <Combobox.Option key={monster.name} value={monster} as={'ul'}>
-            {({ focus }) => (
-              <li
-                className={clsx(
-                  'p-2',
-                  focus ? 'bg-black text-white' : 'bg-white text-black',
-                )}
-              >
-                {monster.name} <span className="text-gray-500">({ monster.hit_dice})</span>
-              </li>
-            )}
-          </Combobox.Option>
-        ))}
-      </Combobox.Options>
+      <div className="my-8">
+          { isSearching && filteredMonsters.length < 1 && <p>Searching&hellip;</p> }
+          { filteredMonsters.length > 0 &&
+          <Combobox.Options className="my-8">
+              {filteredMonsters.map((monster) => (
+                  <Combobox.Option key={monster.name} value={monster} as={'ul'}>
+                      {({ focus }) => (
+                          <li
+                              className={clsx(
+                                  'p-2',
+                                  focus ? 'bg-black text-white' : 'bg-white text-black',
+                              )}
+                          >
+                              {monster.name} <span className={focus ? 'text-gray-300' : 'text-gray-500'}>({ monster.hit_dice})</span>
+                          </li>
+                      )}
+                  </Combobox.Option>
+              ))}
+          </Combobox.Options>
+          }
+          { query && filteredMonsters.length < 1 && <p>No monsters match this search</p>}
+      </div>
     </Combobox>
   )
 }
