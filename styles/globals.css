@@ -32,6 +32,22 @@ body {
     text-wrap: balance;
   }
 
+  .heading-1 {
+    @apply text-4xl;
+  }
+
+  .heading-2 {
+    @apply text-3xl;
+  }
+
+  .heading-3 {
+    @apply text-2xl;
+  }
+
+  .heading-4 {
+    @apply text-xl;
+  }
+
   .link {
     @apply underline;
   }

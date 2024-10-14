@@ -19,6 +19,7 @@ export default function HitDiceForm() {
       hitDice: string
       hitPointResults: HitPointResults
       dieType: DieType
+      monsterName?: string
     }[]
   >([])
 
@@ -61,11 +62,12 @@ export default function HitDiceForm() {
 
   const handleGetHitDiceByMonsterNameModalClose = (
     hitDiceFromMonsterName?: string,
+    monsterName?: string
   ) => {
     setShowMonsterSearch(false)
     if (hitDiceFromMonsterName) {
       setHitDice(hitDiceFromMonsterName)
-      handleGetHitPoints(hitDiceFromMonsterName)
+      handleGetHitPoints(hitDiceFromMonsterName, monsterName)
     }
   }
 
@@ -74,7 +76,7 @@ export default function HitDiceForm() {
     handleGetHitPoints(hitDice)
   }
 
-  const handleGetHitPoints = (hitDice?: string) => {
+  const handleGetHitPoints = (hitDice?: string, monsterName?: string) => {
     if (!hitDice) return
     try {
       const result = rollHitDice(hitDice, true)
@@ -86,6 +88,7 @@ export default function HitDiceForm() {
             hitDice: hitDice,
             hitPointResults: result,
             dieType: `d${dieType}` as DieType,
+            monsterName
           })
           .reverse(),
       )
@@ -126,6 +129,7 @@ export default function HitDiceForm() {
               dieType={item.dieType}
               hitDice={item.hitDice}
               hitPointResults={item.hitPointResults}
+              monsterName={item.monsterName}
             />
           ))
         )}
