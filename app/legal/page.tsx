@@ -1,4 +1,5 @@
 import DiceIcon, { DieType } from '@/components/DiceIcon'
+import { EndOfPageHomeLink } from '@/components/EndOfPageHomeLink'
 
 type IconCredit = {
   icon?: DieType
@@ -7,52 +8,53 @@ type IconCredit = {
   link: string
 }
 
+const diceIconsCredits: IconCredit[] = [
+  {
+    icon: 'd4',
+    name: 'Dice 4 icon',
+    author: 'Skoll',
+    link: 'https://game-icons.net/1x1/skoll/d4.html',
+  },
+  {
+    icon: 'd6',
+    name: 'Perspective dice 6 icon',
+    author: 'Delapouite',
+    link: 'https://game-icons.net/1x1/delapouite/perspective-dice-six.html',
+  },
+  {
+    icon: 'd8',
+    name: 'Dice 8 faces 8 icon',
+    author: 'Delapouite',
+    link: 'https://game-icons.net/1x1/delapouite/dice-eight-faces-eight.html',
+  },
+  {
+    icon: 'd10',
+    name: 'Dice 10 icon',
+    author: 'Skoll',
+    link: 'https://game-icons.net/1x1/skoll/d10.html',
+  },
+  {
+    icon: 'd12',
+    name: 'Dice 12 icon',
+    author: 'Skoll',
+    link: 'https://game-icons.net/1x1/skoll/d12.html',
+  },
+  {
+    icon: 'd20',
+    name: 'Dice 20 faces 20 icon',
+    author: 'Delapouite',
+    link: 'https://game-icons.net/1x1/delapouite/dice-twenty-faces-twenty.html',
+  },
+  {
+    name: 'Perspective dice 6 faces random icon',
+    author: 'Delapouite',
+    link: 'https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html',
+  },
+]
+
 export default function Legal() {
-  const diceIconsCredits: IconCredit[] = [
-    {
-      icon: 'd4',
-      name: 'Dice 4 icon',
-      author: 'Skoll',
-      link: 'https://game-icons.net/1x1/skoll/d4.html',
-    },
-    {
-      icon: 'd6',
-      name: 'Perspective dice 6 icon',
-      author: 'Delapouite',
-      link: 'https://game-icons.net/1x1/delapouite/perspective-dice-six.html',
-    },
-    {
-      icon: 'd8',
-      name: 'Dice 8 faces 8 icon',
-      author: 'Delapouite',
-      link: 'https://game-icons.net/1x1/delapouite/dice-eight-faces-eight.html',
-    },
-    {
-      icon: 'd10',
-      name: 'Dice 10 icon',
-      author: 'Skoll',
-      link: 'https://game-icons.net/1x1/skoll/d10.html',
-    },
-    {
-      icon: 'd12',
-      name: 'Dice 12 icon',
-      author: 'Skoll',
-      link: 'https://game-icons.net/1x1/skoll/d12.html',
-    },
-    {
-      icon: 'd20',
-      name: 'Dice 20 faces 20 icon',
-      author: 'Delapouite',
-      link: 'https://game-icons.net/1x1/delapouite/dice-twenty-faces-twenty.html',
-    },
-    {
-      name: 'Perspective dice 6 faces random icon',
-      author: 'Delapouite',
-      link: 'https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html',
-    },
-  ]
   return (
-    <div className="legal-page flex flex-col gap-16">
+    <div className="legal-page flex flex-col gap-16 leading-relaxed">
       <h1 className="heading-1">Legal information</h1>
 
       <section className="flex flex-col gap-4">
@@ -275,6 +277,8 @@ export default function Legal() {
           ))}
         </ul>
       </section>
+
+      <EndOfPageHomeLink />
     </div>
   )
 }

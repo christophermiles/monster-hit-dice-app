@@ -6,6 +6,7 @@ import purify from 'dompurify'
 import getPluralPhrase from '@/lib/utils/get-plural-phrase'
 import srdMonsterData from '@/data/data-5e-srd-2014'
 import Fuse from 'fuse.js'
+import Link from 'next/link'
 
 interface MonsterForDisplay extends Monster {
   nameForDisplay: string
@@ -147,26 +148,15 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     <div className={clsx(className, 'flex flex-col gap-8')}>
       <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
         <div className="flex-none flex flex-col gap-2 text-sm">
-          <div className="flex flex-col gap-4">
-            <Combobox.Label>
-              Search for monsters from the Wizards of the Coast&trade; 5th
-              Edition (2014) SRD by default, or check the{' '}
-              <strong className="font-semibold">3rd Party OGL</strong> box to
-              search OGL content from Open5e, Kobold&nbsp;Press&trade;,
-              EN&nbsp;Publishing&trade; and
-              Green&nbsp;Ronin&nbsp;Publishing&trade;
-            </Combobox.Label>
-
-            <label className="flex items-center justify-end gap-2">
-              <input
-                type="checkbox"
-                checked={useExtendedSearch}
-                onChange={() => setUseExtendedSearch(!useExtendedSearch)}
-                className="w-4 h-4"
-              />
-              <span>3rd Party OGL</span>
-            </label>
-          </div>
+          <label className="px-2 flex items-center justify-end gap-2">
+            <input
+              type="checkbox"
+              checked={useExtendedSearch}
+              onChange={() => setUseExtendedSearch(!useExtendedSearch)}
+              className="w-4 h-4"
+            />
+            <span>3rd Party OGL</span>
+          </label>
 
           <Combobox.Input
             value={comboboxValue}
@@ -176,10 +166,10 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
             displayValue={() => comboboxValue}
             autoFocus={true}
             placeholder="eg. Goblin"
-            className="w-full input-xl"
+            className="w-full input-lg"
           />
 
-          {comboboxValue &&
+          {comboboxValue ? (
             (isSearchingOpen5eContent || monsterResultsList.length > 0) && (
               <p className="px-2 flex items-baseline justify-between gap-8 text-sm text-neutral-500">
                 <span>
@@ -194,7 +184,37 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                   <span>Searching OGL content&hellip;</span>
                 )}
               </p>
-            )}
+            )
+          ) : (
+            <Combobox.Label as="div" className="mt-4 flex flex-col gap-2">
+              <p>
+                By default, this form searches for monsters from the Wizards of
+                the Coast 5th Edition (2014) SRD.
+              </p>
+              <p>
+                You can also check the{' '}
+                <strong className="font-semibold">3rd Party OGL</strong> box to
+                include Open Gaming License content from Open5e,
+                Kobold&nbsp;Press, EN&nbsp;Publishing and
+                Green&nbsp;Ronin&nbsp;Publishing, courtesy of the{' '}
+                <a
+                  href="https://open5e.com/api-docs"
+                  target="_blank"
+                  rel="nofollow"
+                  className="link"
+                >
+                  Open 5E API
+                </a>
+              </p>
+              <p>
+                See{' '}
+                <Link href="/legal" className="link">
+                  this page
+                </Link>{' '}
+                for more information about the Open Gaming License.
+              </p>
+            </Combobox.Label>
+          )}
         </div>
 
         {monsterResultsList.length > 0 ? (

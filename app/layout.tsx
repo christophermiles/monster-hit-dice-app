@@ -47,12 +47,12 @@ export default function RootLayout({
                 <Link href="/about" className="link">
                   What is this?
                 </Link>
+                <a href="/code" className="link">
+                  Code
+                </a>
                 <Link href="/legal" className="link">
                   Legal
                 </Link>
-                <a href="https://api.hitdice.app" className="link">
-                  API
-                </a>
               </div>
               <p className="text-xs text-neutral-500">
                 Made in <span className="text-lg">🇦🇺</span> by{' '}

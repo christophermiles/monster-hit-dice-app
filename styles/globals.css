@@ -63,12 +63,13 @@ body {
   .input-lg {
     @apply input;
     @apply text-2xl md:text-3xl;
-    @apply p-2;
+    @apply px-2 py-3;
     border-width: 3px;
   }
 
   .input-xl {
     @apply input-lg;
+    @apply py-4;
     @apply text-4xl md:text-5xl;
   }
 

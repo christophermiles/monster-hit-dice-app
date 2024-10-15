@@ -45,7 +45,7 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
                 hitDice: string
                 monsterName?: string
               }) => onClose(hitDice, monsterName)}
-              className="bg-white pt-6 px-4 pb-12 max-h-full w-full"
+              className="bg-white pt-6 px-4 pb-8 max-h-full w-full"
             />
           </DialogPanel>
         </div>
