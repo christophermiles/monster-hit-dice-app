@@ -263,12 +263,12 @@ export default function Legal() {
 
         <ul className="flex flex-col justify-start gap-2">
           {diceIconsCredits.map((credit) => (
-            <li key={credit.icon} className="flex items-center gap-2">
+            <li key={credit.icon} className="inline-flex items-center gap-2">
               <span className="flex-none">
                 <DiceIcon dieType={credit.icon} size="sm" />
               </span>
 
-              <a href={credit.link} className="flex-auto link">
+              <a href={credit.link} className="flex-shrink link">
                 “{credit.name}” by {credit.author}
               </a>
             </li>
