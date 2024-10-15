@@ -29,9 +29,9 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
       {hitPointResults && hitDice && (
         <header>
           <h2 className="flex items-baseline justify-center gap-1 pb-[1ch] text-2xl md:text-3xl text-neutral-500">
-            <span>{hitDice}</span>
+            <span className="flex-none">{hitDice}</span>
             {monsterName && (
-              <small className="overflow-ellipsis text-base md:text-lg">{`(${monsterName})`}</small>
+              <small className="flex-shrink truncate text-base md:text-lg">{`(${monsterName})`}</small>
             )}
           </h2>
         </header>
