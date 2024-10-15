@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import { Monster } from '@/app/api/monsters/types'
 import purify from 'dompurify'
 import getPluralPhrase from '@/app/utils/get-plural-phrase'
-import {parseMaybeAssign} from "sucrase/dist/types/parser/traverser/expression";
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
