@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
 
     const fuse = new Fuse<Monster>(results, {
       keys: ['name'],
+      threshold: 0.25
     })
 
     return NextResponse.json(
