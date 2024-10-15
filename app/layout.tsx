@@ -23,7 +23,7 @@ const font = Font({
     'Consolas', // Windows 7+
     'DejaVu Sans Mono', // Linux
     'Source Code Pro', // Linux
-    'monospace'
+    'monospace',
   ],
 })
 
@@ -36,7 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={clsx('font-mono', 'antialiased')}
+      className={clsx(font.className, 'antialiased')}
     >
       <body>
         <ThemeProvider>

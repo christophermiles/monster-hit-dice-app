@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { Monster } from '@/app/api/monsters/types'
 import purify from 'dompurify'
 import getPluralPhrase from '@/app/utils/get-plural-phrase'
+import srdMonsterData from '@/app/data/data-5e-srd-2014'
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,7 +20,7 @@ interface SearchMonstersComboboxProps
 
 const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
-    className
+  className,
 }) => {
   const [isSearching, setIsSearching] = useState(false)
   const [useExtendedSearch, setUseExtendedSearch] = useState<boolean>(false)
@@ -51,7 +52,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     setIsSearching(true)
 
     const params = new URLSearchParams({
-      name: value
+      name: value,
     })
 
     if (useExtendedSearch) {
@@ -59,9 +60,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     }
 
     try {
-      const res = await fetch(
-        `/api/monsters?${params.toString()}`,
-      )
+      const res = await fetch(`/api/monsters?${params.toString()}`)
       const data: Monster[] = await res.json()
       setMonsters(data)
     } catch (error) {
@@ -82,90 +81,102 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   }
 
   return (
-      <div className={clsx(className, 'flex flex-col gap-8')}>
-        <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
-          <div className="flex-none flex flex-col gap-2 text-sm">
-            <div className="flex flex-col gap-4">
-              <Combobox.Label className="text-xs">
-                Search for monsters from the Wizards of the Coast&trade; 5th Edition (2014) SRD by default, or check the <strong>3rd Party OGL</strong> box to search OGL content from Open5e, Kobold&nbsp;Press&trade;, EN&nbsp;Publishing&trade; and Green&nbsp;Ronin&nbsp;Publishing&trade;
-              </Combobox.Label>
+    <div className={clsx(className, 'flex flex-col gap-8')}>
+      <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
+        <div className="flex-none flex flex-col gap-2 text-sm">
+          <div className="flex flex-col gap-4">
+            <Combobox.Label className="text-xs">
+              Search for monsters from the Wizards of the Coast&trade; 5th
+              Edition (2014) SRD by default, or check the{' '}
+              <strong>3rd Party OGL</strong> box to search OGL content from
+              Open5e, Kobold&nbsp;Press&trade;, EN&nbsp;Publishing&trade; and
+              Green&nbsp;Ronin&nbsp;Publishing&trade;
+            </Combobox.Label>
 
-              <label className="flex items-center justify-end gap-1 text-sm">
-                <input
-                    type="checkbox"
-                    checked={useExtendedSearch}
-                    onChange={() => setUseExtendedSearch(!useExtendedSearch)}
-                />
-                <span>3rd Party OGL</span>
-              </label>
-            </div>
-
-            <Combobox.Input
-                onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    debouncedFetchMonsters(event.target.value)
-                }
-                placeholder="eg. Goblin, Orc, Gelatinous Cube"
-                className="w-full input-lg"
-            />
-
-            {query && (isSearching || filteredMonstersForDisplay.length > 0) && (
-              <p className="text-sm text-neutral-500">
-                {isSearching ? <span>Searching&hellip;</span> : getPluralPhrase(filteredMonstersForDisplay.length, ['results', 'result', 'results'])}
-              </p>
-            )}
+            <label className="flex items-center justify-end gap-1 text-sm">
+              <input
+                type="checkbox"
+                checked={useExtendedSearch}
+                onChange={() => setUseExtendedSearch(!useExtendedSearch)}
+              />
+              <span>3rd Party OGL</span>
+            </label>
           </div>
 
-          {filteredMonstersForDisplay.length > 0 ? (
-              <Combobox.Options className="flex-shrink overflow-y-auto">
-                {filteredMonstersForDisplay.map((monster, index) => (
-                    <Combobox.Option
-                        key={`${index}-${monster.name}`}
-                        value={monster}
-                        as={'ul'}
-                    >
-                      {({focus}) => (
-                          <li
-                              className={clsx(
-                                  'p-2 flex items-baseline justify-between gap-4',
-                                  focus ? 'bg-black text-white' : 'bg-white text-black',
-                              )}
-                          >
-                <span className="flex-none flex items-baseline gap-1">
-                  <span
-                      dangerouslySetInnerHTML={{
-                        __html: monster.nameForDisplay,
-                      }}
-                  />
-                  <span
-                      className={
-                        focus ? 'text-neutral-300' : 'text-neutral-500'
-                      }
-                  >
-                    ({monster.hitDice})
-                  </span>
-                </span>
+          <Combobox.Input
+            onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
+              debouncedFetchMonsters(event.target.value)
+            }
+            placeholder="eg. Goblin, Orc, Gelatinous Cube"
+            className="w-full input-lg"
+          />
 
-                            {monster.documentTitle && (
-                                <span
-                                    className={clsx(
-                                        'flex-shrink truncate text-xs',
-                                        focus ? 'text-neutral-300' : 'text-neutral-500',
-                                    )}
-                                >
-                    {monster.documentTitle}
-                  </span>
-                            )}
-                          </li>
-                          // TODO: Make this its own component?
-                      )}
-                    </Combobox.Option>
-                ))}
-              </Combobox.Options>
-          ) : (
-              query && !isSearching && <p>No monsters match this search</p>
+          {query && (isSearching || filteredMonstersForDisplay.length > 0) && (
+            <p className="text-sm text-neutral-500">
+              {isSearching ? (
+                <span>Searching&hellip;</span>
+              ) : (
+                getPluralPhrase(filteredMonstersForDisplay.length, [
+                  'results',
+                  'result',
+                  'results',
+                ])
+              )}
+            </p>
           )}
-        </Combobox>
-      </div>
+        </div>
+
+        {filteredMonstersForDisplay.length > 0 ? (
+          <Combobox.Options className="flex-shrink overflow-y-auto">
+            {filteredMonstersForDisplay.map((monster, index) => (
+              <Combobox.Option
+                key={`${index}-${monster.name}`}
+                value={monster}
+                as={'ul'}
+              >
+                {({ focus }) => (
+                  <li
+                    className={clsx(
+                      'p-2 flex items-baseline justify-between gap-4',
+                      focus ? 'bg-black text-white' : 'bg-white text-black',
+                    )}
+                  >
+                    <span className="flex-none flex items-baseline gap-1">
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: monster.nameForDisplay,
+                        }}
+                      />
+                      <span
+                        className={
+                          focus ? 'text-neutral-300' : 'text-neutral-500'
+                        }
+                      >
+                        ({monster.hitDice})
+                      </span>
+                    </span>
+
+                    {monster.documentTitle && (
+                      <span
+                        className={clsx(
+                          'flex-shrink truncate text-xs',
+                          focus ? 'text-neutral-300' : 'text-neutral-500',
+                        )}
+                      >
+                        {monster.documentTitle}
+                      </span>
+                    )}
+                  </li>
+                  // TODO: Make this its own component?
+                )}
+              </Combobox.Option>
+            ))}
+          </Combobox.Options>
+        ) : (
+          query && !isSearching && <p>No monsters match this search</p>
+        )}
+      </Combobox>
+    </div>
   )
 }
 

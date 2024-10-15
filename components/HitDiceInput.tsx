@@ -108,12 +108,14 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
 
   return (
     <Field className={clsx('flex flex-col gap-4', className)}>
-      <div className={clsx(
+      <div
+        className={clsx(
           'flex items-baseline',
           inputHeaderEnd && 'justify-between',
           'px-2',
           'text-sm',
-      )}>
+        )}
+      >
         <label htmlFor="hit-dice-input">Enter Hit Dice</label>
 
         {inputHeaderEnd}
