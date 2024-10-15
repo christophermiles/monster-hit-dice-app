@@ -1,4 +1,4 @@
-import { Monster } from '@/app/api/monsters/types'
+import { Monster } from '@/app/api/open5e/monsters/types'
 
 const monsters: Monster[] = [
   { name: 'Aboleth', hitDice: '18d10+36' },
