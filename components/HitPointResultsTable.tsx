@@ -1,7 +1,5 @@
 import React from 'react'
 import type { HitPointResults } from 'roll-hit-dice/dist/types'
-import ClipboardIcon from '@/components/ClipboardIcon'
-import DeleteIcon from '@/components/DeleteIcon'
 import clsx from 'clsx'
 
 interface HitPointResultsTableProps {
@@ -78,20 +76,6 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
           </tr>
         </tfoot>
       </table>
-
-      {hitPointResults && (
-        <footer className="mt-4 flex justify-between items-baseline">
-          <button className="text-button text-xs flex items-center gap-1">
-            <ClipboardIcon className="w-4 h-4" />
-            <span>Copy</span>
-          </button>
-
-          <button className="text-button text-xs flex items-center gap-1">
-            <DeleteIcon className="w-4 h-4" />
-            <span>Delete</span>
-          </button>
-        </footer>
-      )}
     </div>
   )
 }
