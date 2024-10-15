@@ -12,6 +12,8 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const name = searchParams.get('name')
 
+  console.log('GET', request, name)
+
   if (!name) {
     return NextResponse.json(
       { error: 'name parameter is required' },
@@ -39,7 +41,7 @@ export async function GET(request: NextRequest) {
         .map((open5eMonster: Open5EMonster): Monster => {
           return {
             name: open5eMonster.name,
-            hitDice: open5eMonster.hit_dice,
+            hitDice: open5eMonster.hit_dice.trim().replace(/\s/g, ''),
             documentTitle: open5eMonster.document__title,
           }
         }),

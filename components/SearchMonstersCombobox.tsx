@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Combobox } from '@headlessui/react'
-import debounce from 'lodash.debounce'
 import clsx from 'clsx'
 import { Monster } from '@/app/api/open5e/monsters/types'
 import purify from 'dompurify'
-import getPluralPhrase from '@/app/utils/get-plural-phrase'
-import srdMonsterData from '@/app/data/data-5e-srd-2014'
-import getPluralPhrase from '@/utils/get-plural-phrase'
+import getPluralPhrase from '@/lib/utils/get-plural-phrase'
 import srdMonsterData from '@/data/data-5e-srd-2014'
+import Fuse from 'fuse.js'
+
+interface MonsterForDisplay extends Monster {
+  nameForDisplay: string
+}
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,67 +22,129 @@ interface SearchMonstersComboboxProps
   }) => void
 }
 
+const fuse = new Fuse(srdMonsterData, {
+  keys: ['name'],
+  threshold: 0.05,
+})
+
+let timeoutId: NodeJS.Timeout
+
 const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
   className,
 }) => {
-  const [isSearching, setIsSearching] = useState(false)
   const [useExtendedSearch, setUseExtendedSearch] = useState<boolean>(false)
-  const [query, setQuery] = useState<string>('')
-  const [selectedMonster, setSelectedMonster] = useState<Monster>()
-  const [monsters, setMonsters] = useState<Monster[]>([])
+  const [comboboxValue, setComboboxValue] = useState<string>('')
+  const [isSearchingOpen5eContent, setIsSearchingOpen5eContent] =
+    useState(false)
+  const [selectedMonster, setSelectedMonster] = useState<Monster | null>(null)
+  const [monsterResultsList, setMonsterResultsList] = useState<
+    MonsterForDisplay[]
+  >([])
 
-  const filteredMonstersForDisplay = monsters.slice(0, 20).map((m) => {
-    return {
-      ...m,
-      nameForDisplay: purify
-        .sanitize(m.name)
-        .split('')
-        .map((l) =>
-          query.toLowerCase().includes(l.toLowerCase()) ? `<u>${l}</u>` : l,
+  const resetFuse = useCallback(() => {
+    fuse.setCollection(srdMonsterData)
+  }, [])
+
+  const reset = useCallback(() => {
+    resetFuse()
+    setMonsterResultsList([])
+    setSelectedMonster(null)
+  }, [resetFuse])
+
+  const doFilter = useCallback((monstersToFilter: Monster[], query: string) => {
+    fuse.setCollection(monstersToFilter)
+
+    const filteredMonsters = fuse.search(query).map(
+      ({ item }): MonsterForDisplay => ({
+        ...item,
+        nameForDisplay: purify
+          .sanitize(item.name)
+          .split('')
+          .map((l) =>
+            query.toLowerCase().includes(l.toLowerCase()) ? `<u>${l}</u>` : l,
+          )
+          .join(''),
+      }),
+    )
+
+    setMonsterResultsList(filteredMonsters)
+  }, [])
+
+  const debouncedFetchOpen5eMonsters = useCallback(
+    async (query: string): Promise<Monster[]> => {
+      if (!query) return []
+
+      setIsSearchingOpen5eContent(true)
+
+      const params = new URLSearchParams({
+        name: query,
+      })
+
+      return new Promise((resolve) => {
+        if (timeoutId) clearTimeout(timeoutId)
+
+        timeoutId = setTimeout(async () => {
+          try {
+            const res = await fetch(`/api/open5e/monsters?${params.toString()}`)
+            const data: Monster[] = await res.json()
+            resolve(data)
+          } catch (error) {
+            console.error('Error fetching data:', error)
+            resolve([])
+          } finally {
+            setIsSearchingOpen5eContent(false)
+          }
+        }, 1000)
+      })
+    },
+    [],
+  )
+
+  const handleInput = useCallback(
+    async (newQuery: string) => {
+      console.log('Query', newQuery, new Date())
+
+      setComboboxValue(newQuery)
+
+      if (!newQuery) {
+        reset()
+        return
+      }
+
+      if (useExtendedSearch) {
+        doFilter(srdMonsterData, newQuery)
+        const results = await debouncedFetchOpen5eMonsters(newQuery)
+        console.log('results', results, new Date())
+        doFilter(
+          srdMonsterData
+            .map((m: Monster): Monster => {
+              return {
+                ...m,
+                documentTitle: '5E SRD (2014)',
+              }
+            })
+            .concat(results || []),
+          newQuery,
         )
-        .join(''), // Could instead use https://www.fusejs.io/api/options.html#includematches to get the indices of matching characters
-    }
-  })
+      } else {
+        doFilter(srdMonsterData, newQuery)
+      }
+    },
+    [useExtendedSearch, debouncedFetchOpen5eMonsters, doFilter, reset],
+  )
 
-  const fetchMonsters = async (value: string) => {
-    setQuery(value)
-
-    if (!value) {
-      setMonsters([])
-      return
-    }
-
-    setIsSearching(true)
-
-    const params = new URLSearchParams({
-      name: value,
-    })
-
-    if (useExtendedSearch) {
-      params.append('extendedSearch', 'true')
-    }
-
-    try {
-      const res = await fetch(`/api/monsters?${params.toString()}`)
-      const data: Monster[] = await res.json()
-      setMonsters(data)
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    } finally {
-      setIsSearching(false)
-    }
-  }
-
-  const debouncedFetchMonsters = debounce(fetchMonsters, 500)
-
-  const handleMonsterSelected = (monster: Monster) => {
-    setSelectedMonster(monster)
-    if (monster) {
-      const { hitDice, name: monsterName } = monster
-      onHitDiceObtained({ hitDice, monsterName })
-    }
-  }
+  const handleMonsterSelected = useCallback(
+    (monster: Monster) => {
+      setSelectedMonster(monster)
+      if (monster) {
+        const { hitDice, name: monsterName } = monster
+        onHitDiceObtained({ hitDice, monsterName })
+        resetFuse()
+      }
+    },
+    [onHitDiceObtained, resetFuse],
+  )
 
   return (
     <div className={clsx(className, 'flex flex-col gap-8')}>
@@ -90,8 +154,9 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
             <Combobox.Label className="text-xs">
               Search for monsters from the Wizards of the Coast&trade; 5th
               Edition (2014) SRD by default, or check the{' '}
-              <strong>3rd Party OGL</strong> box to search OGL content from
-              Open5e, Kobold&nbsp;Press&trade;, EN&nbsp;Publishing&trade; and
+              <strong className="font-semibold">3rd Party OGL</strong> box to
+              search OGL content from Open5e, Kobold&nbsp;Press&trade;,
+              EN&nbsp;Publishing&trade; and
               Green&nbsp;Ronin&nbsp;Publishing&trade;
             </Combobox.Label>
 
@@ -106,31 +171,37 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
           </div>
 
           <Combobox.Input
-            onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
-              debouncedFetchMonsters(event.target.value)
+            value={comboboxValue}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleInput(event.target.value)
             }
-            placeholder="eg. Goblin, Orc, Gelatinous Cube"
+            displayValue={() => comboboxValue}
+            autoFocus={true}
+            placeholder="eg. Goblin, Orc, Tarrasque"
             className="w-full input-lg"
           />
 
-          {query && (isSearching || filteredMonstersForDisplay.length > 0) && (
-            <p className="text-sm text-neutral-500">
-              {isSearching ? (
-                <span>Searching&hellip;</span>
-              ) : (
-                getPluralPhrase(filteredMonstersForDisplay.length, [
-                  'results',
-                  'result',
-                  'results',
-                ])
-              )}
-            </p>
-          )}
+          {comboboxValue &&
+            (isSearchingOpen5eContent || monsterResultsList.length > 0) && (
+              <p className="px-2 flex items-baseline justify-between gap-8 text-sm text-neutral-500">
+                <span>
+                  {getPluralPhrase(monsterResultsList.length, [
+                    'results',
+                    'result',
+                    'results',
+                  ])}
+                </span>
+
+                {isSearchingOpen5eContent && (
+                  <span>Searching OGL content&hellip;</span>
+                )}
+              </p>
+            )}
         </div>
 
-        {filteredMonstersForDisplay.length > 0 ? (
+        {monsterResultsList.length > 0 ? (
           <Combobox.Options className="flex-shrink overflow-y-auto">
-            {filteredMonstersForDisplay.map((monster, index) => (
+            {monsterResultsList.map((monster, index) => (
               <Combobox.Option
                 key={`${index}-${monster.name}`}
                 value={monster}
@@ -175,7 +246,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
             ))}
           </Combobox.Options>
         ) : (
-          query && !isSearching && <p>No monsters match this search</p>
+          comboboxValue &&
+          !isSearchingOpen5eContent && <p>No monsters match this search</p>
         )}
       </Combobox>
     </div>
