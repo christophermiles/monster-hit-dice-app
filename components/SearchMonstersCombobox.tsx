@@ -6,6 +6,8 @@ import { Monster } from '@/app/api/open5e/monsters/types'
 import purify from 'dompurify'
 import getPluralPhrase from '@/app/utils/get-plural-phrase'
 import srdMonsterData from '@/app/data/data-5e-srd-2014'
+import getPluralPhrase from '@/utils/get-plural-phrase'
+import srdMonsterData from '@/data/data-5e-srd-2014'
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
