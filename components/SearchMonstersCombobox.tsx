@@ -84,11 +84,13 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   return (
       <div className={clsx(className, 'flex flex-col gap-8')}>
         <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
-          <div className="flex-none">
-            <div className="mb-2 px-2 flex items-baseline justify-between gap-4 text-sm">
-              <Combobox.Label>Search SRD monsters</Combobox.Label>
+          <div className="flex-none flex flex-col gap-2 text-sm">
+            <div className="flex flex-col gap-4">
+              <Combobox.Label className="text-xs">
+                Search for monsters from the Wizards of the Coast&trade; 5th Edition (2014) SRD by default, or check the <strong>3rd Party OGL</strong> box to search OGL content from Open5e, Kobold&nbsp;Press&trade;, EN&nbsp;Publishing&trade; and Green&nbsp;Ronin&nbsp;Publishing&trade;
+              </Combobox.Label>
 
-              <label className="flex items-center gap-1 text-xs">
+              <label className="flex items-center justify-end gap-1 text-sm">
                 <input
                     type="checkbox"
                     checked={useExtendedSearch}
@@ -102,67 +104,66 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                 onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
                     debouncedFetchMonsters(event.target.value)
                 }
-                className="w-full input input-lg"
+                placeholder="eg. Goblin, Orc, Gelatinous Cube"
+                className="w-full input-lg"
             />
 
             {query && (isSearching || filteredMonstersForDisplay.length > 0) && (
-              <p className="p-2 text-sm text-neutral-500">
+              <p className="text-sm text-neutral-500">
                 {isSearching ? <span>Searching&hellip;</span> : getPluralPhrase(filteredMonstersForDisplay.length, ['results', 'result', 'results'])}
               </p>
             )}
           </div>
 
-          <div className="flex-shrink overflow-y-auto">
-            {filteredMonstersForDisplay.length > 0 ? (
-                <Combobox.Options>
-                  {filteredMonstersForDisplay.map((monster, index) => (
-                      <Combobox.Option
-                          key={`${index}-${monster.name}`}
-                          value={monster}
-                          as={'ul'}
-                      >
-                        {({focus}) => (
-                            <li
-                                className={clsx(
-                                    'p-2 flex items-baseline justify-between gap-4',
-                                    focus ? 'bg-black text-white' : 'bg-white text-black',
-                                )}
-                            >
-                  <span className="flex-none flex items-baseline gap-1">
-                    <span
-                        dangerouslySetInnerHTML={{
-                          __html: monster.nameForDisplay,
-                        }}
-                    />
-                    <span
-                        className={
-                          focus ? 'text-neutral-300' : 'text-neutral-500'
-                        }
+          {filteredMonstersForDisplay.length > 0 ? (
+              <Combobox.Options className="flex-shrink overflow-y-auto">
+                {filteredMonstersForDisplay.map((monster, index) => (
+                    <Combobox.Option
+                        key={`${index}-${monster.name}`}
+                        value={monster}
+                        as={'ul'}
                     >
-                      ({monster.hitDice})
-                    </span>
-                  </span>
-
-                              {monster.documentTitle && (
-                                  <span
-                                      className={clsx(
-                                          'flex-shrink truncate text-xs',
-                                          focus ? 'text-neutral-300' : 'text-neutral-500',
-                                      )}
-                                  >
-                      {monster.documentTitle}
-                    </span>
+                      {({focus}) => (
+                          <li
+                              className={clsx(
+                                  'p-2 flex items-baseline justify-between gap-4',
+                                  focus ? 'bg-black text-white' : 'bg-white text-black',
                               )}
-                            </li>
-                            // TODO: Make this its own component?
-                        )}
-                      </Combobox.Option>
-                  ))}
-                </Combobox.Options>
-            ) : (
-                query && !isSearching && <p className="px-2">No monsters match this search</p>
-            )}
-          </div>
+                          >
+                <span className="flex-none flex items-baseline gap-1">
+                  <span
+                      dangerouslySetInnerHTML={{
+                        __html: monster.nameForDisplay,
+                      }}
+                  />
+                  <span
+                      className={
+                        focus ? 'text-neutral-300' : 'text-neutral-500'
+                      }
+                  >
+                    ({monster.hitDice})
+                  </span>
+                </span>
+
+                            {monster.documentTitle && (
+                                <span
+                                    className={clsx(
+                                        'flex-shrink truncate text-xs',
+                                        focus ? 'text-neutral-300' : 'text-neutral-500',
+                                    )}
+                                >
+                    {monster.documentTitle}
+                  </span>
+                            )}
+                          </li>
+                          // TODO: Make this its own component?
+                      )}
+                    </Combobox.Option>
+                ))}
+              </Combobox.Options>
+          ) : (
+              query && !isSearching && <p>No monsters match this search</p>
+          )}
         </Combobox>
       </div>
   )

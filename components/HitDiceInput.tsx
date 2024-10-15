@@ -128,7 +128,7 @@ const HitDiceInput: React.FC<HitDiceInputProps> = ({
         onInput={handleInput}
         onFocus={handleFocus}
         aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
-        className={clsx('input-lg')}
+        className="input-xl"
       />
     </Field>
   )
