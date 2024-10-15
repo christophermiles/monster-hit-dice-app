@@ -41,7 +41,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <div className="main-layout min-h-screen grid-rows-[1fr_auto] pt-8">
-            <main className="main-layout-content px-4">{children}</main>
+            <main className="main-layout-content px-4 pb-16">{children}</main>
             <footer className="main-layout-content py-8 flex items-baseline justify-center flex-wrap gap-8">
               <div className="flex items-baseline gap-8 text-xs">
                 <Link href="/about" className="link">
