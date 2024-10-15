@@ -12,6 +12,19 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      fontFamily: {
+        mono: [
+          'ui-monospace',
+          'SFMono-Regular', // macOS 10.15+, iOS 13.3+
+          'Menlo', // macOS
+          'Droid Sans Mono', // Android
+          'Cascadia Code', // Windows 11+
+          'Consolas', // Windows 7+
+          'DejaVu Sans Mono', // Linux
+          'Source Code Pro', // Linux
+          'monospace'
+        ],
+      },
     },
   },
   plugins: [],

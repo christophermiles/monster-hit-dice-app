@@ -16,12 +16,14 @@ const font = Font({
   subsets: ['latin'],
   fallback: [
     'ui-monospace',
-    'Cascadia Code',
-    'Source Code Pro',
-    'Menlo',
-    'Consolas',
-    'DejaVu Sans Mono',
-    'monospace',
+    'SFMono-Regular', // macOS 10.15+, iOS 13.3+
+    'Menlo', // macOS
+    'Droid Sans Mono', // Android
+    'Cascadia Code', // Windows 11+
+    'Consolas', // Windows 7+
+    'DejaVu Sans Mono', // Linux
+    'Source Code Pro', // Linux
+    'monospace'
   ],
 })
 
@@ -34,7 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={clsx(font.className, 'antialiased')}
+      className={clsx('font-mono', 'antialiased')}
     >
       <body>
         <ThemeProvider>
