@@ -48,7 +48,7 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
         <div className="main-layout-content max-h-screen py-12">
           <SearchMonstersCombobox
             onHitDiceObtained={({ hitDice, monsterName}: { hitDice: string; monsterName?: string }) => onClose(hitDice, monsterName)}
-            className="bg-white p-4 max-h-full w-full"
+            className="bg-white pt-6 px-4 pb-12 max-h-full w-full"
           />
         </div>
       </div>
