@@ -103,8 +103,6 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
   const handleInput = useCallback(
     async (newQuery: string) => {
-      console.log('Query', newQuery, new Date())
-
       setComboboxValue(newQuery)
 
       if (!newQuery) {
@@ -115,7 +113,6 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       if (useExtendedSearch) {
         doFilter(srdMonsterData, newQuery)
         const results = await debouncedFetchOpen5eMonsters(newQuery)
-        console.log('results', results, new Date())
         doFilter(
           srdMonsterData
             .map((m: Monster): Monster => {
@@ -151,7 +148,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
         <div className="flex-none flex flex-col gap-2 text-sm">
           <div className="flex flex-col gap-4">
-            <Combobox.Label className="text-xs">
+            <Combobox.Label className="text-sm">
               Search for monsters from the Wizards of the Coast&trade; 5th
               Edition (2014) SRD by default, or check the{' '}
               <strong className="font-semibold">3rd Party OGL</strong> box to
@@ -160,11 +157,12 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
               Green&nbsp;Ronin&nbsp;Publishing&trade;
             </Combobox.Label>
 
-            <label className="flex items-center justify-end gap-1 text-sm">
+            <label className="flex items-center justify-end gap-2 text-lg">
               <input
                 type="checkbox"
                 checked={useExtendedSearch}
                 onChange={() => setUseExtendedSearch(!useExtendedSearch)}
+                className="w-4 h-4"
               />
               <span>3rd Party OGL</span>
             </label>

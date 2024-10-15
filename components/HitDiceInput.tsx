@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react'
 import { HIT_DICE_BY_MONSTER_EXAMPLES, HIT_DICE_REGEX } from '@/lib/constants'
-import { Field, FieldProps, Input } from '@headlessui/react'
 import clsx from 'clsx'
+import { Field, FieldProps, Input } from '@headlessui/react'
 
 interface HitDiceInputProps extends FieldProps {
   value?: string
@@ -9,131 +9,133 @@ interface HitDiceInputProps extends FieldProps {
   inputHeaderEnd?: React.ReactNode
 }
 
-const HitDiceInput: React.FC<HitDiceInputProps> = ({
-  value,
-  onInput,
-  inputHeaderEnd,
-  className,
-}) => {
-  const placeholderExamples = Object.values(HIT_DICE_BY_MONSTER_EXAMPLES)
-  const [placeholderExample, setPlaceholderExample] = useState('')
-  const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
-  const [isTypingPaused, setIsTypingPaused] = useState(false)
-  const [hasBeenFocused, setHasBeenFocused] = useState(false)
+const placeholderExamples = Object.values(HIT_DICE_BY_MONSTER_EXAMPLES)
 
-  useEffect(() => {
-    if (hasBeenFocused) return // Stop all animated typing after the first focus
+const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
+  function HitDiceInput(
+    { value, onInput, inputHeaderEnd, className },
+    ref: ForwardedRef<HTMLInputElement>,
+  ) {
+    const [placeholderExample, setPlaceholderExample] = useState('')
+    const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
+    const [isTypingPaused, setIsTypingPaused] = useState(false)
+    const [hasBeenFocused, setHasBeenFocused] = useState(false)
 
-    let charIndex = 0
-    let currentPlaceholder = ''
-    let timeoutId: NodeJS.Timeout
-    let blinkTimeoutId: NodeJS.Timeout
+    useEffect(() => {
+      if (hasBeenFocused) return // Stop all animated typing after the first focus
 
-    const displayNextPlaceholder = (nextExample: string) => {
-      charIndex = 0
-      currentPlaceholder = ''
-      let isBlinking = false
+      let charIndex = 0
+      let currentPlaceholder = ''
+      let timeoutId: NodeJS.Timeout
+      let blinkTimeoutId: NodeJS.Timeout
 
-      const typeNextLetter = () => {
-        if (isTypingPaused) return
+      const displayNextPlaceholder = (nextExample: string) => {
+        charIndex = 0
+        currentPlaceholder = ''
+        let isBlinking = false
 
-        if (charIndex < nextExample.length) {
-          currentPlaceholder += nextExample[charIndex]
-          setPlaceholderExample(`${currentPlaceholder}|`)
-          charIndex++
-          timeoutId = setTimeout(typeNextLetter, 75)
-        } else {
-          startBlinkingCursor()
-        }
-      }
-
-      const startBlinkingCursor = () => {
-        blinkTimeoutId = setInterval(() => {
+        const typeNextLetter = () => {
           if (isTypingPaused) return
 
-          if (isBlinking) {
+          if (charIndex < nextExample.length) {
+            currentPlaceholder += nextExample[charIndex]
             setPlaceholderExample(`${currentPlaceholder}|`)
+            charIndex++
+            timeoutId = setTimeout(typeNextLetter, 75)
           } else {
-            setPlaceholderExample(currentPlaceholder)
+            startBlinkingCursor()
           }
-          isBlinking = !isBlinking
-        }, 500)
+        }
+
+        const startBlinkingCursor = () => {
+          blinkTimeoutId = setInterval(() => {
+            if (isTypingPaused) return
+
+            if (isBlinking) {
+              setPlaceholderExample(`${currentPlaceholder}|`)
+            } else {
+              setPlaceholderExample(currentPlaceholder)
+            }
+            isBlinking = !isBlinking
+          }, 500)
+        }
+
+        const clearIntervals = () => {
+          clearTimeout(timeoutId)
+          clearInterval(blinkTimeoutId)
+        }
+
+        typeNextLetter()
+
+        return clearIntervals
       }
 
-      const clearIntervals = () => {
+      const rotatePlaceholders = () => {
+        const nextIndex =
+          (currentPlaceholderIndex + 1) % placeholderExamples.length
+        setCurrentPlaceholderIndex(nextIndex)
+      }
+
+      displayNextPlaceholder(placeholderExamples[currentPlaceholderIndex])
+
+      const rotatePlaceholdersInterval = setInterval(() => {
+        if (isTypingPaused) return
+        rotatePlaceholders()
+      }, 4500)
+
+      return () => {
+        clearInterval(rotatePlaceholdersInterval)
         clearTimeout(timeoutId)
         clearInterval(blinkTimeoutId)
       }
+    }, [currentPlaceholderIndex, isTypingPaused, hasBeenFocused])
 
-      typeNextLetter()
-
-      return clearIntervals
+    const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = event.target.value
+      if (onInput) onInput(event)
+      if (newValue !== '') {
+        setIsTypingPaused(true)
+      } else if (!hasBeenFocused) {
+        setIsTypingPaused(false)
+      }
     }
 
-    const rotatePlaceholders = () => {
-      const nextIndex =
-        (currentPlaceholderIndex + 1) % placeholderExamples.length
-      setCurrentPlaceholderIndex(nextIndex)
-    }
-
-    displayNextPlaceholder(placeholderExamples[currentPlaceholderIndex])
-
-    const rotatePlaceholdersInterval = setInterval(() => {
-      if (isTypingPaused) return
-      rotatePlaceholders()
-    }, 4500)
-
-    return () => {
-      clearInterval(rotatePlaceholdersInterval)
-      clearTimeout(timeoutId)
-      clearInterval(blinkTimeoutId)
-    }
-  }, [currentPlaceholderIndex, isTypingPaused, hasBeenFocused])
-
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value
-    if (onInput) onInput(event)
-    if (newValue !== '') {
+    const handleFocus = () => {
       setIsTypingPaused(true)
-    } else if (!hasBeenFocused) {
-      setIsTypingPaused(false)
+      setPlaceholderExample((current) => current.replace('|', '')) // Remove the fake cursor
+      if (!hasBeenFocused) setHasBeenFocused(true)
     }
-  }
 
-  const handleFocus = () => {
-    setIsTypingPaused(true)
-    setPlaceholderExample((current) => current.replace('|', '')) // Remove the fake cursor
-    if (!hasBeenFocused) setHasBeenFocused(true)
-  }
+    return (
+      <Field className={clsx('flex flex-col gap-4', className)}>
+        <div
+          className={clsx(
+            'flex items-baseline',
+            inputHeaderEnd && 'justify-between',
+            'px-2',
+            'text-sm',
+          )}
+        >
+          <label htmlFor="hit-dice-input">Enter Hit Dice</label>
 
-  return (
-    <Field className={clsx('flex flex-col gap-4', className)}>
-      <div
-        className={clsx(
-          'flex items-baseline',
-          inputHeaderEnd && 'justify-between',
-          'px-2',
-          'text-sm',
-        )}
-      >
-        <label htmlFor="hit-dice-input">Enter Hit Dice</label>
+          {inputHeaderEnd}
+        </div>
 
-        {inputHeaderEnd}
-      </div>
-
-      <Input
-        id="hit-dice-input"
-        type="text"
-        placeholder={placeholderExample}
-        pattern={HIT_DICE_REGEX.source}
-        value={value}
-        onInput={handleInput}
-        onFocus={handleFocus}
-        aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
-        className="input-xl"
-      />
-    </Field>
-  )
-}
+        <Input
+          ref={ref}
+          id="hit-dice-input"
+          type="text"
+          placeholder={placeholderExample}
+          pattern={HIT_DICE_REGEX.source}
+          value={value}
+          onInput={handleInput}
+          onFocus={handleFocus}
+          aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
+          className="input-xl"
+        />
+      </Field>
+    )
+  },
+)
 
 export default HitDiceInput

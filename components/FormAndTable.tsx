@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
 import LaunchSearchMonstersButton from '@/components/LaunchSearchMonstersButton'
@@ -22,6 +22,8 @@ export default function HitDiceForm() {
       monsterName?: string
     }[]
   >([])
+
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -66,14 +68,21 @@ export default function HitDiceForm() {
   ) => {
     setShowMonsterSearch(false)
     if (hitDiceFromMonsterName) {
-      setHitDice(hitDiceFromMonsterName)
       handleGetHitPoints(hitDiceFromMonsterName, monsterName)
+      setHitDice('')
+      if (inputRef.current) {
+        inputRef.current.focus()
+      }
     }
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     handleGetHitPoints(hitDice)
+    setHitDice('')
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
   }
 
   const handleGetHitPoints = (hitDice?: string, monsterName?: string) => {
@@ -105,18 +114,21 @@ export default function HitDiceForm() {
           className="flex flex-col items-center justify-center gap-8 w-full"
         >
           <HitDiceInput
+            ref={inputRef}
             value={hitDice}
             onInput={handleHitDiceInput}
             className="w-full"
             inputHeaderEnd={
-              <LaunchSearchMonstersButton onClick={handleLaunchSearchMonstersButtonClick} />
+              <LaunchSearchMonstersButton
+                onClick={handleLaunchSearchMonstersButtonClick}
+              />
             }
           />
 
           <GetHitPointsButton
             dieType={dieType}
             disabled={!hitDice}
-            onClick={handleGetHitPoints}
+            type="submit"
           />
         </form>
 
