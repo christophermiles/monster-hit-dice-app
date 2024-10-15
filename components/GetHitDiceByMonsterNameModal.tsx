@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import SearchMonstersCombobox from '@/components/SearchMonstersCombobox'
 
 interface GetHitDiceByMonsterNameModalProps
@@ -29,30 +30,27 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
 
   if (!isOpen) return null
 
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    onClose()
-  }
-
   return (
-    <div
-      className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-85 flex flex-col justify-start"
-      onClick={handleBackdropClick}
-    >
-      <div
-        className="main-layout"
-        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-          e.stopPropagation() // Prevent input clicks from closing the backdrop
-        }}
-      >
-        <div className="main-layout-content max-h-screen py-12">
-          <SearchMonstersCombobox
-            onHitDiceObtained={({ hitDice, monsterName}: { hitDice: string; monsterName?: string }) => onClose(hitDice, monsterName)}
-            className="bg-white pt-6 px-4 pb-12 max-h-full w-full"
-          />
+    <Dialog open={isOpen} onClose={() => onClose()} className="relative z-50">
+      <DialogBackdrop className="fixed inset-0 bg-black/80 backdrop-blur-sm" />
+
+      <div className="fixed inset-0 flex flex-col items-center justify-start">
+        <div className="main-layout">
+          <DialogPanel className="main-layout-content max-h-screen py-12">
+            <SearchMonstersCombobox
+              onHitDiceObtained={({
+                hitDice,
+                monsterName,
+              }: {
+                hitDice: string
+                monsterName?: string
+              }) => onClose(hitDice, monsterName)}
+              className="bg-white pt-6 px-4 pb-12 max-h-full w-full"
+            />
+          </DialogPanel>
         </div>
       </div>
-    </div>
+    </Dialog>
   )
 }
 
