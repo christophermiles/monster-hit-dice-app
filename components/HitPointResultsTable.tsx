@@ -28,17 +28,19 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
     <div className="hit-point-results-table">
       {hitPointResults && hitDice && (
         <header>
-          <h2 className="flex items-baseline justify-center gap-1 pb-[1ch] text-2xl md:text-3xl text-neutral-500">
-            <span className="flex-none">{hitDice}</span>
+          <h2 className="flex items-baseline justify-center gap-1 pb-[1ch]">
+            <span className="flex-none text-3xl md:text-4xl lg:text-5xl">
+              {hitDice}
+            </span>
             {monsterName && (
-              <small className="flex-shrink truncate text-base md:text-lg">{`(${monsterName})`}</small>
+              <small className="flex-shrink truncate text-lg md:text-xl">{`(${monsterName})`}</small>
             )}
           </h2>
         </header>
       )}
 
       <table className="w-full">
-        <tbody className="text-2xl md:text-4xl lg:text-5xl">
+        <tbody className="text-3xl md:text-4xl lg:text-5xl">
           <tr>
             {Object.keys(valueTexts).map((key, index, array) => (
               <td

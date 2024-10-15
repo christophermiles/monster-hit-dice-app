@@ -52,8 +52,6 @@ export default function HitDiceForm() {
   }
 
   useEffect(() => {
-    if (!hitDice) return
-
     try {
       const dieTypeNumber = parseHitDice(hitDice, true).dieType
       setDieType(`d${dieTypeNumber}` as DieType)

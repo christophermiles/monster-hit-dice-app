@@ -148,7 +148,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       <Combobox value={selectedMonster} onChange={handleMonsterSelected}>
         <div className="flex-none flex flex-col gap-2 text-sm">
           <div className="flex flex-col gap-4">
-            <Combobox.Label className="text-sm">
+            <Combobox.Label>
               Search for monsters from the Wizards of the Coast&trade; 5th
               Edition (2014) SRD by default, or check the{' '}
               <strong className="font-semibold">3rd Party OGL</strong> box to
@@ -157,7 +157,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
               Green&nbsp;Ronin&nbsp;Publishing&trade;
             </Combobox.Label>
 
-            <label className="flex items-center justify-end gap-2 text-lg">
+            <label className="flex items-center justify-end gap-2">
               <input
                 type="checkbox"
                 checked={useExtendedSearch}
@@ -175,8 +175,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
             }
             displayValue={() => comboboxValue}
             autoFocus={true}
-            placeholder="eg. Goblin, Orc, Tarrasque"
-            className="w-full input-lg"
+            placeholder="eg. Goblin"
+            className="w-full input-xl"
           />
 
           {comboboxValue &&

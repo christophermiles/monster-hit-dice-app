@@ -38,7 +38,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={clsx(font.className, 'antialiased')}
     >
-      <body>
+      <body className="bg-neutral-50">
         <ThemeProvider>
           <div className="main-layout min-h-screen grid-rows-[1fr_auto] pt-8">
             <main className="main-layout-content px-4 pb-16">{children}</main>
