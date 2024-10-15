@@ -4,6 +4,8 @@ import debounce from 'lodash.debounce'
 import clsx from 'clsx'
 import { Monster } from '@/app/api/monsters/types'
 import purify from 'dompurify'
+import getPluralPhrase from '@/app/utils/get-plural-phrase'
+import {parseMaybeAssign} from "sucrase/dist/types/parser/traverser/expression";
 
 interface SearchMonstersComboboxProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,17 +43,25 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
   const fetchMonsters = async (value: string) => {
     setQuery(value)
+
     if (!value) {
       setMonsters([])
       return
     }
-    setIsSearching(true)
-    console.log('Search Open 5E for', value, new Date())
 
-    // TODO: Set loading indicator
+    setIsSearching(true)
+
+    const params = new URLSearchParams({
+      name: value
+    })
+
+    if (useExtendedSearch) {
+      params.append('extendedSearch', 'true')
+    }
+
     try {
       const res = await fetch(
-        `/api/monsters?name=${value}&extendedSearch=${useExtendedSearch}`,
+        `/api/monsters?${params.toString()}`,
       )
       const data: Monster[] = await res.json()
       setMonsters(data)
@@ -66,8 +76,10 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
   const handleMonsterSelected = (monster: Monster) => {
     setSelectedMonster(monster)
-    const { hitDice, name: monsterName } = monster
-    onHitDiceObtained({ hitDice, monsterName })
+    if (monster) {
+      const { hitDice, name: monsterName } = monster
+      onHitDiceObtained({ hitDice, monsterName })
+    }
   }
 
   return (
@@ -93,6 +105,12 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                 }
                 className="w-full input input-lg"
             />
+
+            {query && (isSearching || filteredMonstersForDisplay.length > 0) && (
+              <p className="p-2 text-sm text-neutral-500">
+                {isSearching ? <span>Searching&hellip;</span> : getPluralPhrase(filteredMonstersForDisplay.length, ['results', 'result', 'results'])}
+              </p>
+            )}
           </div>
 
           <div className="flex-shrink overflow-y-auto">
@@ -111,20 +129,20 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                                     focus ? 'bg-black text-white' : 'bg-white text-black',
                                 )}
                             >
-                    <span className="flex-none flex items-baseline gap-1">
-                      <span
-                          dangerouslySetInnerHTML={{
-                            __html: monster.nameForDisplay,
-                          }}
-                      />
-                      <span
-                          className={
-                            focus ? 'text-neutral-300' : 'text-neutral-500'
-                          }
-                      >
-                        ({monster.hitDice})
-                      </span>
+                  <span className="flex-none flex items-baseline gap-1">
+                    <span
+                        dangerouslySetInnerHTML={{
+                          __html: monster.nameForDisplay,
+                        }}
+                    />
+                    <span
+                        className={
+                          focus ? 'text-neutral-300' : 'text-neutral-500'
+                        }
+                    >
+                      ({monster.hitDice})
                     </span>
+                  </span>
 
                               {monster.documentTitle && (
                                   <span
@@ -133,8 +151,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                                           focus ? 'text-neutral-300' : 'text-neutral-500',
                                       )}
                                   >
-                        {monster.documentTitle}
-                      </span>
+                      {monster.documentTitle}
+                    </span>
                               )}
                             </li>
                             // TODO: Make this its own component?
@@ -142,10 +160,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                       </Combobox.Option>
                   ))}
                 </Combobox.Options>
-            ) : isSearching ? (
-                <p className="px-2">Searching&hellip;</p>
             ) : (
-                query && <p className="px-2">No monsters match this search</p>
+                query && !isSearching && <p className="px-2">No monsters match this search</p>
             )}
           </div>
         </Combobox>
