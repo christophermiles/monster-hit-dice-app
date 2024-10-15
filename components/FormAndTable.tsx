@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
-import SearchMonstersButton from '@/components/SearchMonstersButton'
+import LaunchSearchMonstersButton from '@/components/LaunchSearchMonstersButton'
 import HitPointResultsTable from '@/components/HitPointResultsTable'
 import GetHitPointsButton from '@/components/GetHitPointsButton'
 import GetHitDiceByMonsterNameModal from '@/components/GetHitDiceByMonsterNameModal'
@@ -38,7 +38,7 @@ export default function HitDiceForm() {
     }
   }, [])
 
-  const handleSearchMonstersButtonClick = (
+  const handleLaunchSearchMonstersButtonClick = (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault()
@@ -109,7 +109,7 @@ export default function HitDiceForm() {
             onInput={handleHitDiceInput}
             className="w-full"
             inputHeaderEnd={
-              <SearchMonstersButton onClick={handleSearchMonstersButtonClick} />
+              <LaunchSearchMonstersButton onClick={handleLaunchSearchMonstersButtonClick} />
             }
           />
 

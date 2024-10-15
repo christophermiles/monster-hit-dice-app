@@ -2,7 +2,7 @@ import React from 'react'
 import { useBrowserInfo } from '@/lib/hooks/useBrowserInfo'
 import CmdK from '@/components/CmdK'
 
-const SearchMonstersButton: React.FC<{
+const LaunchSearchMonstersButton: React.FC<{
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }> = ({ onClick }) => {
   const { platformType } = useBrowserInfo()
@@ -23,4 +23,4 @@ const SearchMonstersButton: React.FC<{
   )
 }
 
-export default SearchMonstersButton
+export default LaunchSearchMonstersButton
