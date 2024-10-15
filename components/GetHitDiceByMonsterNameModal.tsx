@@ -45,13 +45,11 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
           e.stopPropagation() // Prevent input clicks from closing the backdrop
         }}
       >
-        <div className="main-layout-content mt-12">
-          <div className="bg-white p-4">
-            <SearchMonstersCombobox
-              onHitDiceObtained={({ hitDice, monsterName}: { hitDice: string; monsterName?: string }) => onClose(hitDice, monsterName)}
-              className="w-full"
-            />
-          </div>
+        <div className="main-layout-content max-h-screen py-12">
+          <SearchMonstersCombobox
+            onHitDiceObtained={({ hitDice, monsterName}: { hitDice: string; monsterName?: string }) => onClose(hitDice, monsterName)}
+            className="bg-white p-4 max-h-full w-full"
+          />
         </div>
       </div>
     </div>
