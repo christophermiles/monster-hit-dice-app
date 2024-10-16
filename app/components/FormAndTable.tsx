@@ -1,14 +1,14 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import HitDiceInput from '@/components/HitDiceInput'
+import HitDiceInput from '@/app/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
-import LaunchSearchMonstersButton from '@/components/LaunchSearchMonstersButton'
-import HitPointResultsTable from '@/components/HitPointResultsTable'
-import GetHitPointsButton from '@/components/GetHitPointsButton'
-import GetHitDiceByMonsterNameModal from '@/components/GetHitDiceByMonsterNameModal'
+import LaunchSearchMonstersButton from '@/app/components/LaunchSearchMonstersButton'
+import HitPointResultsTable from '@/app/components/HitPointResultsTable'
+import GetHitPointsButton from '@/app/components/GetHitPointsButton'
+import GetHitDiceByMonsterNameModal from '@/app/components/GetHitDiceByMonsterNameModal'
 import { HitPointResults } from 'roll-hit-dice/dist/types'
 import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
-import { DieType } from '@/components/DiceIcon'
+import { DieType } from '@/app/components/DiceIcon'
 
 export default function HitDiceForm() {
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)

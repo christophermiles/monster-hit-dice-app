@@ -1,5 +1,5 @@
-import DiceIcon, { DieType } from '@/components/DiceIcon'
-import { EndOfPageHomeLink } from '@/components/EndOfPageHomeLink'
+import DiceIcon, { DieType } from '@/app/components/DiceIcon'
+import { EndOfPageHomeLink } from '@/app/components/EndOfPageHomeLink'
 
 type IconCredit = {
   icon?: DieType

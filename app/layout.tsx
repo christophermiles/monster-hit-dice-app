@@ -2,7 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Martian_Mono as Font } from 'next/font/google'
-import '../styles/globals.css'
+import '@/app/styles/globals.css'
 import clsx from 'clsx'
 import Link from 'next/link'
 

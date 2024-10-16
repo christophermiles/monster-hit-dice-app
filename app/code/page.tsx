@@ -1,4 +1,4 @@
-import { EndOfPageHomeLink } from '@/components/EndOfPageHomeLink'
+import { EndOfPageHomeLink } from '@/app/components/EndOfPageHomeLink'
 
 export default function AboutApi() {
   return (

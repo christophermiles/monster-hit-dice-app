@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
-import SearchMonstersCombobox from '@/components/SearchMonstersCombobox'
+import SearchMonstersCombobox from '@/app/components/SearchMonstersCombobox'
 
 interface GetHitDiceByMonsterNameModalProps
   extends React.HTMLAttributes<HTMLDivElement> {
