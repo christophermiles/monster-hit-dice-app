@@ -26,15 +26,16 @@ export default function AboutApi() {
         </p>
         <p>
           But sometimes you might want to give your{' '}
-          <abbr title="Big Bad Evil Guy">BBEG 😈</abbr> (Big Bad Evil Guy)
-          maximum Hit Points (because you gave the party too many magic items or
-          let them have too many feats) and you can’t be bothered doing the
-          maths yourself.
+          <abbr title="Big Bad Evil Guy">BBEG 😈</abbr> the maximum possible Hit
+          Points for their creature type (because you gave the party too many
+          magic items or let them have too many feats) and you don’t want to do
+          the maths yourself.
         </p>
         <p>
           Maybe you’re using multiple creatures of the same type in a battle,
-          but you want to mix hings up a bit and make some of them to be a bit
-          weaker than average, and make some of <strong>chads</strong>.
+          but you want to mix things up a bit. Maybe you want some of your
+          kobolds to be even weaker than average &mdash; but you want{' '}
+          <em>some</em> of them to be <strong>KOBOLD CHADS&trade;</strong>.
         </p>
         <p>
           Or maybe you just want to tweak a creature’s Hit Points mid-battle. (

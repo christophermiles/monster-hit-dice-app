@@ -9,7 +9,11 @@ import Fuse from 'fuse.js'
 import debounce from 'lodash.debounce'
 import Link from 'next/link'
 
-interface MonsterForDisplay extends Monster {
+interface ComboboxMonster extends Monster {
+  alwaysShowDocumentTitle?: boolean
+}
+
+interface MonsterForDisplay extends ComboboxMonster {
   nameForDisplay: string
 }
 
@@ -24,12 +28,23 @@ interface SearchMonstersComboboxProps
   }) => void
 }
 
-const fuse = new Fuse(srdMonsterData, {
+const defaultMonsterData: ComboboxMonster[] = (
+  srdMonsterData as ComboboxMonster[]
+).concat([
+  {
+    name: '💪KOBOLD CHAD™💪',
+    hitDice: '100d20+1000',
+    alwaysShowDocumentTitle: true,
+    documentTitle: 'Monster Hit Dice App',
+  },
+])
+
+const fuse = new Fuse(defaultMonsterData, {
   keys: ['name'],
 })
 
 function resetFuse() {
-  fuse.setCollection(srdMonsterData)
+  fuse.setCollection(defaultMonsterData)
 }
 
 const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
@@ -45,7 +60,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     MonsterForDisplay[]
   >([])
   const [collectionToFilter, setCollectionToFilter] =
-    useState<Monster[]>(srdMonsterData)
+    useState<Monster[]>(defaultMonsterData)
   const [fetchError, setFetchError] = useState(false)
 
   useEffect(() => {
@@ -62,7 +77,10 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       fuse.search(comboboxValue).map(
         ({ item }): MonsterForDisplay => ({
           ...item,
-          documentTitle: useExtendedSearch ? item.documentTitle : '',
+          documentTitle:
+            useExtendedSearch || item.alwaysShowDocumentTitle
+              ? item.documentTitle
+              : '',
           nameForDisplay: purify
             .sanitize(item.name)
             .split('')
@@ -79,7 +97,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
   useEffect(() => {
     if (!useExtendedSearch) {
-      setCollectionToFilter(srdMonsterData)
+      setCollectionToFilter(defaultMonsterData)
     }
   }, [useExtendedSearch])
 
@@ -87,7 +105,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   const debouncedFetchOpen5eMonsters = useCallback(
     debounce(async (query: string) => {
       if (!query) {
-        setCollectionToFilter(srdMonsterData)
+        setCollectionToFilter(defaultMonsterData)
         return
       }
 
@@ -97,7 +115,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       try {
         const response = await fetch(`/api/open5e/monsters?name=${query}`)
         const data: Monster[] = await response.json()
-        setCollectionToFilter(srdMonsterData.concat(data))
+        setCollectionToFilter(defaultMonsterData.concat(data))
       } catch {
         setFetchError(true)
       } finally {
