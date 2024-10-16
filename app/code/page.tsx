@@ -12,7 +12,7 @@ export default function AboutApi() {
           A public API for calculating Hit Point values from Hit Dice
           expressions is available at{' '}
           <a
-            href="https://api.hitdice.app"
+            href="https://api.monsterhitdice.app"
             rel="nofollow"
             target="_blank"
             className="link"
@@ -25,7 +25,7 @@ export default function AboutApi() {
         <p>
           For full documentation, visit{' '}
           <a
-            href="https://api.hitdice.app/docs"
+            href="https://api.monsterhitdice.app/docs"
             rel="nofollow"
             target="_blank"
             className="link"
