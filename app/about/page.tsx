@@ -39,7 +39,8 @@ export default function AboutApi() {
         </p>
         <p>
           Or maybe you just want to tweak a creature’s Hit Points mid-battle.
-          Sacrilege? Heresy? An affront to grognardish purism? Well,{' '}
+          Sacrilege? Heresy? The most condemnable example of referee fiat
+          imaginable? Well,{' '}
           <a
             href="https://slyflourish.com/tweaking_monster_hit_points.html"
             className="link"
