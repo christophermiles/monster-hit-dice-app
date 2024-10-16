@@ -8,6 +8,7 @@ import srdMonsterData from '@/data/data-5e-srd-2014'
 import Fuse from 'fuse.js'
 import debounce from 'lodash.debounce'
 import Link from 'next/link'
+import { getFromStorage, setToStorage } from '@/lib/utils/storage'
 
 interface ComboboxMonster extends Monster {
   alwaysShowDocumentTitle?: boolean
@@ -51,30 +52,42 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
   className,
 }) => {
-  const getInitialUseExtendedValue = () => {
-    const useExtendedMonsterSearch = localStorage.getItem(
-      'useExtendedMonsterSearch',
-    )
-    return useExtendedMonsterSearch ? JSON.parse(useExtendedMonsterSearch) : ''
-  }
-
-  const [useExtendedSearch, setUseExtendedSearch] = useState<boolean>(
-    getInitialUseExtendedValue(),
-  )
   const [comboboxValue, setComboboxValue] = useState<string>('')
+
+  // region Extended search value
+  const [useExtendedSearch, setUseExtendedSearch] = useState<boolean>(
+    getFromStorage<boolean>('useExtendedMonsterSearch') || false,
+  )
+  useEffect(() => {
+    setToStorage<boolean>('useExtendedMonsterSearch', useExtendedSearch)
+  }, [useExtendedSearch])
+  // endregion
+
+  // region Fetching state
+  const [fetchedMonstersCache, setFetchedMonstersCache] = useState<
+    Map<string, Monster[]>
+  >(new Map())
   const [isSearchingOpen5eContent, setIsSearchingOpen5eContent] =
     useState(false)
-  const [selectedMonster, setSelectedMonster] = useState<Monster | null>(null)
-  const [monsterResultsList, setMonsterResultsList] = useState<
-    MonsterForDisplay[]
-  >([])
+  const [fetchError, setFetchError] = useState(false)
+  // endregion
+
   const [collectionToFilter, setCollectionToFilter] =
     useState<Monster[]>(defaultMonsterData)
-  const [fetchError, setFetchError] = useState(false)
+
+  useEffect(() => {
+    if (!useExtendedSearch) {
+      setCollectionToFilter(defaultMonsterData)
+    }
+  }, [useExtendedSearch])
 
   useEffect(() => {
     fuse.setCollection(collectionToFilter)
   }, [collectionToFilter])
+
+  const [monsterResultsList, setMonsterResultsList] = useState<
+    MonsterForDisplay[]
+  >([])
 
   useEffect(() => {
     if (!comboboxValue) {
@@ -104,17 +117,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     )
   }, [comboboxValue, useExtendedSearch, collectionToFilter])
 
-  useEffect(() => {
-    localStorage.setItem(
-      'useExtendedMonsterSearch',
-      JSON.stringify(useExtendedSearch),
-    )
-    if (!useExtendedSearch) {
-      setCollectionToFilter(defaultMonsterData)
-    }
-  }, [useExtendedSearch])
+  const [selectedMonster, setSelectedMonster] = useState<Monster | null>(null)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFetchOpen5eMonsters = useCallback(
     debounce(async (query: string) => {
       if (!query) {
@@ -126,16 +130,27 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       setIsSearchingOpen5eContent(true)
 
       try {
-        const response = await fetch(`/api/open5e/monsters?name=${query}`)
-        const data: Monster[] = await response.json()
-        setCollectionToFilter(defaultMonsterData.concat(data))
+        const result: Monster[] = []
+
+        if (fetchedMonstersCache.has(query)) {
+          result.push(...fetchedMonstersCache.get(query)!) // Assert that get() will return a defined value
+        } else {
+          const response = await fetch(`/api/open5e/monsters?name=${query}`)
+          const data: Monster[] = await response.json()
+          result.push(...data)
+          setFetchedMonstersCache((prevCache) =>
+            new Map(prevCache).set(query, data),
+          )
+        }
+
+        setCollectionToFilter(defaultMonsterData.concat(result))
       } catch {
         setFetchError(true)
       } finally {
         setIsSearchingOpen5eContent(false)
       }
     }, 1000),
-    [],
+    [fetchedMonstersCache],
   )
 
   useEffect(() => {
