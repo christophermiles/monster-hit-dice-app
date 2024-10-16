@@ -323,6 +323,11 @@ const monsters: Monster[] = [
   { name: 'Young Silver Dragon', hitDice: '16d10+80' },
   { name: 'Young White Dragon', hitDice: '14d10+56' },
   { name: 'Zombie', hitDice: '3d8+9' },
-]
+].map((m) => {
+  return {
+    ...m,
+    documentTitle: '5E SRD (2014)',
+  }
+})
 
 export default monsters
