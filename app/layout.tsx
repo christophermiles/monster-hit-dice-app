@@ -40,7 +40,13 @@ export default function RootLayout({
     >
       <body className="bg-neutral-50">
         <ThemeProvider>
-          <div className="main-layout min-h-screen grid-rows-[1fr_auto] pt-8">
+          <div className="main-layout min-h-screen grid-rows-[auto_1fr_auto] pt-8">
+            <header>
+              {process.env.NEXT_PUBLIC_VERSION &&
+                parseInt(process.env.NEXT_PUBLIC_VERSION) < 1}
+              <span>BETA</span>
+            </header>
+
             <main className="main-layout-content px-4 pb-16">{children}</main>
             <footer className="main-layout-content py-8 flex items-baseline justify-center flex-wrap gap-8">
               <div className="flex items-baseline gap-8 text-xs">
