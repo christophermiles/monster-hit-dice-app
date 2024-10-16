@@ -1,9 +1,14 @@
 import React from 'react'
 import TextBadge from '@/components/TextBadge'
 import DiceIcon from '@/components/DiceIcon'
+import type { TextBadgeProps } from '@/components/TextBadge'
+import Link from 'next/link'
 
 export default function MainHeader() {
-  const badgeProps = () => {
+  const badgeProps = (): {
+    text: string
+    colour: TextBadgeProps['colour']
+  } | null => {
     if (!process.env.NEXT_PUBLIC_VERSION) {
       return null
     }
@@ -29,10 +34,12 @@ export default function MainHeader() {
   }
   return (
     <div className="flex items-center gap-6">
-      <span className="flex items-center gap-1">
-        <DiceIcon size="md" />
-        <span className="text-lg font-medium">Hit Dice App</span>
-      </span>
+      <nav>
+        <Link href="/" className="flex items-center gap-1 cursor-pointer">
+          <DiceIcon size="md" />
+          <span className="text-lg font-medium">Hit Dice App</span>
+        </Link>
+      </nav>
 
       {badgeProps() && (
         <TextBadge className="text-xs" colour={badgeProps()?.colour}>

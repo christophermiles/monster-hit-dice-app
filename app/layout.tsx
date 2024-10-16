@@ -5,6 +5,7 @@ import { Martian_Mono as Font } from 'next/font/google'
 import '../styles/globals.css'
 import clsx from 'clsx'
 import Link from 'next/link'
+import MainHeader from '@/components/MainHeader'
 
 export const metadata: Metadata = {
   title: 'Hit Dice App',
@@ -40,15 +41,16 @@ export default function RootLayout({
     >
       <body className="bg-neutral-50">
         <ThemeProvider>
-          <div className="main-layout min-h-screen grid-rows-[auto_1fr_auto] pt-8">
-            <header>
-              {process.env.NEXT_PUBLIC_VERSION &&
-                parseInt(process.env.NEXT_PUBLIC_VERSION) < 1}
-              <span>BETA</span>
+          <div className="main-layout min-h-screen grid-rows-[1fr_auto_auto] pt-8">
+            <header className="main-layout-content row-start-2 flex items-baseline justify-center flex-wrap gap-8">
+              <MainHeader />
             </header>
 
-            <main className="main-layout-content px-4 pb-16">{children}</main>
-            <footer className="main-layout-content py-8 flex items-baseline justify-center flex-wrap gap-8">
+            <main className="main-layout-content row-start-1 px-4 pb-16">
+              {children}
+            </main>
+
+            <footer className="main-layout-content row-start-3 py-8 flex items-baseline justify-center flex-wrap gap-8">
               <div className="flex items-baseline gap-8 text-xs">
                 <Link href="/about" className="link">
                   What is this?

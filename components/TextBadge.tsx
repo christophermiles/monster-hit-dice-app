@@ -3,17 +3,19 @@ import clsx from 'clsx'
 
 const DEFAULT_COLOR = 'blue'
 
+export type TextBadgeProps = {
+  children: React.ReactNode
+  colour?: 'blue' | 'amber' | 'green'
+  rounded?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  className?: string
+}
+
 export default function TextBadge({
   children,
   colour,
   rounded,
   className,
-}: Readonly<{
-  children: React.ReactNode
-  colour?: 'blue' | 'amber' | 'green'
-  rounded?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  className?: string
-}>) {
+}: Readonly<TextBadgeProps>) {
   const colourClasses = {
     blue: 'bg-blue-500 text-white',
     green: 'bg-green-500 text-white',
