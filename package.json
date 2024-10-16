@@ -1,5 +1,5 @@
 {
-  "name": "hit-dice-app-client",
+  "name": "monster-hit-dice-app",
   "version": "1.0.0-alpha",
   "description": "An app for generating a range of Hit Point values from Dungeons & Dragons Hit Dice expressions",
   "author": "Christopher Miles <mail@christophermiles.com.au> (http://christophermiles.com.au)",

@@ -37,7 +37,7 @@ export default function MainHeader() {
       <nav>
         <Link href="/" className="flex items-center gap-1 cursor-pointer">
           <DiceIcon size="md" />
-          <span className="text-lg font-medium">Hit Dice App</span>
+          <span className="text-lg font-medium">Monster Hit Dice</span>
         </Link>
       </nav>
 

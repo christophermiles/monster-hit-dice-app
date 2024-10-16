@@ -1,4 +1,4 @@
-# hit-dice-app-client
+# hit-dice-app
 
 An app for generating a range of Hit Point values from Dungeons &amp; Dragons Hit Dice expressions
 
