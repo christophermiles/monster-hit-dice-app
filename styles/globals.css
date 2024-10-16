@@ -56,6 +56,22 @@ body {
     @apply text-neutral-500;
   }
 
+  .text-light {
+    @apply text-neutral-500;
+  }
+
+  .text-lighter {
+    @apply text-neutral-300
+  }
+
+  .text-lightest {
+    @apply text-neutral-200
+  }
+
+  .text-error {
+    @apply text-red-500;
+  }
+
   .input {
     @apply p-1 border-2 border-neutral-400 bg-neutral-50 text-black placeholder-neutral-200 rounded-sm focus-visible:outline-none focus-visible:border-black;
   }
