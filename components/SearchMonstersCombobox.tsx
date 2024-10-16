@@ -51,7 +51,16 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
   className,
 }) => {
-  const [useExtendedSearch, setUseExtendedSearch] = useState<boolean>(false)
+  const getInitialUseExtendedValue = () => {
+    const useExtendedMonsterSearch = localStorage.getItem(
+      'useExtendedMonsterSearch',
+    )
+    return useExtendedMonsterSearch ? JSON.parse(useExtendedMonsterSearch) : ''
+  }
+
+  const [useExtendedSearch, setUseExtendedSearch] = useState<boolean>(
+    getInitialUseExtendedValue(),
+  )
   const [comboboxValue, setComboboxValue] = useState<string>('')
   const [isSearchingOpen5eContent, setIsSearchingOpen5eContent] =
     useState(false)
@@ -96,6 +105,10 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   }, [comboboxValue, useExtendedSearch, collectionToFilter])
 
   useEffect(() => {
+    localStorage.setItem(
+      'useExtendedMonsterSearch',
+      JSON.stringify(useExtendedSearch),
+    )
     if (!useExtendedSearch) {
       setCollectionToFilter(defaultMonsterData)
     }
