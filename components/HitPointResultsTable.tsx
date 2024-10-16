@@ -46,7 +46,7 @@ const HitPointResultsTable: React.FC<HitPointResultsTableProps> = ({
               <td
                 key={key}
                 className={clsx(
-                  'min-w-[4ch] min-h-[1rem] py-[0.5ch] align-baseline text-center border-b',
+                  'min-w-[3ch] sm:min-w-[4ch] min-h-[1rem] py-[0.5ch] align-baseline text-center border-b',
                   hitPointResults
                     ? 'font-medium border-neutral-400'
                     : 'border-neutral-200 text-neutral-200 font-light',

@@ -107,13 +107,13 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
     }
 
     return (
-      <Field className={clsx('flex flex-col gap-4', className)}>
+      <Field className={clsx('max-w-full flex flex-col gap-4', className)}>
         <div
           className={clsx(
             'flex items-baseline',
             inputHeaderEnd && 'justify-between',
             'px-2',
-            'text-sm',
+            'text-xs sm:text-sm',
           )}
         >
           <label htmlFor="hit-dice-input">Enter Hit Dice</label>
@@ -131,7 +131,7 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
           onInput={handleInput}
           onFocus={handleFocus}
           aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
-          className="input-xl"
+          className="w-full input-xl"
         />
       </Field>
     )

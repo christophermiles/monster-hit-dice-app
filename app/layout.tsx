@@ -37,7 +37,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={clsx(font.className, 'antialiased')}
+      className={clsx(
+        font.className,
+        'antialiased',
+        'text-[14px] sm:text-[16px]',
+      )}
     >
       <body className="bg-neutral-50">
         <ThemeProvider>
@@ -46,7 +50,7 @@ export default function RootLayout({
               <MainHeader />
             </header>
 
-            <main className="main-layout-content row-start-1 px-4 pb-16">
+            <main className="main-layout-content row-start-1 pb-16">
               {children}
             </main>
 
