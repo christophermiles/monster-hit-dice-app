@@ -1,6 +1,6 @@
 import React from 'react'
-import { useBrowserInfo } from '@/app/lib/hooks/useBrowserInfo'
-import CmdK from '@/app/components/CmdK'
+import { useBrowserInfo } from '@/lib/hooks/useBrowserInfo'
+import CmdK from '@/components/CmdK'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void

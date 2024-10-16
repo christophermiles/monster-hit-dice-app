@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import { useBrowserInfo } from '@/app/lib/hooks/useBrowserInfo'
+import { useBrowserInfo } from '@/lib/hooks/useBrowserInfo'
 import './CmdK.css'
 
 interface CmdKProps extends React.HTMLAttributes<HTMLSpanElement> {

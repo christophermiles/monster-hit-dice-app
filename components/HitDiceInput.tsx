@@ -1,8 +1,5 @@
 import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react'
-import {
-  HIT_DICE_BY_MONSTER_EXAMPLES,
-  HIT_DICE_REGEX,
-} from '@/app/lib/constants'
+import { HIT_DICE_BY_MONSTER_EXAMPLES, HIT_DICE_REGEX } from '@/lib/constants'
 import clsx from 'clsx'
 import { Field, FieldProps, Input } from '@headlessui/react'
 

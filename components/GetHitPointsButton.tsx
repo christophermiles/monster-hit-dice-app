@@ -1,4 +1,4 @@
-import DiceIcon, { DieType } from '@/app/components/DiceIcon'
+import DiceIcon, { DieType } from '@/components/DiceIcon'
 import React from 'react'
 import clsx from 'clsx'
 
