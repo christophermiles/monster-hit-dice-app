@@ -50,7 +50,7 @@ export default function RootLayout({
               <MainHeader />
             </header>
 
-            <main className="main-layout-content row-start-1 pb-16">
+            <main className="main-layout-content row-start-1 pb-32">
               {children}
             </main>
 

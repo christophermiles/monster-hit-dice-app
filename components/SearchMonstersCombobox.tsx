@@ -187,8 +187,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                 the Coast 5th Edition (2014) SRD.
               </p>
               <p>
-                You can also check the{' '}
-                <strong className="font-semibold">3rd Party OGL</strong> box to
+                You can also check the <strong>3rd Party OGL</strong> box to
                 include Open Gaming License content from Open5e,
                 Kobold&nbsp;Press, EN&nbsp;Publishing and
                 Green&nbsp;Ronin&nbsp;Publishing, courtesy of the{' '}

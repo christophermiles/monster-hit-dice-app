@@ -1,4 +1,4 @@
-export const EndOfPageHomeLink = () => {
+export const HomeLink = () => {
   return (
     <nav className="inline-flex items-baseline gap-1">
       <span className="no-underline">&larr;</span>
