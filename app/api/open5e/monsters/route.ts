@@ -12,8 +12,6 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const name = searchParams.get('name')
 
-  console.log('GET', request, name)
-
   if (!name) {
     return NextResponse.json(
       { error: 'name parameter is required' },
