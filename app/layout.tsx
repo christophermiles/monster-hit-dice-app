@@ -40,7 +40,7 @@ export default function RootLayout({
       className={clsx(
         font.className,
         'antialiased',
-        'text-[14px] sm:text-[16px]',
+        'text-[14px] sm:text-[16px] text-neutral-700',
       )}
     >
       <body className="bg-neutral-50">

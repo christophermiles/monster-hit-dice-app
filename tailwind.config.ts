@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import Prose from '@tailwindcss/typography'
 
 const config: Config = {
   content: [
@@ -22,11 +23,11 @@ const config: Config = {
           'Consolas', // Windows 7+
           'DejaVu Sans Mono', // Linux
           'Source Code Pro', // Linux
-          'monospace'
+          'monospace',
         ],
       },
     },
   },
-  plugins: [],
+  plugins: [Prose],
 }
 export default config

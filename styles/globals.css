@@ -36,26 +36,6 @@ strong {
     text-wrap: balance;
   }
 
-  .heading-1 {
-    @apply text-3xl;
-  }
-
-  .heading-2 {
-    @apply text-2xl;
-  }
-
-  .heading-2:not(:first-child) {
-    @apply mt-8;
-  }
-
-  .heading-3 {
-    @apply text-xl;
-  }
-
-  .heading-4 {
-    @apply text-lg;
-  }
-
   .link {
     @apply underline;
   }
