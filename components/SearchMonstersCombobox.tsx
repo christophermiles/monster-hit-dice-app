@@ -240,7 +240,6 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                 <a
                   href="https://open5e.com/api-docs"
                   target="_blank"
-                  rel="nofollow"
                   className="link"
                 >
                   Open 5E API

@@ -39,7 +39,6 @@ export default function About() {
         <a
           href="https://slyflourish.com/tweaking_monster_hit_points.html"
           className="link"
-          rel="nofollow"
           target="_blank"
         >
           here’s Mike Shea at Sly Flourish with some perfectly valid reasons why

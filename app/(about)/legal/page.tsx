@@ -266,22 +266,12 @@ export default function Legal() {
 
             <span className="flex-shrink">
               “
-              <a
-                href={credit.link}
-                rel="nofollow"
-                target="_blank"
-                className="link"
-              >
+              <a href={credit.link} target="_blank" className="link">
                 {credit.name}
               </a>
               ” by{' '}
               {credit.author.url ? (
-                <a
-                  href={credit.author.url}
-                  rel="nofollow"
-                  target="_blank"
-                  className="link"
-                >
+                <a href={credit.author.url} target="_blank" className="link">
                   {credit.author.name}
                 </a>
               ) : (

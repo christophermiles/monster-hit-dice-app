@@ -10,7 +10,6 @@ export default function Code() {
         is available at{' '}
         <a
           href="https://api.monsterhitdice.app"
-          rel="nofollow"
           target="_blank"
           className="link"
         >
@@ -31,7 +30,6 @@ export default function Code() {
         Or try it from your browser:{' '}
         <a
           href="https://api.monsterhitdice.app/hp?hd=2d8-2&hd=2d8+6&hd=8d10+40&hd=33d20+330"
-          rel="nofollow"
           target="_blank"
           className="link"
         >
@@ -43,7 +41,6 @@ export default function Code() {
         For full documentation, visit{' '}
         <a
           href="https://api.monsterhitdice.app/docs"
-          rel="nofollow"
           target="_blank"
           className="link"
         >
@@ -58,7 +55,6 @@ export default function Code() {
         This Monster Hit Dice web app and the Monster Hit Dice API both use the{' '}
         <a
           href="https://www.npmjs.com/package/roll-hit-dice"
-          rel="nofollow"
           target="_blank"
           className="link"
         >
@@ -71,7 +67,6 @@ export default function Code() {
         Visit the source code repository at{' '}
         <a
           href="https://github.com/christophermiles/roll-hit-dice"
-          rel="nofollow"
           target="_blank"
           className="link"
         >
