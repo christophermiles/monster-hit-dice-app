@@ -257,22 +257,23 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
           )}
         </div>
 
-        {monsterResultsList.length > 0 ? (
-          <Combobox.Options className="flex-shrink overflow-y-auto">
+        {comboboxValue || monsterResultsList.length > 0 ? (
+          <Combobox.Options className="flex-shrink overflow-y-auto" as={'ul'}>
             {monsterResultsList.map((monster, index) => (
               <Combobox.Option
                 key={`${index}-${monster.name}`}
                 value={monster}
-                as={'ul'}
+                as={'li'}
               >
                 {({ focus }) => (
-                  <li
+                  <span
                     className={clsx(
-                      'p-2 flex items-baseline justify-between gap-4',
+                      'p-2 flex flex-col gap-2',
+                      'md:flex-row md:gap-4 md:items-baseline md:justify-between',
                       focus ? 'bg-black text-white' : 'bg-white text-black',
                     )}
                   >
-                    <span className="flex-none flex items-baseline gap-1">
+                    <span className="flex items-baseline gap-1">
                       <span
                         dangerouslySetInnerHTML={{
                           __html: monster.nameForDisplay,
@@ -288,14 +289,14 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                     {monster.documentTitle && (
                       <span
                         className={clsx(
-                          'flex-shrink truncate text-xs',
+                          'truncate text-xs',
                           focus ? 'text-lighter' : 'text-neutral-500',
                         )}
                       >
                         {monster.documentTitle}
                       </span>
                     )}
-                  </li>
+                  </span>
                   // TODO: Make this its own component?
                 )}
               </Combobox.Option>
