@@ -250,7 +250,7 @@ export default function Legal() {
           Dillon, Rodrigo Garcia Carmona, and Wolfgang Baur.
         </p>
 
-        <p>ope5e.com v2.0, copyright 2019.</p>
+        <p>open5e.com v2.0, copyright 2019.</p>
 
         <p>monsterhitdice.app v1.0, copyright 2024.</p>
 
