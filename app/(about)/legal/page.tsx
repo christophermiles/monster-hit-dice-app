@@ -72,8 +72,8 @@ export default function Legal() {
       </p>
 
       <p>
-        All of the rest of hitdice.app is Open Game Content as described in
-        Section 1(d) of the License.
+        All of the rest of monsterhitdice.app is Open Game Content as described
+        in Section 1(d) of the License.
       </p>
 
       <p>The terms of the Open Gaming License Version 1.0a are as follows:</p>
