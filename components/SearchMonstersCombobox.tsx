@@ -113,7 +113,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   const handleInput = async (newQuery: string) => {
     setComboboxValue(newQuery)
 
-    if (useExtendedSearch && newQuery.length > 2) {
+    if (useExtendedSearch && newQuery.length > 0) {
       await debouncedFetchOpen5eMonsters(newQuery)
     }
   }
