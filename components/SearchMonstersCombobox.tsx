@@ -149,6 +149,8 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
 
   const debouncedFetchOpen5eMonsters = useCallback(
     debounce(async (query: string) => {
+      if (isSearchingOpen5eContent) return
+
       if (!query) {
         setCollectionToFilter(defaultMonsterData)
         return
