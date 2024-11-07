@@ -18,7 +18,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: 'white',
   colorScheme: 'only light',
-  userScalable: false,
 }
 
 const font = Font({
