@@ -66,7 +66,17 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   )
   useEffect(() => {
     setToStorage<boolean>('useExtendedMonsterSearch', useExtendedSearch)
-  }, [useExtendedSearch])
+
+    async function triggerNewFetchForCurrentQueryIncludingExtendedSources() {
+      if (comboboxValue) {
+        await debouncedFetchOpen5eMonsters(comboboxValue)
+      }
+    }
+
+    if (useExtendedSearch) {
+      triggerNewFetchForCurrentQueryIncludingExtendedSources()
+    }
+  }, [useExtendedSearch, comboboxValue])
   // endregion
 
   // region Fetching state
