@@ -284,6 +284,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                     className={clsx(
                       'p-2 flex flex-col gap-2',
                       'md:flex-row md:gap-4 md:items-baseline md:justify-between',
+                      'cursor-pointer',
                       focus ? 'bg-black text-white' : 'bg-white text-black',
                     )}
                   >
