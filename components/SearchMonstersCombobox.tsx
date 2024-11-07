@@ -268,7 +268,11 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
         </div>
 
         {comboboxValue || monsterResultsList.length > 0 ? (
-          <Combobox.Options className="flex-shrink overflow-y-auto" as={'ul'}>
+          <Combobox.Options
+            className="flex-shrink overflow-y-auto"
+            as={'ul'}
+            static={true}
+          >
             {monsterResultsList.map((monster, index) => (
               <Combobox.Option
                 key={`${index}-${monster.name}`}
