@@ -47,7 +47,6 @@ const defaultMonsterData: ComboboxMonster[] = (
 
 const fuse = new Fuse(defaultMonsterData, {
   keys: ['name'],
-  minMatchCharLength: 2,
 })
 
 function resetFuse() {
