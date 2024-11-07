@@ -99,12 +99,23 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
     MonsterForDisplay[]
   >([])
 
+  const [selectedMonster, setSelectedMonster] = useState<Monster | null>(null)
+
+  const handleInput = async (newQuery: string) => {
+    setComboboxValue(newQuery)
+
+    if (useExtendedSearch && newQuery.length > 2) {
+      await debouncedFetchOpen5eMonsters(newQuery)
+    }
+  }
+
   useEffect(() => {
     if (!comboboxValue) {
       setMonsterResultsList([])
       return
     }
 
+    // Update the monster results list using Fuse to filter the list by query
     setMonsterResultsList(
       fuse.search(comboboxValue).map(
         ({ item }): MonsterForDisplay => ({
@@ -126,8 +137,6 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       ),
     )
   }, [comboboxValue, useExtendedSearch, collectionToFilter])
-
-  const [selectedMonster, setSelectedMonster] = useState<Monster | null>(null)
 
   const debouncedFetchOpen5eMonsters = useCallback(
     debounce(async (query: string) => {
@@ -168,14 +177,6 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       debouncedFetchOpen5eMonsters.cancel()
     }
   }, [debouncedFetchOpen5eMonsters])
-
-  const handleInput = async (newQuery: string) => {
-    setComboboxValue(newQuery)
-
-    if (useExtendedSearch && newQuery.length > 2) {
-      await debouncedFetchOpen5eMonsters(newQuery)
-    }
-  }
   // endregion
 
   const handleMonsterSelected = useCallback(
