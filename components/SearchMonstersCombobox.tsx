@@ -1,3 +1,4 @@
+// region Imports
 import React, { useCallback, useEffect, useState } from 'react'
 import { Combobox } from '@headlessui/react'
 import clsx from 'clsx'
@@ -9,7 +10,9 @@ import Fuse from 'fuse.js'
 import debounce from 'lodash.debounce'
 import Link from 'next/link'
 import { getFromStorage, setToStorage } from '@/lib/utils/storage'
+// endregion
 
+// region Types
 interface ComboboxMonster extends Monster {
   alwaysShowDocumentTitle?: boolean
 }
@@ -28,7 +31,9 @@ interface SearchMonstersComboboxProps
     monsterName: string
   }) => void
 }
+// endregion
 
+// region Fuse setup and reset
 const defaultMonsterData: ComboboxMonster[] = (
   srdMonsterData as ComboboxMonster[]
 ).concat([
@@ -48,6 +53,7 @@ const fuse = new Fuse(defaultMonsterData, {
 function resetFuse() {
   fuse.setCollection(defaultMonsterData)
 }
+// endregion
 
 const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   onHitDiceObtained,
@@ -73,6 +79,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   const [fetchError, setFetchError] = useState(false)
   // endregion
 
+  // region Collection for filtering
   const [collectionToFilter, setCollectionToFilter] =
     useState<Monster[]>(defaultMonsterData)
 
@@ -85,7 +92,9 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   useEffect(() => {
     fuse.setCollection(collectionToFilter)
   }, [collectionToFilter])
+  // endregion
 
+  // region Results list
   const [monsterResultsList, setMonsterResultsList] = useState<
     MonsterForDisplay[]
   >([])
@@ -167,6 +176,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
       await debouncedFetchOpen5eMonsters(newQuery)
     }
   }
+  // endregion
 
   const handleMonsterSelected = useCallback(
     (monster: Monster) => {
