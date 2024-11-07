@@ -288,14 +288,18 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
                       focus ? 'bg-black text-white' : 'bg-white text-black',
                     )}
                   >
-                    <span className="flex-none truncate flex items-baseline gap-1">
+                    <span className="flex-none flex items-baseline gap-1">
                       <span
                         dangerouslySetInnerHTML={{
                           __html: monster.nameForDisplay,
                         }}
+                        className="flex-shrink truncate"
                       />
                       <span
-                        className={focus ? 'text-lighter' : 'text-neutral-500'}
+                        className={clsx(
+                          'flex-none',
+                          focus ? 'text-lighter' : 'text-neutral-500',
+                        )}
                       >
                         ({monster.hitDice})
                       </span>
