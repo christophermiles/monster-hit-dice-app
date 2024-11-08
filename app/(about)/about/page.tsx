@@ -21,8 +21,8 @@ export default function About() {
       </p>
       <p>
         But sometimes you might want to give your{' '}
-        <abbr title="Big Bad Evil Guy">BBEG 😈</abbr> the maximum possible Hit
-        Points for their creature type and you don’t want to do the maths
+        <abbr title="Big Bad Evil Guy 😈">B.B.E.G.</abbr> the maximum possible
+        Hit Points for their creature type and you don’t want to do the maths
         yourself.
       </p>
       <p>
