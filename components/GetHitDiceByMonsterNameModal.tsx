@@ -36,7 +36,7 @@ const Modal: React.FC<GetHitDiceByMonsterNameModalProps> = ({
 
       <div className="fixed inset-0 flex flex-col items-center justify-start">
         <div className="main-layout">
-          <DialogPanel className="main-layout-content max-h-screen py-12">
+          <DialogPanel className="main-layout-content max-h-screen my-12">
             <SearchMonstersCombobox
               onHitDiceObtained={({
                 hitDice,
