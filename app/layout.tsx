@@ -72,10 +72,6 @@ export default function RootLayout({
                   What is this?
                 </Link>
 
-                <Link href="/code" className="link">
-                  Code
-                </Link>
-
                 <Link href="/roadmap" className="link">
                   Roadmap
                 </Link>
