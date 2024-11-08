@@ -29,9 +29,7 @@ A public API for calculating Hit Point values from Hit Dice expressions is avail
 For example:
 
 ```shell
-  curl --request GET \<br />
-  --url
-  &#39;https://api.monsterhitdice.app/hp?hd=2d8-2&hd=2d8+6&hd=8d10+40&hd=33d20+330&#39;
+  curl --request GET  --url 'https://api.monsterhitdice.app/hp?hd=2d8-2&hd=2d8+6&hd=8d10+40&hd=33d20+330'
 ```
 
 Or try it from your browser: [api.monsterhitdice.app/hp?hd=2d8-2&hd=2d8+6&hd=8d10+40&hd=33d20+330](https://api.monsterhitdice.app/hp?hd=2d8-2&hd=2d8+6&hd=8d10+40&hd=33d20+330)
