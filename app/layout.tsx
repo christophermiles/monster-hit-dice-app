@@ -70,7 +70,12 @@ export default function RootLayout({
 
                 <Link href="/code" className="link">
                   Code
-                </a>
+                </Link>
+
+                <Link href="/roadmap" className="link">
+                  Roadmap
+                </Link>
+
                 <Link href="/legal" className="link">
                   Legal
                 </Link>
