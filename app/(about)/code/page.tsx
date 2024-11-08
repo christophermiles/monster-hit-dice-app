@@ -62,18 +62,6 @@ export default function Code() {
         </a>
         .
       </p>
-
-      <p>
-        Visit the source code repository at{' '}
-        <a
-          href="https://github.com/christophermiles/roll-hit-dice"
-          target="_blank"
-          className="link"
-        >
-          github.com/christophermiles
-        </a>{' '}
-        for more information.
-      </p>
     </>
   )
 }

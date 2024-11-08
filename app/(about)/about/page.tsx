@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <>
-      <h1 className="heading-1">What is this?</h1>
+      <h1>What is this?</h1>
 
       <p>
         This Monster Hit Dice App takes a Hit Dice expression (that’s a fancy
