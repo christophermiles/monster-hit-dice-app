@@ -8,9 +8,15 @@ export default function formatDateModified(
     `${dateStringObject.year}-${dateStringObject.month}-${dateStringObject.day}`,
   )
 
-  return new Intl.DateTimeFormat(locale || navigator.language || 'en-AU', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date)
+  const resolvedLocale =
+    locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-AU')
+
+  return new Intl.DateTimeFormat(
+    resolvedLocale || navigator.language || 'en-AU',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
+  ).format(date)
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import formatDateModified from '@/lib/utils/format-date-modified'
 import type { DateStringObject } from '@/lib/types'
 import React from 'react'
