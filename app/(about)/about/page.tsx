@@ -28,8 +28,8 @@ export default function About() {
       <p>
         Maybe you’re using multiple creatures of the same type in a battle, but
         you want to mix things up a bit. Like, maybe you want some of your
-        kobolds to be even weaker than average &mdash; but you want{' '}
-        <em>some</em> of them to be <strong>💪KOBOLD CHAD™💪s</strong>.
+        kobolds to be even weaker than average &mdash; but you want <em>one</em>{' '}
+        of them to be a <strong>💪KOBOLD CHAD™💪</strong>.
       </p>
       <p>
         Or maybe you just want to tweak a creature’s Hit Points mid-battle.

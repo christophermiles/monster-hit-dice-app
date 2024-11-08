@@ -14,7 +14,7 @@ Using a creature’s average Hit Points works just fine for most Dungeons & Drag
 
 But sometimes you might want to give your <abbr title="Big Bad Evil Guy 😈">BBEG</abbr> the maximum possible Hit Points for their creature type and you don’t want to do the maths yourself.
 
-Maybe you’re using multiple creatures of the same type in a battle, but you want to mix things up a bit. Like, maybe you want some of your kobolds to be even weaker than average &mdash; but you want *some* of them to be **💪KOBOLD CHAD™💪s**.
+Maybe you’re using multiple creatures of the same type in a battle, but you want to mix things up a bit. Like, maybe you want some of your kobolds to be even weaker than average &mdash; but you want *one* of them to be a **💪KOBOLD CHAD™💪**.
 
 Or maybe you just want to tweak a creature’s Hit Points mid-battle. Sacrilege? Heresy? The most condemnable example of referee fiat imaginable? Well, [here’s Mike Shea at Sly Flourish with some perfectly valid reasons why we might want to do this](https://slyflourish.com/tweaking_monster_hit_points.html)!
 
