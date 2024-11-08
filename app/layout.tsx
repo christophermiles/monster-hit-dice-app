@@ -67,7 +67,8 @@ export default function RootLayout({
                 <Link href="/about" className="link">
                   What is this?
                 </Link>
-                <a href="/code" className="link">
+
+                <Link href="/code" className="link">
                   Code
                 </a>
                 <Link href="/legal" className="link">
