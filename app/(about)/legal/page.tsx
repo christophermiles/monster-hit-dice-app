@@ -281,6 +281,14 @@ export default function Legal() {
           </li>
         ))}
       </ul>
+
+      <footer>
+        <p>
+          <small>
+            Last updated <time dateTime="2024-11-08">8 November 2024</time>
+          </small>
+        </p>
+      </footer>
     </>
   )
 }
