@@ -6,6 +6,7 @@ import '../styles/globals.css'
 import clsx from 'clsx'
 import Link from 'next/link'
 import MainHeader from '@/components/MainHeader'
+import GithubIcon from '@/components/GithubIcon'
 
 export const metadata: Metadata = {
   title: 'Hit Dice App',
@@ -63,7 +64,7 @@ export default function RootLayout({
             </main>
 
             <footer className="main-layout-content row-start-3 py-8 flex items-baseline justify-center flex-wrap gap-8">
-              <div className="flex items-baseline gap-8 text-xs">
+              <div className="flex flex-wrap items-baseline justify-center gap-6 text-xs">
                 <Link href="/about" className="link">
                   What is this?
                 </Link>
@@ -79,6 +80,11 @@ export default function RootLayout({
                 <Link href="/legal" className="link">
                   Legal
                 </Link>
+
+                <a href="" className="flex items-baseline gap-1">
+                  <GithubIcon className="w-3 h-3" />
+                  <span className="link">Github</span>
+                </a>
               </div>
               <p className="text-xs text-neutral-500">
                 Made in <span className="text-lg">🇦🇺</span> by{' '}
