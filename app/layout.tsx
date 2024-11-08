@@ -81,7 +81,10 @@ export default function RootLayout({
                   Legal
                 </Link>
 
-                <a href="" className="flex items-baseline gap-1">
+                <a
+                  href="https://github.com/christophermiles/monster-hit-dice-app"
+                  className="flex items-baseline gap-1"
+                >
                   <GithubIcon className="w-3 h-3" />
                   <span className="link">Github</span>
                 </a>
