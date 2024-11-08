@@ -33,8 +33,8 @@ export default function About() {
       </p>
       <p>
         Or maybe you just want to tweak a creature’s Hit Points mid-battle.
-        Sacrilege? Heresy? The most condemnable example of referee fiat
-        imaginable? Well,{' '}
+        Sacrilege? Heresy? The most condemnable example of referee fiat one
+        could possibly imagine? Well,{' '}
         <a
           href="https://slyflourish.com/tweaking_monster_hit_points.html"
           className="link"

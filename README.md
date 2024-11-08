@@ -16,7 +16,7 @@ But sometimes you might want to give your <abbr title="Big Bad Evil Guy 😈">BB
 
 Maybe you’re using multiple creatures of the same type in a battle, but you want to mix things up a bit. Like, maybe you want some of your kobolds to be even weaker than average &mdash; but you want *one* of them to be a **💪KOBOLD CHAD™💪**.
 
-Or maybe you just want to tweak a creature’s Hit Points mid-battle. Sacrilege? Heresy? The most condemnable example of referee fiat imaginable? Well, [here’s Mike Shea at Sly Flourish with some perfectly valid reasons why we might want to do this](https://slyflourish.com/tweaking_monster_hit_points.html)!
+Or maybe you just want to tweak a creature’s Hit Points mid-battle. Sacrilege? Heresy? The most condemnable example of referee fiat one could possibly imagine? Well, [here’s Mike Shea at Sly Flourish with some perfectly valid reasons why we might want to do this](https://slyflourish.com/tweaking_monster_hit_points.html)!
 
 ---
 
