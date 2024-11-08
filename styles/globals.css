@@ -22,7 +22,7 @@ strong {
   }
 
   .main-layout-content {
-    @apply col-start-2 container sm:max-w-2xl mx-auto;
+    @apply col-start-2 container max-w-fit sm:max-w-2xl mx-auto;
   }
 
   .text-balance {
