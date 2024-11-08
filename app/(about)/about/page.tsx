@@ -1,3 +1,11 @@
+import { Metadata } from 'next'
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'About',
+  }
+}
+
 export default function About() {
   return (
     <>

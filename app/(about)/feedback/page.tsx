@@ -1,4 +1,11 @@
 import Link from 'next/link'
+import { Metadata } from 'next'
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'Feedback',
+  }
+}
 
 export default function Feedback() {
   return (

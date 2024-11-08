@@ -9,7 +9,10 @@ import MainHeader from '@/components/MainHeader'
 import GithubIcon from '@/components/GithubIcon'
 
 export const metadata: Metadata = {
-  title: 'Hit Dice App',
+  title: {
+    template: '%s • Monster Hit Dice',
+    default: 'Monster Hit Dice',
+  },
   description:
     'An app for generating a range of Hit Point values from Dungeons & Dragons Hit Dice expressions',
   keywords: ['Dungeons & Dragons', 'D&D', 'Hit Points', 'Hit Dice'],
