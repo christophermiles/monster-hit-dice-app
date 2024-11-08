@@ -77,6 +77,10 @@ export default function RootLayout({
                   Roadmap
                 </Link>
 
+                <Link href="/feedback" className="link">
+                  Feedback
+                </Link>
+
                 <Link href="/legal" className="link">
                   Legal
                 </Link>
