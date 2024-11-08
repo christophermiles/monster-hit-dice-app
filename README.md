@@ -6,7 +6,7 @@ An app for generating a range of Hit Point values from Dungeons &amp; Dragons Hi
 
 ## Wait, what is this?
 
-This Monster Hit Dice App takes a Hit Dice expression (that’s a fancy way of saying ‘number of Hit Dice of a certain Hit Dice type plus modifiers’) and generates Hit Point values ranging between **minimum**, **weak**, **average**, **strong** and **maximum** &mdash; with weak being halfway between minimum and average, and strong being halfway between average and maximum.
+This Monster Hit Dice web app takes a Hit Dice expression (that’s a fancy way of saying ‘number of Hit Dice of a certain Hit Dice type plus modifiers’) and generates Hit Point values ranging between **minimum**, **weak**, **average**, **strong** and **maximum** &mdash; with weak being halfway between minimum and average, and strong being halfway between average and maximum.
 
 ### But why?
 

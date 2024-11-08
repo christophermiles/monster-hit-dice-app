@@ -12,8 +12,8 @@ export default function About() {
       <h1>What is this?</h1>
 
       <p>
-        This Monster Hit Dice App takes a Hit Dice expression (that’s a fancy
-        way of saying ‘number of Hit Dice of a certain Hit Dice type plus
+        This Monster Hit Dice web app takes a Hit Dice expression (that’s a
+        fancy way of saying ‘number of Hit Dice of a certain Hit Dice type plus
         modifiers’) and generates Hit Point values ranging between{' '}
         <strong>minimum</strong>, <strong>weak</strong>,{' '}
         <strong>average</strong>, <strong>strong</strong> and{' '}
