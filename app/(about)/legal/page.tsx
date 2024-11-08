@@ -1,4 +1,23 @@
 import DiceIcon, { DieType } from '@/components/DiceIcon'
+import { DateStringObject } from '@/lib/types'
+import { Metadata } from 'next'
+import getDateModifiedJsonLd from '@/lib/utils/get-date-modified-json-ld'
+import DateModified from '@/components/DateModified'
+
+const LAST_UPDATED: DateStringObject = {
+  year: '2024',
+  month: '11',
+  day: '08',
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'Legal',
+    other: {
+      ...getDateModifiedJsonLd(LAST_UPDATED),
+    },
+  }
+}
 
 type IconCredit = {
   icon?: DieType
@@ -283,11 +302,7 @@ export default function Legal() {
       </ul>
 
       <footer>
-        <p>
-          <small>
-            Last updated <time dateTime="2024-11-08">8 November 2024</time>
-          </small>
-        </p>
+        <DateModified dateStringObject={LAST_UPDATED} />
       </footer>
     </>
   )
