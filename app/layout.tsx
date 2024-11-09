@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import MainHeader from '@/components/MainHeader'
 import GithubIcon from '@/components/GithubIcon'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: {
@@ -101,6 +102,8 @@ export default function RootLayout({
             </footer>
           </div>
         </ThemeProvider>
+
+        <Analytics />
       </body>
     </html>
   )
