@@ -8,6 +8,7 @@ import Link from 'next/link'
 import MainHeader from '@/components/MainHeader'
 import GithubIcon from '@/components/GithubIcon'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
   title: {
@@ -104,6 +105,7 @@ export default function RootLayout({
         </ThemeProvider>
 
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
