@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #FAFAFA;
   --foreground: #171717;
 }
 
@@ -22,7 +22,7 @@ strong {
   }
 
   .main-layout-content {
-    @apply col-start-2 container max-w-fit sm:max-w-2xl mx-auto;
+    @apply col-start-2 container max-w-full sm:max-w-2xl mx-auto;
   }
 
   .text-balance {
@@ -53,8 +53,13 @@ strong {
     @apply text-red-500;
   }
 
+  .input-border {
+    @apply border-2 border-neutral-400 focus-visible:outline-none focus-visible:border-black;
+  }
+
   .input {
-    @apply p-1 border-2 border-neutral-400 bg-neutral-50 text-black placeholder-neutral-200 rounded-sm focus-visible:outline-none focus-visible:border-black;
+    @apply p-1 bg-transparent text-black placeholder-neutral-200 rounded-sm;
+    @apply input-border;
   }
 
   .input-lg {

@@ -13,7 +13,6 @@ export default function HitDiceInputHeader({
       className={clsx(
         'flex items-baseline',
         inputHeaderEnd && 'justify-between',
-        'px-2',
         'text-xs sm:text-sm',
       )}
     >

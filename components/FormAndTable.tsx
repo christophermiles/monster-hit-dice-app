@@ -24,6 +24,7 @@ export default function HitDiceForm() {
   >([])
 
   const inputRef = useRef<HTMLInputElement>(null)
+  const [inputResetAt, setInputResetAt] = useState<Date>()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -100,9 +101,8 @@ export default function HitDiceForm() {
 
   const resetForm = () => {
     setHitDice('')
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
+    setInputResetAt(new Date())
+    inputRef.current?.focus()
   }
 
   return (
@@ -115,6 +115,7 @@ export default function HitDiceForm() {
           <HitDiceInput
             ref={inputRef}
             value={hitDice}
+            inputResetAt={inputResetAt}
             onInput={handleHitDiceExpression}
             className="w-full"
             inputHeaderEnd={

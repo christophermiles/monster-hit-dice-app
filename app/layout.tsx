@@ -57,7 +57,7 @@ export default function RootLayout({
         'text-[14px] sm:text-[16px] text-neutral-700',
       )}
     >
-      <body className="bg-neutral-50">
+      <body>
         <ThemeProvider>
           <div className="main-layout min-h-screen grid-rows-[1fr_auto_auto] pt-8">
             <header className="main-layout-content row-start-2 flex items-baseline justify-center flex-wrap gap-8">

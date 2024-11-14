@@ -1,5 +1,11 @@
-import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react'
-import { HIT_DICE_BY_MONSTER_EXAMPLES, HIT_DICE_REGEX } from '@/lib/constants'
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  ForwardedRef,
+  useRef,
+} from 'react'
+import { HIT_DICE_BY_MONSTER_EXAMPLES } from '@/lib/constants'
 import clsx from 'clsx'
 import {
   Field,
@@ -11,6 +17,7 @@ import {
 } from '@headlessui/react'
 import { isLikelyToShowSoftwareKeyboard } from '@/lib/utils/is-likely-to-use-touch-keyboard'
 import HitDiceInputHeader from '@/components/HitDiceInput/HitDiceInputHeader'
+import { HIT_DICE_REGEX } from 'roll-hit-dice'
 
 interface HitDiceInputProps {
   value?: string
@@ -27,30 +34,50 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
     { value, onInput, inputHeaderEnd, className, inputResetAt },
     ref: ForwardedRef<HTMLInputElement>,
   ) {
-    const [placeholderExample, setPlaceholderExample] = useState('')
-    const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
-    const [isTypingPaused, setIsTypingPaused] = useState(false)
-    const [hasBeenFocused, setHasBeenFocused] = useState(false)
-
     // region Software keyboard
+    const hitDiceNumInputRef = useRef<HTMLInputElement>(null)
     const [showInputsForSoftwareKeyboard, setShowInputsForSoftwareKeyboard] =
       useState(false)
+
     const [
       hitDiceNumFromSoftwareKeyboardInput,
       setHitDiceNumFromSoftwareKeyboardInput,
     ] = useState('')
+    function handleHitDiceNumFromSoftwareKeyboardInput(
+      event: React.ChangeEvent<HTMLInputElement>,
+    ) {
+      setHitDiceNumFromSoftwareKeyboardInput(event.target.value)
+    }
+
     const [
       hitDiceTypeFromSoftwareKeyboardInput,
       setHitDiceTypeFromSoftwareKeyboardInput,
     ] = useState('')
+    function handleHitDiceTypeFromSoftwareKeyboardInput(
+      event: React.ChangeEvent<HTMLInputElement>,
+    ) {
+      setHitDiceTypeFromSoftwareKeyboardInput(event.target.value)
+    }
+
     const [
       hitDiceModifierTypeFromSoftwareKeyboardInput,
       setHitDiceModifierTypeFromSoftwareKeyboardInput,
     ] = useState('+')
+    function handleHitDiceModifierTypeFromSoftwareKeyboardInput(
+      event: React.ChangeEvent<HTMLSelectElement>,
+    ) {
+      setHitDiceModifierTypeFromSoftwareKeyboardInput(event.target.value)
+    }
+
     const [
       hitDiceModifierFromSoftwareKeyboardInput,
       setHitDiceModifierFromSoftwareKeyboardInput,
     ] = useState('')
+    function handleHitDiceModifierFromSoftwareKeyboardInput(
+      event: React.ChangeEvent<HTMLInputElement>,
+    ) {
+      setHitDiceModifierFromSoftwareKeyboardInput(event.target.value)
+    }
 
     useEffect(() => {
       const parts = [
@@ -61,7 +88,6 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
         hitDiceModifierFromSoftwareKeyboardInput,
       ]
       const expression = parts.join('')
-      console.log('expression', expression)
       if (HIT_DICE_REGEX.test(expression)) {
         onInput(expression)
       }
@@ -70,14 +96,38 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
       hitDiceModifierTypeFromSoftwareKeyboardInput,
       hitDiceNumFromSoftwareKeyboardInput,
       hitDiceTypeFromSoftwareKeyboardInput,
+      onInput,
     ])
 
     useEffect(() => {
+      if (showInputsForSoftwareKeyboard) {
+        hitDiceNumInputRef.current?.focus()
+      }
+    }, [showInputsForSoftwareKeyboard])
+
+    useEffect(() => {
       if (inputResetAt) {
+        resetInputsForSoftwareKeyboard()
         setShowInputsForSoftwareKeyboard(false)
       }
-    }, [inputResetAt])
+    }, [inputResetAt, ref])
+    function resetInputsForSoftwareKeyboard() {
+      setShowInputsForSoftwareKeyboard(false)
+      setHitDiceNumFromSoftwareKeyboardInput('')
+      setHitDiceTypeFromSoftwareKeyboardInput('')
+      setHitDiceModifierTypeFromSoftwareKeyboardInput('+')
+      setHitDiceModifierFromSoftwareKeyboardInput('')
+    }
     // endregion
+
+    // region Combined input
+    const combinedInputRef = ref
+
+    const [hasBeenFocused, setHasBeenFocused] = useState(false)
+
+    const [placeholderExample, setPlaceholderExample] = useState('')
+    const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0)
+    const [isTypingPaused, setIsTypingPaused] = useState(false)
 
     useEffect(() => {
       if (hasBeenFocused) return // Stop all animated typing after the first focus
@@ -161,11 +211,6 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
     }
 
     const handleFocusFromCombinedInput = () => {
-      console.log(
-        'isLikelyToShowSoftwareKeyboard',
-        isLikelyToShowSoftwareKeyboard,
-      )
-
       if (isLikelyToShowSoftwareKeyboard) {
         setShowInputsForSoftwareKeyboard(true)
       }
@@ -173,96 +218,85 @@ const HitDiceInput = forwardRef<HTMLInputElement, HitDiceInputProps>(
       setPlaceholderExample((current) => current.replace('|', '')) // Remove the fake cursor
       if (!hasBeenFocused) setHasBeenFocused(true)
     }
+    // endregion
 
     const containerClasses = clsx('max-w-full flex flex-col gap-4', className)
 
-    return (
-      <div>
-        {showInputsForSoftwareKeyboard ? (
-          <Fieldset className={containerClasses}>
-            <HitDiceInputHeader
-              inputHeaderEnd={inputHeaderEnd}
-              label={<Legend>Enter Hit Dice</Legend>}
-            />
+    return showInputsForSoftwareKeyboard ? (
+      <Fieldset className={containerClasses}>
+        <HitDiceInputHeader
+          inputHeaderEnd={inputHeaderEnd}
+          label={<Legend>Enter Hit Dice</Legend>}
+        />
 
-            <div className="flex items-baseline gap-1">
-              <Field>
-                <Input
-                  inputMode="numeric"
-                  value={hitDiceNumFromSoftwareKeyboardInput}
-                  onInput={(event) =>
-                    setHitDiceNumFromSoftwareKeyboardInput(event.target.value)
-                  }
-                  className="input-xl w-[3ch]"
-                />
-                <Label className="sr-only">#</Label>
-              </Field>
-
-              <span className="text-4xl md:text-5xl">d</span>
-
-              <Field>
-                <Input
-                  inputMode="numeric"
-                  value={hitDiceTypeFromSoftwareKeyboardInput}
-                  onInput={(event) =>
-                    setHitDiceTypeFromSoftwareKeyboardInput(event.target.value)
-                  }
-                  className="input-xl w-[3ch]"
-                />
-                <Label className="sr-only">Type</Label>
-              </Field>
-
-              <Field>
-                <Select
-                  name="hit-dice-modifier-type"
-                  onChange={(event) =>
-                    setHitDiceModifierTypeFromSoftwareKeyboardInput(
-                      event.target.value,
-                    )
-                  }
-                  className="text-4xl md:text-5xl"
-                >
-                  <option value="+">+</option>
-                  <option value="-">-</option>
-                </Select>
-              </Field>
-
-              <Field>
-                <Input
-                  value={hitDiceModifierFromSoftwareKeyboardInput}
-                  onInput={(event) =>
-                    setHitDiceModifierFromSoftwareKeyboardInput(
-                      event.target.value,
-                    )
-                  }
-                  className="input-xl max-w-[4ch]"
-                />
-                <Label className="sr-only">Mod.</Label>
-              </Field>
-            </div>
-          </Fieldset>
-        ) : (
-          <Field className={containerClasses}>
-            <HitDiceInputHeader
-              inputHeaderEnd={inputHeaderEnd}
-              label={<Label htmlFor="hit-dice-input">Enter Hit Dice</Label>}
-            />
-
+        <div className="flex items-baseline justify-between gap-1">
+          <Field className="min-w-[3ch]">
             <Input
-              ref={ref}
-              id="hit-dice-input"
-              type="text"
-              placeholder={placeholderExample}
-              pattern={HIT_DICE_REGEX.source}
-              value={value}
-              onInput={handleInputFromCombinedInput}
-              onFocus={handleFocusFromCombinedInput}
-              aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
+              name="hit-dice-number"
+              inputMode="numeric"
+              value={hitDiceNumFromSoftwareKeyboardInput}
+              ref={hitDiceNumInputRef}
+              onInput={handleHitDiceNumFromSoftwareKeyboardInput}
+              className="w-full input-xl text-right"
+            />
+            <Label className="sr-only">#</Label>
+          </Field>
+
+          <span className="flex-none text-4xl md:text-5xl">d</span>
+
+          <Field className="min-w-[2ch]">
+            <Input
+              name="hit-dice-type"
+              inputMode="numeric"
+              value={hitDiceTypeFromSoftwareKeyboardInput}
+              onInput={handleHitDiceTypeFromSoftwareKeyboardInput}
               className="w-full input-xl"
             />
+            <Label className="sr-only">Type</Label>
           </Field>
-        )}
-      </div>
+
+          <Field className="flex-none">
+            <Select
+              name="hit-dice-modifier-type"
+              onChange={handleHitDiceModifierTypeFromSoftwareKeyboardInput}
+              className="text-4xl md:text-5xl appearance-none bg-transparent focus-visible:outline-none text-neutral-400 focus-visible:text-black"
+            >
+              <option value="+">+</option>
+              <option value="-">-</option>
+            </Select>
+          </Field>
+
+          <Field className="min-w-[4ch]">
+            <Input
+              name="hit-dice-modifier"
+              inputMode="numeric"
+              value={hitDiceModifierFromSoftwareKeyboardInput}
+              onInput={handleHitDiceModifierFromSoftwareKeyboardInput}
+              className="w-full input-xl"
+            />
+            <Label className="sr-only">Mod.</Label>
+          </Field>
+        </div>
+      </Fieldset>
+    ) : (
+      <Field className={containerClasses}>
+        <HitDiceInputHeader
+          inputHeaderEnd={inputHeaderEnd}
+          label={<Label htmlFor="hit-dice-input">Enter Hit Dice</Label>}
+        />
+
+        <Input
+          ref={combinedInputRef}
+          id="hit-dice-input"
+          type="text"
+          placeholder={placeholderExample}
+          value={value}
+          onInput={handleInputFromCombinedInput}
+          onFocus={handleFocusFromCombinedInput}
+          aria-label="Enter a Hit Dice expression like '2d6' or '2d8+6'"
+          className="w-full input-xl"
+        />
+      </Field>
     )
   },
 )
