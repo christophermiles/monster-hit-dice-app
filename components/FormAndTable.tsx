@@ -47,8 +47,8 @@ export default function HitDiceForm() {
     setShowMonsterSearch(true)
   }
 
-  const handleHitDiceInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHitDice(e.target.value)
+  const handleHitDiceExpression = (input: string) => {
+    setHitDice(input)
   }
 
   useEffect(() => {
@@ -67,20 +67,14 @@ export default function HitDiceForm() {
     setShowMonsterSearch(false)
     if (hitDiceFromMonsterName) {
       handleGetHitPoints(hitDiceFromMonsterName, monsterName)
-      setHitDice('')
-      if (inputRef.current) {
-        inputRef.current.focus()
-      }
+      resetForm()
     }
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     handleGetHitPoints(hitDice)
-    setHitDice('')
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
+    resetForm()
   }
 
   const handleGetHitPoints = (hitDice?: string, monsterName?: string) => {
@@ -104,6 +98,13 @@ export default function HitDiceForm() {
     }
   }
 
+  const resetForm = () => {
+    setHitDice('')
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col gap-16">
@@ -114,7 +115,7 @@ export default function HitDiceForm() {
           <HitDiceInput
             ref={inputRef}
             value={hitDice}
-            onInput={handleHitDiceInput}
+            onInput={handleHitDiceExpression}
             className="w-full"
             inputHeaderEnd={
               <LaunchSearchMonstersButton
