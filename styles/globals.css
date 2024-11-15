@@ -53,26 +53,67 @@ strong {
     @apply text-red-500;
   }
 
-  .input-border {
-    @apply border-2 border-neutral-400 focus-visible:outline-none focus-visible:border-black;
+  .border-input {
+    @apply border-neutral-400;
   }
 
   .input {
-    @apply p-1 bg-transparent text-black placeholder-neutral-200 rounded-sm;
-    @apply input-border;
+    @apply p-1 bg-transparent text-black placeholder-neutral-200 border-input focus-visible:outline-none focus-visible:border-black;
+  }
+  .input.input-enclosed {
+    @apply border-2 rounded-sm ;
+  }
+  .input-open-start {
+    @apply border-y-2 border-e-2 border-s-0 focus-visible:border-s-0 rounded-e-sm;
+  }
+  .input-open-end {
+    @apply border-y-2 border-s-2 border-e-0 focus-visible:border-e-0 rounded-s-sm;
+  }
+  .input-open-start-end {
+    @apply border-y-2 border-x-0 focus-visible:border-x-0 rounded-none;
+  }
+
+  .input.input-open-start {
+    @apply border-y-2 border-l-2;
+  }
+  .input.input-open-start-end {
+    @apply border-y-2 border-x-0 focus-visible:border-x-0;
   }
 
   .input-lg {
     @apply input;
     @apply text-2xl md:text-3xl;
     @apply px-2 py-3;
-    border-width: 3px;
+  }
+  .input-lg.input-enclosed {
+    @apply border-[3px];
+  }
+  .input-lg.input-open-start {
+    @apply border-y-[3px] border-e-[3px] border-s-0;
+  }
+  .input-lg.input-open-end {
+    @apply border-y-[3px] border-s-[3px] border-e-0;
+  }
+  .input-lg.input-open-start-end {
+    @apply border-y-[3px] border-x-0 focus-visible:border-x-0;
   }
 
   .input-xl {
-    @apply input-lg;
-    @apply py-4;
+    @apply input;
+    @apply px-2 py-4;
     @apply text-4xl md:text-5xl;
+  }
+  .input-xl.input-enclosed {
+    @apply border-4;
+  }
+  .input-xl.input-open-start {
+    @apply border-y-4 border-e-4 border-s-0;
+  }
+  .input-xl.input-open-end {
+    @apply border-y-4 border-s-4 border-e-0;
+  }
+  .input-xl.input-open-start-end {
+    @apply border-y-4 border-x-0 focus-visible:border-x-0;
   }
 
   .button {

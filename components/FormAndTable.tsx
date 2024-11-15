@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import HitDiceInput from '@/components/HitDiceInput'
+import HitDiceInputSoftwareKeyboard from '@/components/HitDiceInputSoftwareKeyboard'
 import { Transition } from '@headlessui/react'
 import LaunchSearchMonstersButton from '@/components/LaunchSearchMonstersButton'
 import HitPointResultsTable from '@/components/HitPointResultsTable'
@@ -9,8 +10,15 @@ import GetHitDiceByMonsterNameModal from '@/components/GetHitDiceByMonsterNameMo
 import { HitPointResults } from 'roll-hit-dice/dist/types'
 import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
 import { DieType } from '@/components/DiceIcon'
+import { isLikelyToShowSoftwareKeyboard } from '@/lib/utils/is-likely-to-use-touch-keyboard'
 
 export default function HitDiceForm() {
+  const [useSoftwareKeyboardInput, setUseSoftwareKeyboardInput] =
+    useState(false)
+  useEffect(() => {
+    setUseSoftwareKeyboardInput(isLikelyToShowSoftwareKeyboard === true)
+    // Avoid hydration mismatch 🤷🏻
+  }, [])
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)
   const [hitDice, setHitDice] = useState('')
   const [dieType, setDieType] = useState<DieType>()
@@ -24,7 +32,6 @@ export default function HitDiceForm() {
   >([])
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const [inputResetAt, setInputResetAt] = useState<Date>()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -101,7 +108,6 @@ export default function HitDiceForm() {
 
   const resetForm = () => {
     setHitDice('')
-    setInputResetAt(new Date())
     inputRef.current?.focus()
   }
 
@@ -112,18 +118,29 @@ export default function HitDiceForm() {
           onSubmit={handleFormSubmit}
           className="flex flex-col items-center justify-center gap-8 w-full"
         >
-          <HitDiceInput
-            ref={inputRef}
-            value={hitDice}
-            inputResetAt={inputResetAt}
-            onInput={handleHitDiceExpression}
-            className="w-full"
-            inputHeaderEnd={
-              <LaunchSearchMonstersButton
-                onClick={handleLaunchSearchMonstersButtonClick}
-              />
-            }
-          />
+          {useSoftwareKeyboardInput ? (
+            <HitDiceInputSoftwareKeyboard
+              ref={inputRef}
+              value={hitDice}
+              onInput={handleHitDiceExpression}
+              inputHeaderEnd={
+                <LaunchSearchMonstersButton
+                  onClick={handleLaunchSearchMonstersButtonClick}
+                />
+              }
+            />
+          ) : (
+            <HitDiceInput
+              ref={inputRef}
+              value={hitDice}
+              onInput={handleHitDiceExpression}
+              inputHeaderEnd={
+                <LaunchSearchMonstersButton
+                  onClick={handleLaunchSearchMonstersButtonClick}
+                />
+              }
+            />
+          )}
 
           <GetHitPointsButton
             dieType={dieType}

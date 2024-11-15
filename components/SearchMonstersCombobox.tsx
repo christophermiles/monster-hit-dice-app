@@ -224,7 +224,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
             displayValue={() => comboboxValue}
             autoFocus={true}
             placeholder="eg. Goblin"
-            className="w-full input-lg"
+            className="w-full input-lg input-enclosed"
           />
 
           {comboboxValue ? (
