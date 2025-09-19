@@ -10,12 +10,7 @@ import GetHitDiceByMonsterNameModal from '@/components/GetHitDiceByMonsterNameMo
 import { HitPointResults } from 'roll-hit-dice/dist/types'
 import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
 import { DieType } from '@/components/DiceIcon'
-import type { Metadata } from 'next'
 import { generateTitle } from '@/lib/utils/title'
-
-type PageProps = {
-  searchParams: { hd?: string; monster?: string }
-}
 
 export default function HitDiceForm() {
   const searchParams = useSearchParams()
