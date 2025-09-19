@@ -143,7 +143,7 @@ export default function HitDiceForm() {
         searchParams.get('monster') as string | undefined,
       )
     }
-  })
+  }, [])
 
   return (
     <>
