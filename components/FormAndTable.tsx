@@ -1,5 +1,6 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
 import LaunchSearchMonstersButton from '@/components/LaunchSearchMonstersButton'
@@ -11,6 +12,10 @@ import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
 import { DieType } from '@/components/DiceIcon'
 
 export default function HitDiceForm() {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const router = useRouter()
+
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)
   const [hitDice, setHitDice] = useState('')
   const [dieType, setDieType] = useState<DieType>()
@@ -54,6 +59,7 @@ export default function HitDiceForm() {
   useEffect(() => {
     try {
       const dieTypeNumber = parseHitDice(hitDice, true).dieType
+
       setDieType(`d${dieTypeNumber}` as DieType)
     } catch {
       setDieType(undefined)
@@ -65,26 +71,33 @@ export default function HitDiceForm() {
     monsterName?: string,
   ) => {
     setShowMonsterSearch(false)
+
     if (hitDiceFromMonsterName) {
-      handleGetHitPoints(hitDiceFromMonsterName, monsterName)
       setHitDice('')
+
       if (inputRef.current) {
         inputRef.current.focus()
       }
+
+      doNavigation(hitDiceFromMonsterName, monsterName)
     }
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    handleGetHitPoints(hitDice)
+
     setHitDice('')
+
     if (inputRef.current) {
       inputRef.current.focus()
     }
+
+    doNavigation(hitDice)
   }
 
   const handleGetHitPoints = (hitDice?: string, monsterName?: string) => {
     if (!hitDice) return
+
     try {
       const result = rollHitDice(hitDice, true)
       const dieType = parseHitDice(hitDice, true).dieType
@@ -103,6 +116,30 @@ export default function HitDiceForm() {
       console.warn(e)
     }
   }
+
+  function doNavigation(hitDice: string, monsterName?: string) {
+    const params = new URLSearchParams(searchParams.toString())
+
+    params.set('hd', hitDice)
+
+    if (monsterName) {
+      params.set('monster', monsterName)
+    } else {
+      params.delete('monster')
+    }
+
+    handleGetHitPoints(params.get('hd') as string, params.get('monster') as string | undefined)
+
+    router.push(`${pathname}/?${params.toString()}`)
+  }
+
+  useEffect(() => {
+    if (searchParams.get('hd')) {
+      handleGetHitPoints(searchParams.get('hd') as string, searchParams.get('monster') as string | undefined)
+    }
+  }, [
+    searchParams
+  ])
 
   return (
     <>
