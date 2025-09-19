@@ -10,6 +10,12 @@ import GetHitDiceByMonsterNameModal from '@/components/GetHitDiceByMonsterNameMo
 import { HitPointResults } from 'roll-hit-dice/dist/types'
 import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
 import { DieType } from '@/components/DiceIcon'
+import type { Metadata } from 'next'
+import { generateTitle } from '@/lib/utils/title'
+
+type PageProps = {
+  searchParams: { hd?: string; monster?: string }
+}
 
 export default function HitDiceForm() {
   const searchParams = useSearchParams()
@@ -137,11 +143,17 @@ export default function HitDiceForm() {
   }
 
   useEffect(() => {
-    if (searchParams.get('hd')) {
+    const hd = searchParams.get('hd')
+    const monster = searchParams.get('monster')
+    if (hd) {
       handleGetHitPoints(
-        searchParams.get('hd') as string,
-        searchParams.get('monster') as string | undefined,
+        hd as string,
+        monster as string | undefined,
       )
+    }
+
+    if (hd) {
+      document.title = generateTitle(monster ? [`${monster} (${hd})`] : [hd])
     }
   }, [])
 
