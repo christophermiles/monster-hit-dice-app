@@ -128,18 +128,22 @@ export default function HitDiceForm() {
       params.delete('monster')
     }
 
-    handleGetHitPoints(params.get('hd') as string, params.get('monster') as string | undefined)
+    handleGetHitPoints(
+      params.get('hd') as string,
+      params.get('monster') as string | undefined,
+    )
 
     router.push(`${pathname}/?${params.toString()}`)
   }
 
   useEffect(() => {
     if (searchParams.get('hd')) {
-      handleGetHitPoints(searchParams.get('hd') as string, searchParams.get('monster') as string | undefined)
+      handleGetHitPoints(
+        searchParams.get('hd') as string,
+        searchParams.get('monster') as string | undefined,
+      )
     }
-  }, [
-    searchParams
-  ])
+  })
 
   return (
     <>
