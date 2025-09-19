@@ -5,15 +5,21 @@ type PageProps = {
   searchParams: { hd?: string; monster?: string }
 }
 
-export async function generateMetadata(
-  { searchParams }: PageProps
-): Promise<Metadata> {
-  const hd = typeof searchParams.hd === 'string' ? decodeURIComponent(searchParams.hd) : '';
-  const monster = typeof searchParams.monster === 'string' ? decodeURIComponent(searchParams.monster) : '';
+export async function generateMetadata({
+  searchParams,
+}: PageProps): Promise<Metadata> {
+  const hd =
+    typeof searchParams.hd === 'string'
+      ? decodeURIComponent(searchParams.hd)
+      : ''
+  const monster =
+    typeof searchParams.monster === 'string'
+      ? decodeURIComponent(searchParams.monster)
+      : ''
 
   if (!hd) {
     return {
-      title: ''
+      title: '',
     }
   }
 
