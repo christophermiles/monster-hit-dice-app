@@ -1,5 +1,6 @@
 import FormAndTable from '@/components/FormAndTable'
 import type { Metadata } from 'next'
+import { generateTitle } from '@/lib/utils/title'
 
 type PageProps = {
   searchParams: { hd?: string; monster?: string }
@@ -23,7 +24,7 @@ export async function generateMetadata({
     }
   }
 
-  return { title: monster ? `${monster} (${hd})` : hd }
+  return { title: generateTitle(monster ? [`${monster} (${hd})`] : [hd]) }
 }
 
 export default function Main() {

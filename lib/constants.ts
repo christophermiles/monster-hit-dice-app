@@ -7,3 +7,6 @@ export const HIT_DICE_BY_MONSTER_EXAMPLES: Record<string, string> = {
   'Gelatinous Cube': '8d10+40',
   Tarrasque: '33d20+330',
 }
+
+export const TITLE = 'Hit Dice App'
+export const TITLE_PARTS_SEPARATOR = '🎲'
