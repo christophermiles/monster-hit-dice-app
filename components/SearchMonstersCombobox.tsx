@@ -191,7 +191,7 @@ const SearchMonstersCombobox: React.FC<SearchMonstersComboboxProps> = ({
   // endregion
 
   const handleMonsterSelected = useCallback(
-    (monster: Monster) => {
+    (monster: Monster | null) => {
       setSelectedMonster(monster)
       if (monster) {
         const { hitDice, name: monsterName } = monster
