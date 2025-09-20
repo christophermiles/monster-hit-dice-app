@@ -9,11 +9,12 @@ import MainHeader from '@/components/MainHeader'
 import GithubIcon from '@/components/GithubIcon'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { TITLE, TITLE_PARTS_SEPARATOR } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s • Monster Hit Dice',
-    default: 'Monster Hit Dice',
+    template: `${TITLE} ${TITLE_PARTS_SEPARATOR} %s`,
+    default: TITLE,
   },
   description:
     'An app for generating a range of Hit Point values from Dungeons & Dragons Hit Dice expressions',

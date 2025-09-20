@@ -42,11 +42,11 @@ strong {
   }
 
   .text-lighter {
-    @apply text-neutral-300
+    @apply text-neutral-300;
   }
 
   .text-lightest {
-    @apply text-neutral-200
+    @apply text-neutral-200;
   }
 
   .text-error {

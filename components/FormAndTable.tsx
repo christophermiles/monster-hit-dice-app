@@ -1,5 +1,6 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
 import LaunchSearchMonstersButton from '@/components/LaunchSearchMonstersButton'
@@ -9,8 +10,13 @@ import GetHitDiceByMonsterNameModal from '@/components/GetHitDiceByMonsterNameMo
 import { HitPointResults } from 'roll-hit-dice/dist/types'
 import rollHitDice, { parseHitDice } from 'roll-hit-dice/dist/roll-hit-dice'
 import { DieType } from '@/components/DiceIcon'
+import { generateTitle } from '@/lib/utils/title'
 
 export default function HitDiceForm() {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const router = useRouter()
+
   const [showMonsterSearch, setShowMonsterSearch] = useState(false)
   const [hitDice, setHitDice] = useState('')
   const [dieType, setDieType] = useState<DieType>()
@@ -54,6 +60,7 @@ export default function HitDiceForm() {
   useEffect(() => {
     try {
       const dieTypeNumber = parseHitDice(hitDice, true).dieType
+
       setDieType(`d${dieTypeNumber}` as DieType)
     } catch {
       setDieType(undefined)
@@ -65,26 +72,33 @@ export default function HitDiceForm() {
     monsterName?: string,
   ) => {
     setShowMonsterSearch(false)
+
     if (hitDiceFromMonsterName) {
-      handleGetHitPoints(hitDiceFromMonsterName, monsterName)
       setHitDice('')
+
       if (inputRef.current) {
         inputRef.current.focus()
       }
+
+      doNavigation(hitDiceFromMonsterName, monsterName)
     }
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    handleGetHitPoints(hitDice)
+
     setHitDice('')
+
     if (inputRef.current) {
       inputRef.current.focus()
     }
+
+    doNavigation(hitDice)
   }
 
   const handleGetHitPoints = (hitDice?: string, monsterName?: string) => {
     if (!hitDice) return
+
     try {
       const result = rollHitDice(hitDice, true)
       const dieType = parseHitDice(hitDice, true).dieType
@@ -103,6 +117,40 @@ export default function HitDiceForm() {
       console.warn(e)
     }
   }
+
+  function doNavigation(hitDice: string, monsterName?: string) {
+    const params = new URLSearchParams(searchParams.toString())
+
+    params.set('hd', hitDice)
+
+    if (monsterName) {
+      params.set('monster', monsterName)
+    } else {
+      params.delete('monster')
+    }
+
+    handleGetHitPoints(
+      params.get('hd') as string,
+      params.get('monster') as string | undefined,
+    )
+
+    router.push(`${pathname}/?${params.toString()}`)
+  }
+
+  useEffect(() => {
+    const hd = searchParams.get('hd')
+    const monster = searchParams.get('monster')
+    if (hd) {
+      handleGetHitPoints(
+        hd as string,
+        monster as string | undefined,
+      )
+    }
+
+    if (hd) {
+      document.title = generateTitle(monster ? [`${monster} (${hd})`] : [hd])
+    }
+  }, [searchParams])
 
   return (
     <>
