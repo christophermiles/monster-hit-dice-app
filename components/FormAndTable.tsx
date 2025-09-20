@@ -150,7 +150,7 @@ export default function HitDiceForm() {
     if (hd) {
       document.title = generateTitle(monster ? [`${monster} (${hd})`] : [hd])
     }
-  }, [])
+  }, [searchParams])
 
   return (
     <>
