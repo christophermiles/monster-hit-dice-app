@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import HitDiceInput from '@/components/HitDiceInput'
 import { Transition } from '@headlessui/react'
@@ -153,7 +153,7 @@ export default function HitDiceForm() {
   }, [])
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <div className="flex flex-col gap-16">
         <form
           onSubmit={handleFormSubmit}
@@ -201,6 +201,6 @@ export default function HitDiceForm() {
           onClose={handleGetHitDiceByMonsterNameModalClose}
         />
       </Transition>
-    </>
+    </Suspense>
   )
 }
