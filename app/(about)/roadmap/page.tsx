@@ -4,9 +4,9 @@ import DateModified from '@/components/DateModified'
 import { DateStringObject } from '@/lib/types'
 
 const LAST_UPDATED: DateStringObject = {
-  year: '2024',
-  month: '11',
-  day: '08',
+  year: '2025',
+  month: '09',
+  day: '21',
 }
 
 export function generateMetadata(): Metadata {
@@ -26,6 +26,7 @@ export default function Roadmap() {
       <p>In no particular order:</p>
 
       <ul>
+        <li>Include option to use 2024 or 2014 monsters in monster search</li>
         <li>Add support for dark theme</li>
         <li>
           Separate inputs for Hit Die number, Hit Die type and modifier with
@@ -33,7 +34,6 @@ export default function Roadmap() {
           touch keyboards
         </li>
         <li>Result history synced to local storage</li>
-        <li>Handle Hit Dice expression passed as query parameters in URL</li>
       </ul>
 
       <footer>
