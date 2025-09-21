@@ -26,6 +26,7 @@ export default function Roadmap() {
       <p>In no particular order:</p>
 
       <ul>
+        <li>Include option to use 2024 or 2014 monsters in monster search</li>
         <li>Add support for dark theme</li>
         <li>
           Separate inputs for Hit Die number, Hit Die type and modifier with
