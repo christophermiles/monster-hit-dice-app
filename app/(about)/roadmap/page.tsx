@@ -4,9 +4,9 @@ import DateModified from '@/components/DateModified'
 import { DateStringObject } from '@/lib/types'
 
 const LAST_UPDATED: DateStringObject = {
-  year: '2024',
-  month: '11',
-  day: '08',
+  year: '2025',
+  month: '09',
+  day: '21',
 }
 
 export function generateMetadata(): Metadata {
@@ -33,7 +33,6 @@ export default function Roadmap() {
           touch keyboards
         </li>
         <li>Result history synced to local storage</li>
-        <li>Handle Hit Dice expression passed as query parameters in URL</li>
       </ul>
 
       <footer>
