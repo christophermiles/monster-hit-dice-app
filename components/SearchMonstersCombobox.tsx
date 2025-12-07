@@ -21,8 +21,7 @@ interface MonsterForDisplay extends ComboboxMonster {
   nameForDisplay: string
 }
 
-interface SearchMonstersComboboxProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface SearchMonstersComboboxProps extends React.HTMLAttributes<HTMLDivElement> {
   onHitDiceObtained: ({
     hitDice,
     monsterName,

@@ -141,10 +141,7 @@ export default function HitDiceForm() {
     const hd = searchParams.get('hd')
     const monster = searchParams.get('monster')
     if (hd) {
-      handleGetHitPoints(
-        hd as string,
-        monster as string | undefined,
-      )
+      handleGetHitPoints(hd as string, monster as string | undefined)
     }
 
     if (hd) {
