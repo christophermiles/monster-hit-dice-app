@@ -5,6 +5,7 @@ import { Martian_Mono as Font } from 'next/font/google'
 import '../styles/globals.css'
 import clsx from 'clsx'
 import Link from 'next/link'
+import Script from 'next/script'
 import MainHeader from '@/components/MainHeader'
 import GithubIcon from '@/components/GithubIcon'
 import { Analytics } from '@vercel/analytics/react'
@@ -107,6 +108,13 @@ export default function RootLayout({
 
         <Analytics />
         <SpeedInsights />
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   )
